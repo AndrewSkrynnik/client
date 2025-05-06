@@ -1,0 +1,126 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 120px;
+  border-radius: var(--border-radius);
+  line-height: 0;
+  font-weight: 700;
+  color: var(--color-secondary-text);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: var(--box-shadow);
+}
+
+.buttonTransform {
+  overflow: hidden;
+  transition: var(--transition-all);
+  cursor: pointer;
+}
+
+/* Варианты кнопок */
+.buttonPrimary {
+  background-color: var(--color-primary);
+}
+
+.buttonPrimaryOutline {
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+@media (width >= 769px) {
+  .button:active {
+    opacity: var(--opacity);
+  }
+
+  .button:not(.buttonDisabled, .buttonLoading):hover {
+    &.buttonPrimary {
+      background-color: var(--color-primary-hover);
+      box-shadow: var(--box-shadow-hover);
+    }
+
+    &.buttonPrimaryOutline {
+      color: var(--color-primary-hover);
+      box-shadow: var(--box-shadow-hover);
+      border-color: var(--color-primary-hover);
+    }
+
+    &.buttonSecondary {
+      background-color: var(--color-secondary-hover);
+    }
+
+    &.buttonSecondaryOutline {
+      color: var(--color-secondary-hover);
+      box-shadow: var(--box-shadow-hover);
+      border-color: var(--color-secondary-hover);
+    }
+  }
+}
+
+.buttonSecondary {
+  background-color: var(--color-secondary);
+}
+
+.buttonSecondaryOutline {
+  border: 1px solid var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+/* Размеры кнопок */
+.buttonSmall {
+  height: 40px;
+  padding: 4px 8px;
+  font-size: 14px;
+}
+
+.buttonMedium {
+  height: 48px;
+  padding: 8px 16px;
+  font-size: 16px;
+}
+
+.buttonLarge {
+  height: 56px;
+  padding: 12px 20px;
+  font-size: 18px;
+}
+
+/* Стили для disabled */
+.buttonDisabled {
+  background-color: var(--color-disabled-bg);
+  color: var(--color-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Стили для состояния loading */
+.buttonLoading {
+  &.buttonPrimary {
+    background-color: var(--color-primary-hover);
+  }
+
+  &.buttonSecondary {
+    background-color: var(--color-secondary-hover);
+  }
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid white;
+  border-radius: 100%;
+  animation: spin 1s linear infinite;
+  border-top-color: transparent;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}

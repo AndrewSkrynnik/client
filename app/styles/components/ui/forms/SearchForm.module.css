@@ -1,0 +1,36 @@
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.suggestionList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid var(--color-primary-border);
+  border-radius: var(--border-radius);
+  background-color: var(--color-primary-bg);
+  box-shadow: var(--box-shadow);
+  z-index: 10;
+  margin-top: 4px;
+}
+
+.suggestionItem {
+  padding: 16px 8px; /* TODO: проверить порядок свойств */
+  cursor: pointer;
+
+  span {
+    font-weight: 700;
+  }
+}
+
+@media (width <= 768px) {
+  .suggestionItem:hover {
+    background-color: #f3f4f6; /* TODO: сделать потом переменную */
+  }
+}
