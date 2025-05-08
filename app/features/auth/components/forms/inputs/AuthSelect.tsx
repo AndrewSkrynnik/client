@@ -1,0 +1,45 @@
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem
+} from "@mui/material";
+import { Controller, FieldValues } from "react-hook-form";
+
+import { StyledSelect } from "@/features/auth/components/forms/inputs/styled/StyledSelect";
+import { AuthSelectProps } from "@/features/auth/components/forms/inputs/types";
+
+export const AuthSelect = <T extends FieldValues>({
+  control,
+  name,
+  label,
+  options,
+  disabled = false
+}: AuthSelectProps<T>) => (
+  <Controller
+    name={name}
+    control={control}
+    render={({ field, fieldState }) => (
+      <FormControl fullWidth error={!!fieldState.error} disabled={disabled}>
+        <InputLabel shrink>{label}</InputLabel>
+        <StyledSelect
+          {...field}
+          value={field.value ?? ""}
+          displayEmpty
+          fullWidth
+          inputProps={{ "aria-label": label }}
+        >
+          <MenuItem value="" disabled>
+            Выберите...
+          </MenuItem>
+          {options.map(option => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </StyledSelect>
+        <FormHelperText>{fieldState.error?.message}</FormHelperText>
+      </FormControl>
+    )}
+  />
+);

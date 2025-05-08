@@ -10,7 +10,6 @@
   font-weight: 700;
   color: var(--color-secondary-text);
   letter-spacing: 0.1em;
-  text-transform: uppercase;
   box-shadow: var(--box-shadow);
 }
 
@@ -89,7 +88,8 @@
 
 /* Стили для disabled */
 .buttonDisabled {
-  background-color: var(--color-disabled-bg);
+  border: none;
+  background-color: var(--bg-disabled);
   color: var(--color-disabled);
   cursor: not-allowed;
   pointer-events: none;

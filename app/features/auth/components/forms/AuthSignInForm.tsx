@@ -5,11 +5,11 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 import { signInSchema } from "@/features/auth/common/schema";
+import { AuthInput } from "@/features/auth/components/forms/inputs/AuthInput";
+import { AuthPasswordInput } from "@/features/auth/components/forms/inputs/AuthPasswordInput";
 import { AuthLoginInputs } from "@/features/auth/types";
 
 import { Button } from "@/components/ui/buttons/Button";
-import { AuthInput } from "@/components/ui/forms/AuthInput";
-import { AuthPasswordInput } from "@/components/ui/forms/AuthPasswordInput";
 
 import axiosInstance from "@/libs/axios";
 
@@ -28,6 +28,7 @@ export const AuthSignInForm = () => {
     formState: { isSubmitting }
   } = useForm<AuthLoginInputs>({
     resolver: yupResolver(signInSchema),
+    defaultValues: { email: "", password: "" },
     mode: "onChange"
   });
 
@@ -39,7 +40,10 @@ export const AuthSignInForm = () => {
       setAuth(user);
       toast.success("Вход выполнен!");
 
-      window.location.reload();
+      // ⏳ Добавим задержку 1.5 сек (время показа тоста)
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (error: any) {
       if (error.response?.data?.message) {
         toast.error(error.response.data.message);
@@ -52,9 +56,14 @@ export const AuthSignInForm = () => {
   return (
     <form className={styles.authForm} onSubmit={handleSubmit(onSubmit)}>
       <AuthInput control={control} name="email" label="Email" type="email" />
-      <AuthPasswordInput control={control} name="password" label="Пароль" />
+      <AuthPasswordInput
+        control={control}
+        name="password"
+        label="Пароль"
+        type="password"
+      />
       <Button variant="Primary" type="submit" isLoading={isSubmitting}>
-        {isSubmitting ? null : "вход"}
+        {isSubmitting ? null : "Вход"}
       </Button>
     </form>
   );

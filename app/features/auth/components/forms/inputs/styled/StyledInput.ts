@@ -15,8 +15,9 @@ export const StyledInput = styled(TextField)({
     "@media (max-width: 490px)": {}
   },
 
+  /* Лишнее */
   "& .MuiInputLabel-root": {
-    top: "-3px",
+    top: "-3px !important",
 
     "@media (max-width: 1024px)": {
       top: "-3px"

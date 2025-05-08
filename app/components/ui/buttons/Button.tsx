@@ -1,8 +1,7 @@
+import clsx from "clsx";
 import { ButtonHTMLAttributes, FC, ReactNode } from "react";
 
 import styles from "@/styles/components/ui/buttons/Button.module.css";
-
-import classNames from "classnames";
 
 export type ButtonVariant =
   | "Primary"
@@ -29,7 +28,7 @@ export const Button: FC<ButtonProps> = ({
   ...props
 }) => {
   // Генерация классов на основе пропсов
-  const buttonClass = classNames(
+  const buttonClass = clsx(
     styles.button,
     styles[`button${variant}`],
     styles[`button${size}`],
