@@ -1,6 +1,5 @@
-import { AuthHeader } from "@/features/auth/components/AuthHeader";
-
 import { Footer } from "@/components/layout/footer/Footer";
+import { HeaderTop } from "@/components/layout/header/HeaderTop";
 
 export default function ConfirmationLayout({
   children
@@ -9,7 +8,7 @@ export default function ConfirmationLayout({
 }>) {
   return (
     <>
-      <AuthHeader />
+      <HeaderTop />
       <main className="justify-center">{children}</main>
       <Footer />
     </>
