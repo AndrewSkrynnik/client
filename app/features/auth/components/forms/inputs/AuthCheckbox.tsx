@@ -1,8 +1,9 @@
 import { FormControlLabel, FormGroup } from "@mui/material";
 import { Controller, FieldValues } from "react-hook-form";
 
-import { StyledCheckbox } from "@/features/auth/components/forms/inputs/styled/StyledCheckbox";
-import { AuthCheckboxProps } from "@/features/auth/components/forms/inputs/types";
+import { AuthCheckboxProps } from "@/features/auth/types";
+
+import { StyledCheckbox } from "@/components/styled/StyledCheckbox";
 
 export const AuthCheckbox = <T extends FieldValues>({
   control,

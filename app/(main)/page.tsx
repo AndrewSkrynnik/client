@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import { DashboardTemplate } from "@/features/dashboard/components/DashboardTemplate";
+import { HomeTemplate } from "@/features/home/components/HomeTemplate";
 
 export const metadata: Metadata = {
   title: "Домашняя страница | Example.com",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function DashboardPage() {
   return (
     <section className="section">
-      <DashboardTemplate />
+      <HomeTemplate />
     </section>
   );
 }

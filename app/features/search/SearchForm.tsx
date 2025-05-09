@@ -3,7 +3,8 @@
 import { useRouter } from "next/navigation";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 
-import { SearchInput } from "@/components/ui/forms/search/SearchInput";
+import { SearchInput } from "@/features/search/SearchInput";
+
 import { TooltipComponent } from "@/components/ui/tooltip/TooltipComponent";
 
 import axiosInstance from "@/libs/axios";

@@ -1,8 +1,9 @@
 import { InputMask } from "@react-input/mask";
 import { Controller, FieldValues } from "react-hook-form";
 
-import { StyledInput } from "@/features/auth/components/forms/inputs/styled/StyledInput";
-import { AuthInputProps } from "@/features/auth/components/forms/inputs/types";
+import { AuthInputProps } from "@/features/auth/types";
+
+import { StyledInput } from "@/components/styled/StyledInput";
 
 export const AuthPhoneInput = <T extends FieldValues>({
   control,

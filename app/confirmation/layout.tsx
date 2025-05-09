@@ -1,7 +1,7 @@
 import { Footer } from "@/components/layout/footer/Footer";
 import { HeaderTop } from "@/components/layout/header/HeaderTop";
 
-export default function ConfirmationLayout({
+export default function TestLayout({
   children
 }: Readonly<{
   children: React.ReactNode;

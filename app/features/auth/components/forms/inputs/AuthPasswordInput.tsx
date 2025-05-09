@@ -9,8 +9,9 @@ import { Controller, FieldValues } from "react-hook-form";
 
 import { calculatePasswordStrength } from "@/features/auth/common/calculatePasswordStrength";
 import { PasswordStrengthHint } from "@/features/auth/components/forms/inputs/PasswordStrengthHint";
-import { StyledInput } from "@/features/auth/components/forms/inputs/styled/StyledInput";
-import { AuthInputProps } from "@/features/auth/components/forms/inputs/types";
+import { AuthInputProps } from "@/features/auth/types";
+
+import { StyledInput } from "@/components/styled/StyledInput";
 
 export const AuthPasswordInput = <T extends FieldValues>({
   control,

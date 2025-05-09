@@ -1,10 +1,11 @@
 import { rules } from "@/features/auth/common/strengthPasswordRules";
+import { PasswordStrengthHintProps } from "@/features/auth/types";
+
 import {
   Rule,
   StrengthBar,
   StyledHint
-} from "@/features/auth/components/forms/inputs/styled/PasswordStrengthHint";
-import { PasswordStrengthHintProps } from "@/features/auth/components/forms/inputs/types";
+} from "@/components/styled/StyledPasswordStrengthHint";
 
 export const PasswordStrengthHint = ({
   password,
