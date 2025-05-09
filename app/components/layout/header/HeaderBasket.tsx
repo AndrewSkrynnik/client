@@ -30,6 +30,12 @@ export const HeaderBasket = () => (
  */
   <Link href="/office/basket">
     <div className={styles.basketMenu}>
+      <div className={styles.basketMenuIconWrapper}>
+        <ShoppingCartIcon fontSize="large" />
+        {/* {totalQuantity > 0 && (
+          <p className={styles.basketMenuIconCounter}>{totalQuantity}</p>
+        )} */}
+      </div>
       <div className="flex flex-col">
         корзина пуста
         {/* {totalQuantity > 0 ? (
@@ -46,12 +52,6 @@ export const HeaderBasket = () => (
           </>
         ) : (
           <p className={styles.basketMenuText}>Корзина пуста</p>
-        )} */}
-      </div>
-      <div className={styles.basketMenuIconWrapper}>
-        <ShoppingCartIcon fontSize="large" />
-        {/* {totalQuantity > 0 && (
-          <p className={styles.basketMenuIconCounter}>{totalQuantity}</p>
         )} */}
       </div>
     </div>

@@ -1,5 +1,4 @@
 import { HeaderBasket } from "@/components/layout/header/HeaderBasket";
-import { HeaderSearch } from "@/components/layout/header/HeaderSearch";
 import { HeaderUserMenu } from "@/components/layout/header/HeaderUserMenu";
 
 //import { useAuthStore } from "@/store/useAuthStore";
@@ -29,8 +28,7 @@ export const HeaderBottom = () => (
 
   <div className={styles.headerBottom}>
     <div className={`container ${styles.headerContainer}`}>
-      <HeaderSearch />
-      <div className="flex items-center justify-between gap-x-2">
+      <div className={styles.headerBottomContainer}>
         <HeaderBasket />
         <HeaderUserMenu />
       </div>

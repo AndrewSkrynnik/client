@@ -69,7 +69,14 @@ export const useAuthStore = create<AuthState>()(
       partialize: state => ({
         user: state.user,
         isAuthenticated: state.isAuthenticated
-      })
+      }),
+      /* TODO: onRehydrateStorage - применить логику прелоудера на основе UserInfo в других компонентах */
+      onRehydrateStorage: () => state => {
+        // Вызывается после восстановления тора из локал стора
+        if (state?.setAuth) {
+          state.setAuthReady(true);
+        }
+      }
     }
   )
 );

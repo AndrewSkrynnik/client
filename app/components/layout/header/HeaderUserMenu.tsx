@@ -39,6 +39,7 @@ export const HeaderUserMenu = () => {
     <>
       <div onClick={handleClick} className={styles.userMenuIconWrapper}>
         <IconButton
+          sx={{ padding: 0 }}
           disableRipple
           aria-controls={open ? "account-menu" : undefined}
           aria-haspopup="true"
@@ -46,6 +47,7 @@ export const HeaderUserMenu = () => {
         >
           <AccountCircleIcon fontSize="large" className={styles.userMenuIcon} />
         </IconButton>
+        <UserInfo />
       </div>
       <Menu
         anchorEl={anchorEl}
@@ -64,7 +66,6 @@ export const HeaderUserMenu = () => {
           "& .MuiMenu-paper": { borderRadius: "6px" }
         }}
       >
-        <UserInfo />
         <UserMenu filterIds={defaultFilterIds} onClose={handleClose} />
         <div className={styles.exitButtonContainer}>
           <li onClick={handleLogout} className={styles.link}>
