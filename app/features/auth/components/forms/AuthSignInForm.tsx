@@ -40,7 +40,6 @@ export const AuthSignInForm = () => {
       setAuth(user);
       toast.success("Вход выполнен!");
 
-      // ⏳ Добавим задержку 1.5 сек (время показа тоста)
       setTimeout(() => {
         window.location.reload();
       }, 1500);

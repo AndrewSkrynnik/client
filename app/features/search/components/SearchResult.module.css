@@ -1,14 +1,14 @@
 /* SearchResultTable */
 .table {
   width: 100%;
-  border: 1px solid var(--color-primary-border);
+  border: 1px solid var(--border-head);
   border-collapse: collapse;
 }
 
 .th,
 .td {
   padding: 8px 16px;
-  border: 1px solid var(--color-secondary-border);
+  border: 1px solid var(--border-body);
   text-align: left;
 }
 
@@ -18,13 +18,13 @@
 }
 
 .tr:hover {
-  background-color: var(--color-secondary-bg);
+  background-color: red;
   cursor: pointer;
 }
 
 .findButton {
   font-weight: 700;
-  color: var(--color-secondary-hover);
+  color: red;
   text-align: center;
 
   @media (width >= 769px) {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { IconLogo } from "@/components/icons";
+import { IconLogo } from "@/components/icons/IconLogo";
 
 import styles from "@/styles/components/layout/header/Header.module.css";
 

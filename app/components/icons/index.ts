@@ -37,9 +37,6 @@ export { default as ViewQuiltIcon } from "@mui/icons-material/ViewQuilt";
 /* MUI Icons -> SearchCrossesTable */
 export { default as InfoIcon } from "@mui/icons-material/Info";
 
-/* Logo */
-export * from "./IconLogo.tsx";
-
 /* AuthPasswordInput */
 export { default as VisibilityIcon } from "@mui/icons-material/Visibility";
 export { default as VisibilityOffIcon } from "@mui/icons-material/VisibilityOff";

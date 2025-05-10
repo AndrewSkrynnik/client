@@ -15,17 +15,7 @@
   display: flex;
   width: 100%;
   height: response(80, 100, lgmd);
-  background-color: var(--color-primary);
-
-  &::after {
-    position: absolute;
-    content: "";
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: var(--color-primary-bg);
-  }
+  background-color: var(--bg-blue-dark);
 }
 
 /* HeaderBottom */
@@ -33,7 +23,7 @@
   display: flex;
   width: 100%;
   height: 80px;
-  background-color: var(--color-secondary-bg);
+  background-color: var(--bg-gray);
 
   @media (width <= 606px) {
     flex-direction: column;
@@ -78,7 +68,7 @@
 
 .logoTitle {
   font-size: response(16, 20, lgmd);
-  color: var(--color-secondary-text);
+  color: var(--color-white);
 }
 
 /* HeaderBasket */
@@ -90,9 +80,9 @@
   min-width: 340px;
   height: 60px;
   padding: 16px;
-  border: 1px solid var(--color-primary-border);
+  border: 1px solid var(--border-body);
   border-radius: var(--border-radius);
-  background-color: var(--color-primary-bg);
+  background-color: var(--bg-white);
   transition: var(--transition-all);
 }
 
@@ -107,7 +97,10 @@
 
 .basketMenuIconWrapper {
   position: relative;
-  color: var(--color-primary);
+
+  svg {
+    color: var(--color-blue-dark);
+  }
 }
 
 .basketMenuIconCounter {
@@ -122,7 +115,7 @@
   border-radius: 100%;
   background-color: var(--color-error);
   font-size: 8px;
-  color: var(--color-secondary-text);
+  color: var(--color-blue-dark);
   box-shadow: var(--box-shadow);
 }
 
@@ -135,9 +128,9 @@
   width: 236px;
   height: 60px;
   padding: 16px;
-  border: 1px solid var(--color-primary-border);
+  border: 1px solid var(--border-body);
   border-radius: var(--border-radius);
-  background-color: var(--color-primary-bg);
+  background-color: var(--bg-white);
   box-shadow: var(--box-shadow);
   transition: var(--transition-all);
   cursor: pointer;
@@ -148,13 +141,13 @@
 }
 
 .userMenuIcon {
-  color: var(--color-primary);
+  color: var(--color-blue-dark);
   transition: var(--transition-all);
 }
 
 .exitButtonContainer {
   padding: 0;
-  border-top: 1px solid var(--color-primary-border);
+  border-top: 1px solid var(--border-body);
   cursor: pointer;
 }
 
@@ -174,8 +167,8 @@
     box-shadow: var(--box-shadow-hover);
   }
 
-  .basketMenu:hover .basketMenuIconWrapper {
-    color: var(--color-primary-hover);
+  .basketMenu:hover .basketMenuIconWrapper svg {
+    color: var(--hover-blue-dark);
   }
 
   .basketMenu:hover .basketMenuIconCounter {
@@ -187,8 +180,8 @@
   }
 
   .link:hover {
-    background-color: var(--color-primary);
-    color: var(--color-secondary-text-title);
+    background-color: var(--bg-blue-dark);
+    color: var(--color-white);
   }
 
   .link:active {
@@ -200,7 +193,7 @@
   }
 
   .userMenuIconWrapper:hover .userMenuIcon {
-    color: var(--color-primary-hover);
+    color: var(--hover-blue-dark);
   }
 
   .userMenuIconWrapper:active {

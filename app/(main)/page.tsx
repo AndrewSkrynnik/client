@@ -2,17 +2,18 @@ import { Metadata } from "next";
 
 import { HomeTemplate } from "@/features/home/components/HomeTemplate";
 
+/* тут вообще не нужна метадата? */
 export const metadata: Metadata = {
-  title: "Домашняя страница | Example.com",
+  title: "Домашняя страница | rotazap.ru",
   description: "Описание страницы",
-  applicationName: "Example.com",
+  applicationName: "rotazap.ru",
   generator: "Next.js"
 };
 
-export default function HomePage() {
+export default function MainPage() {
   return (
-    <section className="section">
+    <>
       <HomeTemplate />
-    </section>
+    </>
   );
 }

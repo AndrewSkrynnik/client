@@ -33,7 +33,7 @@ export const ConfirmationTemplate = () => {
       toast.success("Аккаунт подтвержден!");
       setTimeout(() => router.push("/"), 1500);
     }
-  }, [user?.role]);
+  }, [user?.role, router]);
 
   return (
     <div className="container">

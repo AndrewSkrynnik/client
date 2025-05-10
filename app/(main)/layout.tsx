@@ -3,6 +3,8 @@ import { Header } from "@/components/layout/header/Header";
 
 import "@/styles/globals.css";
 
+import { LayoutWrapper } from "@/(main)/LayoutWrapper";
+
 export default async function MainLayout({
   children
 }: Readonly<{
@@ -11,7 +13,7 @@ export default async function MainLayout({
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <LayoutWrapper>{children}</LayoutWrapper>
       <Footer />
     </>
   );
