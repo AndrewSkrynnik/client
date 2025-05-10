@@ -4,7 +4,6 @@ import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
-/* TODO: работает ли после авторизации? */
 export const ToastComponent = () => (
   <ToastContainer
     position="bottom-right"

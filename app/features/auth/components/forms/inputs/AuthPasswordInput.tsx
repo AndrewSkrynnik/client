@@ -1,8 +1,5 @@
 "use client";
 
-/* TODO: Нужно ли вынести иконки через index? больше грузят проект или нет? */
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { Controller, FieldValues } from "react-hook-form";
@@ -11,6 +8,7 @@ import { calculatePasswordStrength } from "@/features/auth/common/calculatePassw
 import { PasswordStrengthHint } from "@/features/auth/components/forms/inputs/PasswordStrengthHint";
 import { AuthInputProps } from "@/features/auth/types";
 
+import { VisibilityIcon, VisibilityOffIcon } from "@/components/icons";
 import { StyledInput } from "@/components/styled/StyledInput";
 
 export const AuthPasswordInput = <T extends FieldValues>({
@@ -77,7 +75,7 @@ export const AuthPasswordInput = <T extends FieldValues>({
                     size="small"
                     tabIndex={-1}
                   >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                   </IconButton>
                 </InputAdornment>
               )

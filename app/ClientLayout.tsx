@@ -21,7 +21,6 @@ export default function ClientLayout({
     if (process.env.NODE_ENV === "development") {
       import("react-scan").then(({ scan }) => scan());
     }
-    /* TODO: сделать редирект с задержкой после авторизации */
 
     setupAxiosInterceptors();
   }, []);

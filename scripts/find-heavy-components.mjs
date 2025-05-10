@@ -5,7 +5,7 @@ import fs from "fs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const outputPath = path.resolve(__dirname, "../.eslint-heavy-imports.json");
-const sizeThreshold = 50 * 1024; // 50 KB
+const sizeThreshold = 20 * 1024; // 20 KB
 
 const scanDirs = [
   path.resolve(__dirname, "../app/components"),
