@@ -1,0 +1,93 @@
+/* SearchResultTable */
+.table {
+  width: 100%;
+  border: 1px solid var(--color-primary-border);
+  border-collapse: collapse;
+}
+
+.th,
+.td {
+  padding: 8px 16px;
+  border: 1px solid var(--color-secondary-border);
+  text-align: left;
+}
+
+.th {
+  font-weight: 700;
+  border-color: red;
+}
+
+.tr:hover {
+  background-color: var(--color-secondary-bg);
+  cursor: pointer;
+}
+
+.findButton {
+  font-weight: 700;
+  color: var(--color-secondary-hover);
+  text-align: center;
+
+  @media (width >= 769px) {
+    text-decoration: underline;
+  }
+}
+
+/* Модальное окно (общие стили) */
+.modalOverlay {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 50%);
+  opacity: 0;
+  animation: fade-in 0.2s forwards;
+  z-index: 50;
+  inset: 0;
+}
+
+.modalContent {
+  max-width: 600px;
+  padding: 24px;
+  border-radius: 8px;
+  background: white;
+  text-align: center;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 30%);
+  animation: scale-in 0.2s forwards;
+  transform: scale(0.95);
+}
+
+.modalClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  color: #666;
+  cursor: pointer;
+}
+
+.modalClose:hover {
+  color: black;
+}
+
+/* Анимация появления */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.95);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}

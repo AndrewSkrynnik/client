@@ -5,10 +5,9 @@ import { KeyboardEvent, useEffect, useRef, useState } from "react";
 
 import { SearchInput } from "@/features/search/SearchInput";
 
-import { TooltipComponent } from "@/components/ui/tooltip/TooltipComponent";
-
 import axiosInstance from "@/libs/axios";
 
+/* вынести стили  */
 import styles from "@/styles/components/ui/forms/SearchForm.module.css";
 
 interface Tip {
@@ -92,14 +91,13 @@ export const SearchForm = () => {
       {showSuggestions && suggestions.length > 0 && (
         <ul className={styles.suggestionList}>
           {suggestions.map((tip, index) => (
-            <TooltipComponent key={index} title={tip.description}>
-              <li
-                onClick={() => handleSuggestionClick(tip.number)}
-                className={styles.suggestionItem}
-              >
-                <span>{tip.brand}</span> - {tip.number}
-              </li>
-            </TooltipComponent>
+            <li
+              key={index}
+              onClick={() => handleSuggestionClick(tip.number)}
+              className={styles.suggestionItem}
+            >
+              <span>{tip.brand}</span> - {tip.number}
+            </li>
           ))}
         </ul>
       )}

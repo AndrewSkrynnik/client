@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   generator: "Next.js"
 };
 
-export default function DashboardPage() {
+export default function HomePage() {
   return (
     <section className="section">
       <HomeTemplate />

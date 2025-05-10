@@ -96,7 +96,7 @@ export const userMenuItems: MenuItemConfig[] = [
   },
   {
     id: 10,
-    href: "/dashboard",
+    href: "/",
     title: "На главную",
     disabled: false,
     icon: ForwardIcon

@@ -37,7 +37,7 @@ export function middleware(request: NextRequest) {
 
   // --- Если авторизованный пользователь пытается попасть на /auth ---
   if (pathname === "/auth") {
-    console.log("Redirecting to /dashboard due to already authenticated user");
+    console.log("Redirecting to / due to already authenticated user");
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -53,7 +53,7 @@ export function middleware(request: NextRequest) {
   // --- Если роль "user", запрещаем доступ к /confirmation и /auth ---
   if (userRole === "user") {
     if (pathname === "/confirmation" || pathname === "/auth") {
-      console.log("Redirecting to /dashboard due to user role restriction");
+      console.log("Redirecting to / due to user role restriction");
       return NextResponse.redirect(new URL("/", request.url));
     }
     return NextResponse.next();

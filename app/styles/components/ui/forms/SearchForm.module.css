@@ -21,8 +21,17 @@
 }
 
 .suggestionItem {
-  padding: 16px 8px; /* TODO: проверить порядок свойств */
+  padding: 10px 16px;
+  transition: var(--transition-all);
   cursor: pointer;
+
+  @media (width >= 769px) {
+    &:hover {
+      border-radius: var(--border-radius);
+      background-color: var(--color-primary);
+      color: white;
+    }
+  }
 
   span {
     font-weight: 700;

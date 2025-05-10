@@ -25,6 +25,10 @@
   --color-additional-bg: #f0f5ff; /* White */
   --bg-disabled: #d1d5dc; /* Gray */
 
+  /* Tables */
+
+  /* Прописать стили для таблиц */
+
   /* Hovers */
   --color-primary-hover: #2a4a74; /* Dark blue light */
   --color-secondary-hover: #e77c58; /* Peach light */
@@ -82,7 +86,7 @@ h6 {
 }
 
 h1 {
-  font-size: response(36, 50, lg);
+  font-size: response(28, 40, lg);
 }
 
 h2 {
