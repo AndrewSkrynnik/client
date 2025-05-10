@@ -18,6 +18,10 @@
   align-items: center;
   justify-content: center;
   column-gap: 10px;
+
+  @media (width <= 520px) {
+    font-size: 20px;
+  }
 }
 
 @keyframes spin-slow {
@@ -39,4 +43,10 @@
     display: inline-block;
     animation: spin-slow 6s linear infinite;
   }
+}
+
+.text {
+  font-size: 14px;
+  color: var(--color-black-light);
+  text-align: center;
 }

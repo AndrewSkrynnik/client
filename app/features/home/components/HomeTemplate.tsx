@@ -17,7 +17,7 @@ export const HomeTemplate = () => (
           />
         </h1>
         <SearchForm />
-        <p className="text-black-light mt-[-10px] text-center text-sm">
+        <p className={styles.text}>
           Быстрый поиск оригинальных и аналоговых автозапчастей по артикулу.
           Пример артикула: <span className="font-bold">6R0615301</span>
         </p>
