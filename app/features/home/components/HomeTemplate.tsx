@@ -5,7 +5,7 @@ import { SettingsIcon } from "@/components/icons";
 import styles from "@/styles/pages/home/Home.module.css";
 
 export const HomeTemplate = () => (
-  <section className={styles.main}>
+  <section className={`${styles.main} mt-[-50px]`}>
     <div className="container">
       <div className={styles.homeContainer}>
         <h1 className={styles.title}>
