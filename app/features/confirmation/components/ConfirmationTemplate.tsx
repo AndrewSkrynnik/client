@@ -19,7 +19,7 @@ export const ConfirmationTemplate = () => {
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {
       onSuccess: () => {
-        router.push("/auth"); // Перенаправляем пользователя на страницу /auth
+        router.push("/auth");
       }
     });
   };
@@ -36,24 +36,55 @@ export const ConfirmationTemplate = () => {
   }, [user?.role, router]);
 
   return (
-    <div className="container">
-      <div className="mx-auto my-0 flex w-full max-w-[600px] flex-col items-center justify-center gap-y-3 text-center">
-        <h1 className="text-2xl">Спасибо за регистрацию!</h1>
-        <p>
-          Мы проверяем Вашу заявку. Как только процесс завершится, вы сможете
-          перейти на страницу авторизации и войти в свой аккаунт. Рады видеть
-          вас среди наших пользователей!
-        </p>
-        <Button onClick={handleLogout}>Выйти</Button>
-        <i className="text-sm">
-          Если нажмете кнопку Выйти, вы будете перенаправлены на страницу
-          авторизации, и не сможете сразу увидеть, что Ваш аккаунт авторизовали.{" "}
-          <br />
-          <b className="text-secondary">
-            Рекомендуем оставаться на этой странице.
-          </b>
-        </i>
+    <section className="py-10">
+      <div className="container">
+        <div className="mx-auto flex w-full max-w-[840px] flex-col items-center px-4">
+          {/* Заголовок */}
+          <h1 className="mb-6 text-center text-2xl leading-snug font-bold md:text-3xl">
+            Добро пожаловать в интернет-магазин{" "}
+            <span className="text-peach">ROTAZAP</span>
+          </h1>
+
+          {/* Текст */}
+          <div className="mb-6 w-full space-y-3 text-justify text-base leading-relaxed text-neutral-800">
+            <p>
+              Благодарим за регистрацию на нашем сайте! Ваш аккаунт находится на
+              стадии активации.
+            </p>
+            <p>
+              После завершения процесса активации Вы сможете полноценно
+              пользоваться возможностями нашего интернет-магазина. Мы
+              сотрудничаем исключительно с клиентами, заключившими договор.
+              Активация аккаунта будет завершена после выполнения всех условий,
+              указанных в договоре.
+            </p>
+            <p>
+              Ознакомиться с условиями Вы можете{" "}
+              <a
+                href="https://rotazap.ru/info/wholesale"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link"
+              >
+                здесь
+              </a>
+              .
+            </p>
+          </div>
+          <Button onClick={handleLogout}>На страницу авторизации</Button>
+          <p className="mt-[30px] text-center text-sm">
+            Дополнительную информацию вы можете получить у нашего менеджера:{" "}
+            <a href="tel:+79163934369" className="link">
+              +7 (916) 393-43-69
+            </a>{" "}
+            /{" "}
+            <a href="mailto:info@rotazap.ru" className="link">
+              info@rotazap.ru
+            </a>
+            .
+          </p>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
