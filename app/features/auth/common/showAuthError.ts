@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 import { AxiosError } from "axios";
 
-interface ServerError {
+export interface ServerError {
   message?: string | string[];
   error?: string;
   statusCode?: number;

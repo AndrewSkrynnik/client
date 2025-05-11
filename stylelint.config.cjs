@@ -50,6 +50,7 @@ module.exports = {
         "flex-grow",
         "align-items",
         "justify-content",
+        "flex-wrap",
         "gap",
         "row-gap",
         "column-gap",

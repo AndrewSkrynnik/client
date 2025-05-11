@@ -25,6 +25,10 @@
   height: 80px;
   background-color: var(--bg-gray);
 
+  @media (width <= 874px) {
+    height: 150px;
+  }
+
   @media (width <= 606px) {
     flex-direction: column;
     height: 100%;
@@ -33,21 +37,64 @@
 }
 
 .headerBottomContainer {
-  position: relative;
-  display: flex;
+  display: grid;
   align-items: center;
-  justify-content: end;
-  column-gap: 8px;
+  gap: 8px;
   width: 100%;
+  grid-template-columns: 1fr auto auto;
+}
 
-  @media (width <= 606px) {
+/* ≤ 874px: Basket + User справа, Rates снизу */
+@media (width <= 874px) {
+  .headerBottomContainer {
+    display: grid;
+    align-items: center;
+    gap: 8px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+  }
+
+  /* CurrencyRates — нижний ряд, вся ширина */
+  .headerBottomContainer > :nth-child(1) {
+    grid-column: 1 / 4;
+    grid-row: 2;
+  }
+
+  /* Basket — верхний ряд, вторая колонка */
+  .headerBottomContainer > :nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  /* User — верхний ряд, третья колонка */
+  .headerBottomContainer > :nth-child(3) {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
+
+/* ≤ 600px: колонка, порядок: User, Basket, Rates */
+@media (width <= 600px) {
+  .headerBottomContainer {
+    display: flex;
     flex-direction: column;
-    justify-content: center;
-    row-gap: 10px;
+    align-items: stretch;
+  }
 
-    a {
-      width: 100%;
-    }
+  .headerBottomContainer > :nth-child(1) {
+    order: 3;
+  }
+
+  .headerBottomContainer > :nth-child(2) {
+    order: 2;
+  }
+
+  .headerBottomContainer > :nth-child(3) {
+    order: 1;
+  }
+
+  .headerBottomContainer > * {
+    width: 100%;
   }
 }
 
@@ -76,14 +123,17 @@
   display: flex;
   align-items: center;
   column-gap: 10px;
-  width: 100%;
-  min-width: 340px;
+  width: 320px;
   height: 60px;
   padding: 16px;
   border: 1px solid var(--border-body);
   border-radius: var(--border-radius);
   background-color: var(--bg-white);
   transition: var(--transition-all);
+
+  @media (width <= 600px) {
+    width: 100%;
+  }
 }
 
 .basketMenuTitle {

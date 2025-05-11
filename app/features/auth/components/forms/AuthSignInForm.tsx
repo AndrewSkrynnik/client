@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 import { signInSchema } from "@/features/auth/common/schema";
+import { showAuthError } from "@/features/auth/common/showAuthError";
 import { AuthInput } from "@/features/auth/components/forms/inputs/AuthInput";
 import { AuthPasswordInput } from "@/features/auth/components/forms/inputs/AuthPasswordInput";
 import { AuthLoginInputs } from "@/features/auth/types";
@@ -14,8 +15,6 @@ import { Button } from "@/components/ui/buttons/Button";
 import axiosInstance from "@/libs/axios";
 
 import { useAuthStore } from "@/store/useAuthStore";
-
-import { showAuthError } from "@/common/showAuthError";
 
 import styles from "@/styles/pages/auth/Auth.module.css";
 

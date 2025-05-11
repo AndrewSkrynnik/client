@@ -40,4 +40,7 @@ export { default as InfoIcon } from "@mui/icons-material/Info";
 export { default as VisibilityIcon } from "@mui/icons-material/Visibility";
 export { default as VisibilityOffIcon } from "@mui/icons-material/VisibilityOff";
 
-/* AuthPasswordInput */
+/* CurrencyRates */
+export { default as AttachMoneyIcon } from "@mui/icons-material/AttachMoney";
+export { default as CurrencyYenIcon } from "@mui/icons-material/CurrencyYen";
+export { default as EuroIcon } from "@mui/icons-material/Euro";
