@@ -26,6 +26,12 @@ export const AuthInput = <T extends FieldValues>({
         helperText={fieldState.error?.message}
         fullWidth
         InputLabelProps={{ shrink: true }}
+        inputProps={{
+          readOnly: true,
+          onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
+            e.currentTarget.readOnly = false;
+          }
+        }}
       />
     )}
   />

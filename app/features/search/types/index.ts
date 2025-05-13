@@ -7,6 +7,7 @@ export interface SearchInputProps {
   value: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
+  onClear?: () => void;
 }
 
 /* Search Result Props */

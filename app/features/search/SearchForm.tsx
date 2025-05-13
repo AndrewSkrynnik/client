@@ -87,6 +87,11 @@ export const SearchForm = () => {
         onChange={e => setQuery(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Введите артикул детали..."
+        onClear={() => {
+          setQuery("");
+          setSuggestions([]);
+          setShowSuggestions(false);
+        }}
       />
       {showSuggestions && suggestions.length > 0 && (
         <ul className={styles.suggestionList}>

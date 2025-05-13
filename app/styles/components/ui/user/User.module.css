@@ -45,7 +45,7 @@
 @media (width >= 769px) {
   .link:hover {
     background-color: var(--bg-blue-dark);
-    color: var(--color-black);
+    color: var(--color-white);
   }
 
   .link:active {
