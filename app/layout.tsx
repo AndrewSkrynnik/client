@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { ReactNode } from "react";
 
 import { ibm, roboto } from "@/styles/fonts/fonts";
 import "@/styles/globals.css";
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   console.log("✅ ENV_FILE:", process.env.ENV_FILE);
 

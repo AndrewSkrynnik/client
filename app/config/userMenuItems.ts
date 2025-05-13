@@ -1,3 +1,5 @@
+import { ComponentType } from "react";
+
 import {
   AccountBalanceWalletIcon,
   ArticleIcon,
@@ -16,7 +18,7 @@ export interface MenuItemConfig {
   id: number;
   href: string;
   title: string;
-  icon: React.ComponentType<{
+  icon: ComponentType<{
     className?: string;
     fontSize?: "small" | "medium" | "large";
   }>;

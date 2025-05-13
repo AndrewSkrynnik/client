@@ -1,9 +1,9 @@
-import { FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
 export const Pagination: FC<PaginationProps> = ({

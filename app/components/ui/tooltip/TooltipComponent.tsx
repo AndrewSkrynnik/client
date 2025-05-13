@@ -1,8 +1,9 @@
 import { Tooltip } from "@mui/material";
+import { ReactElement } from "react";
 
 interface TooltipComponentProps {
   title: string;
-  children: React.ReactElement;
+  children: ReactElement;
 }
 
 export const TooltipComponent = ({

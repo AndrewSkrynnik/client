@@ -1,19 +1,16 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
+import { DrawerComponent } from "@/components/ui/drawer/DrawerComponent";
 import { ToastComponent } from "@/components/ui/toast/ToastComponent";
 
 import { useAppInitialization } from "@/hooks/useAppInitialization";
 
 import { setupAxiosInterceptors } from "@/libs/axios-interceptors";
 
-export default function ClientLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function ClientLayout({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
   useAppInitialization();
 
@@ -29,6 +26,7 @@ export default function ClientLayout({
     <QueryClientProvider client={queryClient}>
       {children}
       <ToastComponent />
+      <DrawerComponent />
     </QueryClientProvider>
   );
 }

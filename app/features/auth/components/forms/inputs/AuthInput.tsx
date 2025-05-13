@@ -1,3 +1,4 @@
+import { FocusEvent } from "react";
 import { Controller, FieldValues } from "react-hook-form";
 
 import { AuthInputProps } from "@/features/auth/types";
@@ -28,7 +29,7 @@ export const AuthInput = <T extends FieldValues>({
         InputLabelProps={{ shrink: true }}
         inputProps={{
           readOnly: true,
-          onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
+          onFocus: (e: FocusEvent<HTMLInputElement>) => {
             e.currentTarget.readOnly = false;
           }
         }}
