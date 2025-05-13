@@ -125,7 +125,7 @@ h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(0 0 0 / 30%);
+  background-color: rgb(0 0 0 / 10%);
   z-index: 9999;
   backdrop-filter: blur(2px);
   inset: 0;
