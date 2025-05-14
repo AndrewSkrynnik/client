@@ -33,7 +33,7 @@ export default function DeliveryPage() {
               Условия и важные аспекты логистики и приема заказов
             </p>
           </div>
-          <div className={styles.container}>
+          <div className="mt-[32px]">
             <div className={styles.accordionContainer}>
               <AccordionComponent title="Способы и график доставки">
                 <ul className={styles.list}>
