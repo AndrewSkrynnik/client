@@ -41,7 +41,7 @@
 
 body {
   position: relative;
-  overflow: hidden auto;
+  overflow: hidden scroll;
   background-color: var(--bg-white);
   font-family: var(--font-roboto);
   font-size: 16px;
@@ -53,7 +53,6 @@ main {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 0 response(5, 10, lg);
 }
 
 h1,
@@ -90,15 +89,22 @@ h6 {
   min-height: 100vh;
 }
 
-.section {
-  width: 100%;
-  padding-bottom: response(30, 50, lg);
-}
-
 .container {
   max-width: 1475px;
-  padding: 0 response(10, 20, lg);
+  padding: 0 40px;
   margin: 0 auto;
+
+  @media (width <= 1024px) {
+    padding: 0 20px;
+  }
+
+  @media (width <= 768px) {
+    padding: 0 15px;
+  }
+
+  @media (width <= 490px) {
+    padding: 0 10px;
+  }
 }
 
 .link {

@@ -77,17 +77,19 @@
   background-color: var(--bg-blue-dark);
   color: var(--color-white);
   transition: var(--transition-all);
+  z-index: 1000;
   cursor: pointer;
   transform: translateX(50%) translateY(-50%);
 
-  @media (width <= 874px) {
-    top: 35%;
-    height: 10%;
+  @media (width <= 900px) {
+    top: 50px;
+    height: 80px;
   }
 
-  @media (width <= 600px) {
-    top: 40%;
-    height: 10%;
+  @media (width <= 768px) {
+    top: 40px;
+    width: 60px;
+    height: 40px;
   }
 }
 

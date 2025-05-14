@@ -96,13 +96,13 @@ const eslintConfig = [
         {
           mode: "full",
           type: "root",
-          pattern: ["app/*", "app/*/*"]
+          pattern: ["app/*", "app/*/*", "app/*/*/*"]
         },
         {
           mode: "full",
           type: "feature",
           capture: ["featureName"],
-          pattern: ["app/features/*/**/*"]
+          pattern: ["app/features/*/**"]
         },
         {
           mode: "full",
@@ -113,9 +113,21 @@ const eslintConfig = [
           mode: "full",
           type: "ignored",
           pattern: ["app/tmp/**/*", "app/tests/**/*", "app/devtools/**/*"]
+        },
+        {
+          mode: "full",
+          type: "group",
+          pattern: ["app/\\(main\\)/**/*"]
+        }
+      ],
+      "boundaries/rules": [
+        {
+          from: "group",
+          allow: ["feature", "shared", "common"]
         }
       ]
     },
+
     rules: {
       /* semi: ["error", "always"],
       quotes: [
