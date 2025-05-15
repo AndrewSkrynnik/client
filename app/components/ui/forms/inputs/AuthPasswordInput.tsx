@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import { Controller, FieldValues } from "react-hook-form";
 
 import { calculatePasswordStrength } from "@/features/auth/common/calculatePasswordStrength";
-import { PasswordStrengthHint } from "@/features/auth/components/forms/inputs/PasswordStrengthHint";
-import { AuthInputProps } from "@/features/auth/types";
 
 import { VisibilityIcon, VisibilityOffIcon } from "@/components/icons";
 import { StyledInput } from "@/components/styled/StyledInput";
+import { PasswordStrengthHint } from "@/components/ui/forms/inputs/PasswordStrengthHint";
+import { AuthInputProps } from "@/components/ui/forms/inputs/types";
 
 export const AuthPasswordInput = <T extends FieldValues>({
   control,

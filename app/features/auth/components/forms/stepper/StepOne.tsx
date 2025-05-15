@@ -4,11 +4,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
 import { stepOneSchema } from "@/features/auth/common/schema";
-import { AuthInput } from "@/features/auth/components/forms/inputs/AuthInput";
-import { AuthPasswordInput } from "@/features/auth/components/forms/inputs/AuthPasswordInput";
-import { AuthRegisterInputs } from "@/features/auth/types";
+import { AuthRegisterForm } from "@/features/auth/types";
 
 import { Button } from "@/components/ui/buttons/Button";
+import { AuthInput } from "@/components/ui/forms/inputs/AuthInput";
+import { AuthPasswordInput } from "@/components/ui/forms/inputs/AuthPasswordInput";
 
 import { useStepFormStore } from "@/store/useStepFormStore";
 
@@ -19,7 +19,7 @@ export const StepOne = () => {
     control,
     handleSubmit,
     formState: { isValid, isSubmitting }
-  } = useForm<Pick<AuthRegisterInputs, "username" | "email" | "password">>({
+  } = useForm<Pick<AuthRegisterForm, "username" | "email" | "password">>({
     defaultValues: {
       username: data.username || "",
       email: data.email || "",
@@ -30,7 +30,7 @@ export const StepOne = () => {
   });
 
   const onSubmit = (
-    values: Pick<AuthRegisterInputs, "username" | "email" | "password">
+    values: Pick<AuthRegisterForm, "username" | "email" | "password">
   ) => {
     setData(values);
     setStep(2);

@@ -6,11 +6,11 @@ import { toast } from "react-toastify";
 
 import { signInSchema } from "@/features/auth/common/schema";
 import { showAuthError } from "@/features/auth/common/showAuthError";
-import { AuthInput } from "@/features/auth/components/forms/inputs/AuthInput";
-import { AuthPasswordInput } from "@/features/auth/components/forms/inputs/AuthPasswordInput";
-import { AuthLoginInputs } from "@/features/auth/types";
+import { AuthLoginForm } from "@/features/auth/types";
 
 import { Button } from "@/components/ui/buttons/Button";
+import { AuthInput } from "@/components/ui/forms/inputs/AuthInput";
+import { AuthPasswordInput } from "@/components/ui/forms/inputs/AuthPasswordInput";
 
 import axiosInstance from "@/libs/axios";
 
@@ -25,13 +25,13 @@ export const AuthSignInForm = () => {
     control,
     handleSubmit,
     formState: { isSubmitting }
-  } = useForm<AuthLoginInputs>({
+  } = useForm<AuthLoginForm>({
     resolver: yupResolver(signInSchema),
     defaultValues: { email: "", password: "" },
     mode: "onChange"
   });
 
-  const onSubmit = async (data: AuthLoginInputs) => {
+  const onSubmit = async (data: AuthLoginForm) => {
     try {
       const response = await axiosInstance.post("/auth/login", data);
       const { user } = response.data;

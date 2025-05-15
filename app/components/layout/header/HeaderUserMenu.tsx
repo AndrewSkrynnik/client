@@ -6,7 +6,7 @@ import { MouseEvent, useState } from "react";
 
 import { AccountCircleIcon, ExitToAppIcon } from "@/components/icons";
 import { UserInfo } from "@/components/ui/user/UserInfo";
-import { UserMenu } from "@/components/ui/user/UserMenu";
+import { UserPopoverMenu } from "@/components/ui/user/UserPopoverMenu";
 
 import { useAuth } from "@/hooks/useAuth";
 
@@ -25,6 +25,11 @@ export const HeaderUserMenu = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+
+    // ⛔️ Убираем фокус, чтобы он не остался внутри скрытого DOM
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   };
 
   const handleLogout = () => {
@@ -54,6 +59,9 @@ export const HeaderUserMenu = () => {
         id="account-menu"
         open={open}
         onClose={handleClose}
+        disableAutoFocus
+        disableEnforceFocus
+        disableRestoreFocus
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         sx={{
@@ -66,7 +74,7 @@ export const HeaderUserMenu = () => {
           "& .MuiMenu-paper": { borderRadius: "6px" }
         }}
       >
-        <UserMenu filterIds={defaultFilterIds} onClose={handleClose} />
+        <UserPopoverMenu filterIds={defaultFilterIds} onClose={handleClose} />
         <div className={styles.exitButtonContainer}>
           <li onClick={handleLogout} className={styles.link}>
             <ExitToAppIcon />

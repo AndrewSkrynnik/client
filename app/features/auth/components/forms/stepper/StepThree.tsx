@@ -7,12 +7,12 @@ import { toast } from "react-toastify";
 
 import { stepThreeSchema } from "@/features/auth/common/schema";
 import { showAuthError } from "@/features/auth/common/showAuthError";
-import { AuthCheckbox } from "@/features/auth/components/forms/inputs/AuthCheckbox";
-import { AuthInput } from "@/features/auth/components/forms/inputs/AuthInput";
-import { AuthSelect } from "@/features/auth/components/forms/inputs/AuthSelect";
-import { AuthRegisterInputs } from "@/features/auth/types";
+import { AuthRegisterForm } from "@/features/auth/types";
 
 import { Button } from "@/components/ui/buttons/Button";
+import { AuthCheckbox } from "@/components/ui/forms/inputs/AuthCheckbox";
+import { AuthInput } from "@/components/ui/forms/inputs/AuthInput";
+import { AuthSelect } from "@/components/ui/forms/inputs/AuthSelect";
 
 import axiosInstance from "@/libs/axios";
 
@@ -31,7 +31,7 @@ export const StepThree = () => {
     formState: { isValid, isSubmitting }
   } = useForm<
     Pick<
-      AuthRegisterInputs,
+      AuthRegisterForm,
       "organizationName" | "legalForm" | "activity" | "consent" | "confirmation"
     >
   >({
@@ -48,15 +48,15 @@ export const StepThree = () => {
 
   const onSubmit = async (
     values: Pick<
-      AuthRegisterInputs,
+      AuthRegisterForm,
       "organizationName" | "legalForm" | "activity" | "consent" | "confirmation"
     >
   ) => {
     try {
-      const fullFormData: AuthRegisterInputs = {
+      const fullFormData: AuthRegisterForm = {
         ...data,
         ...values
-      } as AuthRegisterInputs;
+      } as AuthRegisterForm;
 
       const response = await axiosInstance.post("/auth/register", fullFormData);
       setAuth(response.data.user);

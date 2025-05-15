@@ -5,7 +5,7 @@ import { Header } from "@/components/layout/header/Header";
 
 import "@/styles/globals.css";
 
-import { LayoutWrapper } from "@/(main)/LayoutWrapper";
+import { LayoutWrapper } from "./LayoutWrapper";
 
 export default async function MainLayout({
   children

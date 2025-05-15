@@ -55,7 +55,7 @@
 
 .activeLink {
   background-color: var(--bg-blue-dark);
-  color: var(--color-black);
+  color: var(--color-white);
 }
 
 .disabledLink {

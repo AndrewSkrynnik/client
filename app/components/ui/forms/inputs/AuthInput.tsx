@@ -1,14 +1,14 @@
-import { InputMask } from "@react-input/mask";
+import { FocusEvent } from "react";
 import { Controller, FieldValues } from "react-hook-form";
 
-import { AuthInputProps } from "@/features/auth/types";
-
 import { StyledInput } from "@/components/styled/StyledInput";
+import { AuthInputProps } from "@/components/ui/forms/inputs/types";
 
-export const AuthPhoneInput = <T extends FieldValues>({
+export const AuthInput = <T extends FieldValues>({
   control,
   name,
   label,
+  type,
   autoComplete = "off",
   disabled = false
 }: AuthInputProps<T>) => (
@@ -18,20 +18,18 @@ export const AuthPhoneInput = <T extends FieldValues>({
     render={({ field, fieldState }) => (
       <StyledInput
         {...field}
-        value={field.value ?? "+7-___-___-__-__"}
+        type={type}
         label={label}
         autoComplete={autoComplete}
+        disabled={disabled}
         error={!!fieldState.error}
         helperText={fieldState.error?.message}
         fullWidth
-        disabled={disabled}
         InputLabelProps={{ shrink: true }}
-        InputProps={{
-          inputComponent: InputMask as any,
-          inputProps: {
-            mask: "+7-___-___-__-__",
-            replacement: { _: /\d/ },
-            showMask: true
+        inputProps={{
+          readOnly: true,
+          onFocus: (e: FocusEvent<HTMLInputElement>) => {
+            e.currentTarget.readOnly = false;
           }
         }}
       />

@@ -4,11 +4,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
 import { stepTwoSchema } from "@/features/auth/common/schema";
-import { AuthInput } from "@/features/auth/components/forms/inputs/AuthInput";
-import { AuthPhoneInput } from "@/features/auth/components/forms/inputs/AuthPhoneInput";
-import { AuthRegisterInputs } from "@/features/auth/types";
+import { AuthRegisterForm } from "@/features/auth/types";
 
 import { Button } from "@/components/ui/buttons/Button";
+import { AuthInput } from "@/components/ui/forms/inputs/AuthInput";
+import { AuthPhoneInput } from "@/components/ui/forms/inputs/AuthPhoneInput";
 
 import { useStepFormStore } from "@/store/useStepFormStore";
 
@@ -20,20 +20,18 @@ export const StepTwo = () => {
     handleSubmit,
     watch,
     formState: { isValid, isSubmitting }
-  } = useForm<Pick<AuthRegisterInputs, "fullName" | "phoneNumber" | "address">>(
-    {
-      defaultValues: {
-        fullName: data.fullName || "",
-        phoneNumber: data.phoneNumber || "+7-___-___-__-__",
-        address: data.address || ""
-      },
-      resolver: yupResolver(stepTwoSchema),
-      mode: "onChange"
-    }
-  );
+  } = useForm<Pick<AuthRegisterForm, "fullName" | "phoneNumber" | "address">>({
+    defaultValues: {
+      fullName: data.fullName || "",
+      phoneNumber: data.phoneNumber || "+7-___-___-__-__",
+      address: data.address || ""
+    },
+    resolver: yupResolver(stepTwoSchema),
+    mode: "onChange"
+  });
 
   const onSubmit = (
-    values: Pick<AuthRegisterInputs, "fullName" | "phoneNumber" | "address">
+    values: Pick<AuthRegisterForm, "fullName" | "phoneNumber" | "address">
   ) => {
     setData(values);
     setStep(3);
@@ -49,6 +47,7 @@ export const StepTwo = () => {
         control={control}
         name="phoneNumber"
         label="Номер телефона"
+        type="tel"
       />
       <AuthInput
         control={control}

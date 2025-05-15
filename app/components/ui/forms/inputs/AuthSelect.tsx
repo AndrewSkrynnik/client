@@ -6,9 +6,8 @@ import {
 } from "@mui/material";
 import { Controller, FieldValues } from "react-hook-form";
 
-import { AuthSelectProps } from "@/features/auth/types";
-
 import { StyledSelect } from "@/components/styled/StyledSelect";
+import { AuthSelectProps } from "@/components/ui/forms/inputs/types";
 
 export const AuthSelect = <T extends FieldValues>({
   control,
