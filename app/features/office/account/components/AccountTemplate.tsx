@@ -1,3 +1,6 @@
+import { AccountForm } from "@/features/office/account/components/forms/AccountForm";
+import { ChangePasswordForm } from "@/features/office/account/components/forms/ChangePasswordForm";
+
 import { AccountCircleIcon } from "@/components/icons";
 import { UserInfo } from "@/components/ui/user/UserInfo";
 
@@ -19,8 +22,8 @@ export const AccountTemplate = () => (
           <UserInfo />
         </div>
       </div>
-      {/* <AccountForm /> */}
-      {/* <ChangePasswordForm /> */}
+      <AccountForm />
+      <ChangePasswordForm />
     </div>
   </div>
 );

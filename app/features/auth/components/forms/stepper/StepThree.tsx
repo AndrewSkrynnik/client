@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 import { stepThreeSchema } from "@/features/auth/common/schema";
-import { showAuthError } from "@/features/auth/common/showAuthError";
 import { AuthRegisterForm } from "@/features/auth/types";
 
 import { Button } from "@/components/ui/buttons/Button";
@@ -18,6 +17,8 @@ import axiosInstance from "@/libs/axios";
 
 import { useAuthStore } from "@/store/useAuthStore";
 import { useStepFormStore } from "@/store/useStepFormStore";
+
+import { showAuthError } from "@/common/showAuthError";
 
 export const StepThree = () => {
   const { data, setData, setStep, reset } = useStepFormStore();

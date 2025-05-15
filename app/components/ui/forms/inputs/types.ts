@@ -8,6 +8,8 @@ export interface AuthInputProps<T extends FieldValues> {
   label: string;
   autoComplete?: string;
   disabled?: boolean;
+  defaultValue?: string;
+  onChange?: (...args: any[]) => void;
 }
 
 export interface AuthSelectProps<T extends FieldValues> {
