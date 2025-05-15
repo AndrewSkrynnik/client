@@ -5,15 +5,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-import { AuthPasswordInput } from "@/features/auth/components/forms/inputs/AuthPasswordInput";
 import { resetPasswordSchema } from "@/features/password/common";
 import { ResetPasswordInputs } from "@/features/password/types";
 
 import { Button } from "@/components/ui/buttons/Button";
+import { AuthPasswordInput } from "@/components/ui/forms/inputs/AuthPasswordInput";
 
 import axios from "@/libs/axios";
 
-import styles from "../Password.module.css";
+import styles from "@/styles/pages/password/Password.module.css";
 
 export const ResetPasswordForm = () => {
   const router = useRouter();

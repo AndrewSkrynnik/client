@@ -6,15 +6,15 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-import { AuthInput } from "@/features/auth/components/forms/inputs/AuthInput";
 import { forgotPasswordSchema } from "@/features/password/common";
 import { ForgotPasswordInputs } from "@/features/password/types";
 
 import { Button } from "@/components/ui/buttons/Button";
+import { AuthInput } from "@/components/ui/forms/inputs/AuthInput";
 
 import axiosInstance from "@/libs/axios";
 
-import styles from "../Password.module.css";
+import styles from "@/styles/pages/password/Password.module.css";
 
 export const ForgotPasswordForm = () => {
   const router = useRouter();
