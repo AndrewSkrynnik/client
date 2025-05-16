@@ -170,6 +170,7 @@ section.Toastify {
 
 ::-webkit-scrollbar-thumb {
   width: 8px;
+  border-radius: 50px;
   background-color: var(--bg-peach);
 }
 
