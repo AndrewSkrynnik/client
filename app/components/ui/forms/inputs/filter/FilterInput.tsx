@@ -1,7 +1,7 @@
 import { Controller, FieldValues } from "react-hook-form";
 
 import { StyledInput } from "@/components/styled/StyledInput";
-import { FilterInputProps } from "@/components/ui/forms/inputs/types";
+import { FilterInputProps } from "@/components/ui/forms/inputs/filter/types";
 
 export const FilterInput = <T extends FieldValues>({
   control,

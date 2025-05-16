@@ -22,6 +22,8 @@ import { DatePickerComponent } from "@/components/ui/date-picker/DatePicker";
 import { FilterInput } from "@/components/ui/forms/inputs/filter/FilterInput";
 import { FilterSelect } from "@/components/ui/forms/inputs/filter/FilterSelect";
 
+import styles from "@/styles/pages/office/orders/Orders.module.css";
+
 import { isWithinInterval, parseISO } from "date-fns";
 
 export const metadata: Metadata = {
@@ -96,12 +98,8 @@ export const OrdersTemplate = () => {
       <h2 className="officePageTitle">Заказы</h2>
       <div className="officePageContent">
         <form onSubmit={handleSubmit(onSubmit)} onReset={handleReset}>
-          <DatePickerComponent
-            control={control}
-            name="date_range"
-            label="Диапазон дат"
-          />
-          <div style={{ display: "flex", gap: "12px", margin: "16px 0" }}>
+          <div className={styles.filterContainer}>
+            <DatePickerComponent control={control} name="date_range" />
             <FilterInput
               control={control}
               label="Артикул детали"

@@ -2,9 +2,12 @@ import { ru } from "date-fns/locale";
 import DatePicker from "react-datepicker";
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
 
-import "react-datepicker/dist/react-datepicker.css";
+import { CalendarTrigger } from "@/components/ui/date-picker/CalendarTrigger";
 
-// можно подключить свой стиль
+import styles from "@/styles/components/ui/date-picker/DatePicker.module.css";
+import "@/styles/components/ui/date-picker/calendar.css";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 interface DateRangeFilterInputProps<T extends FieldValues> {
   control: Control<T>;
@@ -21,7 +24,7 @@ export const DatePickerComponent = <T extends FieldValues>({
     control={control}
     name={name}
     render={({ field }) => (
-      <div>
+      <div className={styles.container}>
         {label && <label>{label}</label>}
         <DatePicker
           selectsRange
@@ -32,9 +35,10 @@ export const DatePickerComponent = <T extends FieldValues>({
           }}
           dateFormat="dd.MM.yyyy"
           locale={ru}
-          placeholderText="Выберите диапазон"
-          isClearable
           monthsShown={2}
+          customInput={<CalendarTrigger />}
+          wrapperClassName="datepicker-wrapper"
+          withPortal
         />
       </div>
     )}
