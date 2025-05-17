@@ -65,37 +65,32 @@
 /* DrawerButton */
 .drawerButton {
   position: fixed;
-  top: 50%;
-  left: -56px;
+  top: 49px;
+  left: -60px;
   display: flex;
   flex-direction: column;
   align-items: end;
   justify-content: center;
-  width: 56px;
-  height: 25%;
+  width: 60px;
+  height: 100px;
   border-radius: var(--border-radius);
-  background-color: var(--bg-blue-dark);
+  background-color: transparent;
   color: var(--color-white);
   transition: var(--transition-all);
   z-index: 1000;
   cursor: pointer;
   transform: translateX(50%) translateY(-50%);
 
-  @media (width <= 900px) {
-    top: 50px;
-    height: 80px;
-  }
-
   @media (width <= 768px) {
-    top: 40px;
-    width: 60px;
-    height: 40px;
+    top: 39px;
+    width: 70px;
+    height: 80px;
   }
 }
 
 .drawerButton:hover {
   @media (width >= 769px) {
-    background-color: var(--color-peach);
+    background-color: var(--hover-blue-dark);
     transform: translateX(75%) translateY(-50%);
   }
 }

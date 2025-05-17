@@ -11,9 +11,7 @@ export default async function OfficeLayout({
     <section>
       <div className="container">
         <div className="relative flex w-full gap-x-[40px] py-[40px]">
-          <aside className="border-border-body shadow-box-shadow sticky top-0 h-[502px] w-full max-w-[280px] rounded-lg border border-solid border-[#e5e5e5] p-2 text-lg">
-            <UserSidebarMenu />
-          </aside>
+          <UserSidebarMenu />
           {children}
         </div>
       </div>

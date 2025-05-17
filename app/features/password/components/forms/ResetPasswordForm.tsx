@@ -1,6 +1,7 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -70,6 +71,9 @@ export const ResetPasswordForm = () => {
           Установить новый пароль
         </Button>
       </form>
+      <Link className="link" href="/auth">
+        Вернуться назад
+      </Link>
     </div>
   );
 };

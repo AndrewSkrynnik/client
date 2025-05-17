@@ -12,22 +12,24 @@ export const UserSidebarMenu = () => {
   const pathname = useCurrentPath();
 
   return (
-    <ul>
-      {userMenuItems.map(item => (
-        <li key={item.id}>
-          <Link
-            className={`${styles.link} rounded-md ${
-              item.disabled ? styles.disabledLink : ""
-            } ${pathname === item.href ? styles.activeLink : ""}`}
-            href={item.href}
-            aria-disabled={item.disabled}
-            onClick={e => item.disabled && e.preventDefault()}
-          >
-            <item.icon fontSize="medium" />
-            <p>{item.title}</p>
-          </Link>
-        </li>
-      ))}
+    <ul className="h-full">
+      <aside className={styles.sidebar}>
+        {userMenuItems.map(item => (
+          <li key={item.id}>
+            <Link
+              className={`${styles.linkSidebar} rounded-md ${
+                item.disabled ? styles.disabledLink : ""
+              } ${pathname === item.href ? styles.activeLink : ""}`}
+              href={item.href}
+              aria-disabled={item.disabled}
+              onClick={e => item.disabled && e.preventDefault()}
+            >
+              <item.icon fontSize="medium" />
+              <p>{item.title}</p>
+            </Link>
+          </li>
+        ))}
+      </aside>
     </ul>
   );
 };

@@ -27,7 +27,7 @@ export const UserPopoverMenu = ({ onClose, filterIds }: Props) => {
   };
 
   return (
-    <>
+    <aside>
       {filteredItems.map(item => (
         <li key={item.id} onClick={handleItemClick}>
           {item.disabled ? (
@@ -51,6 +51,6 @@ export const UserPopoverMenu = ({ onClose, filterIds }: Props) => {
           )}
         </li>
       ))}
-    </>
+    </aside>
   );
 };
