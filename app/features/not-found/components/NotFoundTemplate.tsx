@@ -29,7 +29,7 @@ export const NotFoundTemplate = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <h1 className={styles.title}>404 Error</h1>
+        <h1 className={styles.title}>ОШИБКА 404</h1>
         <div className={styles.descriptionContainer}>
           <p className={styles.description}>
             Страница <span className="text-accent">{pathname}</span> не найдена
