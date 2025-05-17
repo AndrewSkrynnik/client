@@ -62,8 +62,8 @@ export const HeaderUserMenu = () => {
         disableAutoFocus
         disableEnforceFocus
         disableRestoreFocus
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        transformOrigin={{ horizontal: "left", vertical: "top" }}
+        anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
         sx={{
           top: "10px",
 
@@ -71,7 +71,7 @@ export const HeaderUserMenu = () => {
             padding: "0"
           },
 
-          "& .MuiMenu-paper": { borderRadius: "6px" }
+          "& .MuiMenu-paper": { borderRadius: "6px", width: "240px" }
         }}
       >
         <UserPopoverMenu filterIds={defaultFilterIds} onClose={handleClose} />

@@ -10,11 +10,12 @@ import styles from "@/styles/components/ui/user/User.module.css";
 
 export const UserSidebarMenu = () => {
   const pathname = useCurrentPath();
+  const visibleItems = userMenuItems.filter(item => item.render !== false);
 
   return (
     <ul className="h-full">
       <aside className={styles.sidebar}>
-        {userMenuItems.map(item => (
+        {visibleItems.map(item => (
           <li key={item.id}>
             <Link
               className={`${styles.linkSidebar} rounded-md ${

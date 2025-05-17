@@ -23,6 +23,7 @@ export interface MenuItemConfig {
     fontSize?: "small" | "medium" | "large";
   }>;
   disabled?: boolean;
+  render?: boolean;
 }
 
 export const userMenuItems: MenuItemConfig[] = [
@@ -31,6 +32,7 @@ export const userMenuItems: MenuItemConfig[] = [
     href: "/office/account",
     title: "Учетная запись",
     disabled: false,
+    render: true,
     icon: SwitchAccountIcon
   },
   {
@@ -38,6 +40,7 @@ export const userMenuItems: MenuItemConfig[] = [
     href: "/office/orders",
     title: "Заказы",
     disabled: false,
+    render: true,
     icon: ViewQuiltIcon
   },
   {
@@ -45,6 +48,7 @@ export const userMenuItems: MenuItemConfig[] = [
     href: "/office/refunds",
     title: "Возвраты",
     disabled: false,
+    render: true,
     icon: AssignmentReturnIcon
   },
   {
@@ -52,13 +56,15 @@ export const userMenuItems: MenuItemConfig[] = [
     href: "/office/basket",
     title: "Корзина",
     disabled: false,
+    render: true,
     icon: ShoppingCartIcon
   },
   {
     id: 4,
     href: "/office/favorites",
     title: "Избранное",
-    disabled: true,
+    disabled: false,
+    render: false,
     icon: FavoriteIcon
   },
   {
@@ -66,6 +72,7 @@ export const userMenuItems: MenuItemConfig[] = [
     href: "/office/upload-files",
     title: "Загрузка из файла",
     disabled: false,
+    render: false,
     icon: DownloadForOfflineIcon
   },
   {
@@ -73,6 +80,7 @@ export const userMenuItems: MenuItemConfig[] = [
     href: "/office/documents",
     title: "Документы",
     disabled: false,
+    render: false,
     icon: ArticleIcon
   },
   {
@@ -80,13 +88,15 @@ export const userMenuItems: MenuItemConfig[] = [
     href: "/office/statutory-documents",
     title: "Уставные документы",
     disabled: false,
+    render: false,
     icon: ContactPageIcon
   },
   {
     id: 8,
     href: "/orders/balance",
     title: "Баланс",
-    disabled: true,
+    disabled: false,
+    render: false,
     icon: AccountBalanceWalletIcon
   },
   {
@@ -94,6 +104,7 @@ export const userMenuItems: MenuItemConfig[] = [
     href: "/office/settings",
     title: "Настройки",
     disabled: false,
+    render: false,
     icon: SettingsIcon
   },
   {
@@ -101,6 +112,7 @@ export const userMenuItems: MenuItemConfig[] = [
     href: "/",
     title: "На главную",
     disabled: false,
+    render: true,
     icon: ForwardIcon
   }
 ];

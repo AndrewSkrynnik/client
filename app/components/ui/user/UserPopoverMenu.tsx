@@ -15,9 +15,11 @@ interface Props {
 
 export const UserPopoverMenu = ({ onClose, filterIds }: Props) => {
   const pathname = useCurrentPath();
-  const filteredItems = filterIds
-    ? userMenuItems.filter(item => filterIds.includes(item.id))
-    : userMenuItems;
+  const filteredItems = (
+    filterIds
+      ? userMenuItems.filter(item => filterIds.includes(item.id))
+      : userMenuItems
+  ).filter(item => item.render !== false); // <- ФИЛЬТРУЕМ ПО render
 
   const handleItemClick = () => {
     onClose();
