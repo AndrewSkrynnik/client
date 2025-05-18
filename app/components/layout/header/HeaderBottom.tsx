@@ -2,38 +2,31 @@ import { HeaderBasket } from "@/components/layout/header/HeaderBasket";
 import { HeaderUserMenu } from "@/components/layout/header/HeaderUserMenu";
 import { CurrencyRates } from "@/components/ui/currency-rates/CurrencyRates";
 
-//import { useAuthStore } from "@/store/useAuthStore";
+import { useAuthStore } from "@/store/useAuthStore";
 
 import styles from "@/styles/components/layout/header/Header.module.css";
 
-export const HeaderBottom = () => (
-  /* const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+export const HeaderBottom = () => {
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
   const isAuthReady = useAuthStore(state => state.isAuthReady);
 
   if (!isAuthReady) {
-    return (
-      <div
-        style={{
-          height: "80px",
-          width: "100%",
-          backgroundColor: "#F5F5F5",
-          zIndex: 9999
-        }}
-      />
-    );
+    return <div className="loadingBox">Загрузка...</div>;
   }
 
   if (!isAuthenticated) {
     return null;
-  } */
+  }
 
-  <div className={styles.headerBottom}>
-    <div className={`container ${styles.headerContainer}`}>
-      <div className={styles.headerBottomContainer}>
-        <CurrencyRates />
-        <HeaderBasket />
-        <HeaderUserMenu />
+  return (
+    <div className={styles.headerBottom}>
+      <div className={`container ${styles.headerContainer}`}>
+        <div className={styles.headerBottomContainer}>
+          <CurrencyRates />
+          <HeaderBasket />
+          <HeaderUserMenu />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};

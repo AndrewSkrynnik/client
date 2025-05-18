@@ -1,13 +1,13 @@
 // /features/auth/store/useStepFormStore.ts
 import { create } from "zustand";
 
-import { AuthRegisterInputs } from "@/features/auth/types";
+import { AuthRegisterForm } from "@/features/auth/types";
 
 type StepFormState = {
   step: number;
-  data: Partial<AuthRegisterInputs>;
+  data: Partial<AuthRegisterForm>;
   setStep: (step: number) => void;
-  setData: (newData: Partial<AuthRegisterInputs>) => void;
+  setData: (newData: Partial<AuthRegisterForm>) => void;
   reset: () => void;
 };
 

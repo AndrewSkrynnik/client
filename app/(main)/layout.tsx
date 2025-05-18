@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 import { Footer } from "@/components/layout/footer/Footer";
-import { Header } from "@/components/layout/header/Header";
+import { HeaderTop } from "@/components/layout/header/HeaderTop";
 
 import "@/styles/globals.css";
 
@@ -14,7 +14,7 @@ export default async function MainLayout({
 }>) {
   return (
     <>
-      <Header />
+      <HeaderTop />
       <LayoutWrapper>{children}</LayoutWrapper>
       <Footer />
     </>

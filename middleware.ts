@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
   }
 
   // --- Маршруты, доступные для всех пользователей ---
-  const publicRoutes = ["/forgot-password", "/reset-password"];
+  const publicRoutes = ["/forgot-password", "/reset-password", "/info"];
 
   if (
     publicRoutes.some(route => pathname === route || pathname.startsWith(route))
