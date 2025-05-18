@@ -7,6 +7,7 @@ export interface FilterInputProps<T extends FieldValues> {
   type?: string;
   placeholder?: string;
   disabled?: boolean;
+  size?: "small" | "medium";
 }
 
 export interface FilterSelectProps<T extends FieldValues> {

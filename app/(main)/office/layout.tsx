@@ -10,7 +10,7 @@ export default async function OfficeLayout({
   return (
     <section>
       <div className="container">
-        <div className="relative flex w-full gap-x-[40px] py-[40px]">
+        <div className="officePageContainer">
           <UserSidebarMenu />
           {children}
         </div>

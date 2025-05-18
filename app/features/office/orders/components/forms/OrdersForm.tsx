@@ -3,7 +3,10 @@
 import { useForm } from "react-hook-form";
 
 import { orderStatusDetails } from "@/features/office/orders/common/orders.data";
-import { OrdersFilterForm } from "@/features/office/orders/types";
+import {
+  OrdersFilterFormProps,
+  OrdersFilterValues
+} from "@/features/office/orders/types";
 
 import { Button } from "@/components/ui/buttons/Button";
 import { DatePickerComponent } from "@/components/ui/date-picker/DatePicker";
@@ -12,34 +15,30 @@ import { FilterSelect } from "@/components/ui/forms/inputs/filter/FilterSelect";
 
 import styles from "@/styles/pages/office/orders/Orders.module.css";
 
-export const OrdersForm = () => {
-  const { control, handleSubmit, reset } = useForm<OrdersFilterForm>({
+export const OrdersForm = ({ onFilter, onReset }: OrdersFilterFormProps) => {
+  const { control, handleSubmit, reset } = useForm<OrdersFilterValues>({
     defaultValues: {
       article: "",
       order_status: "",
       date_range: [null, null]
     }
   });
-  // Преобразуем titles в массив строк
+
   const statusOptions = orderStatusDetails.map(status => status.title);
 
-  const onSubmit = (data: OrdersFilterForm) => {
-    // отправка запроса с параметрами фильтра
-    console.log("Фильтр:", data);
+  const handleFormReset = () => {
+    reset();
+    onReset();
   };
 
   return (
     <form
       className={styles.form}
-      onSubmit={handleSubmit(onSubmit)}
-      onReset={() => reset()}
+      onSubmit={handleSubmit(onFilter)}
+      onReset={handleFormReset}
     >
-      <DatePickerComponent
-        control={control}
-        name="date_range"
-        label="Диапазон дат"
-      />
-      <div className={styles.formElementsContainer}>
+      <div className={styles.filterContainer}>
+        <DatePickerComponent control={control} name="date_range" />
         <FilterInput
           control={control}
           label="Артикул детали"
@@ -53,11 +52,11 @@ export const OrdersForm = () => {
           options={statusOptions}
         />
       </div>
-      <div className={styles.formElementsContainer}>
-        <Button size="Small" type="submit">
+      <div style={{ display: "flex", gap: "8px" }}>
+        <Button type="submit" size="Small">
           Применить фильтр
         </Button>
-        <Button size="Small" variant="SecondaryOutline" type="reset">
+        <Button type="reset" size="Small" variant="SecondaryOutline">
           Сбросить фильтр
         </Button>
       </div>
