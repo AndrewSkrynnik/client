@@ -118,6 +118,7 @@ export const AccountForm = () => {
         <Button
           isDisabled={!isModified || !isValid || isSubmitting}
           isLoading={isSubmitting}
+          size="Small"
         >
           Сохранить
         </Button>

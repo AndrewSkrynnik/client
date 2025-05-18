@@ -90,6 +90,7 @@ export const ChangePasswordForm = ({
         type="submit"
         isLoading={isSubmitting}
         isDisabled={isSubmitting || !isValid}
+        size="Small"
       >
         Сменить пароль
       </Button>
