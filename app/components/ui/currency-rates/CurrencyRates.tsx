@@ -32,7 +32,13 @@ export const CurrencyRates = () => {
     fetchRates();
   }, []);
 
-  if (!rates) return <p>Загрузка курса валют...</p>;
+  if (!rates) {
+    return (
+      <div className={styles.container}>
+        <p className={styles.title}>Загрузка курса валют...</p>
+      </div>
+    );
+  }
 
   const formattedDate = date
     ? new Date(date).toLocaleDateString("ru-RU")

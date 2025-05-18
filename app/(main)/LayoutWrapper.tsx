@@ -9,12 +9,7 @@ export const LayoutWrapper = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
 
   const isHome = pathname === "/";
-  const hideHeaderBottom =
-    pathname.startsWith("/info/*") ||
-    pathname.startsWith("/auth") ||
-    pathname.startsWith("/forgot-password") ||
-    pathname.startsWith("/reset-password") ||
-    pathname.startsWith("/confirmation");
+  const hideHeaderBottom = pathname.startsWith("/info/*");
 
   return (
     <>

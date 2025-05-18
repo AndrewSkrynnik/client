@@ -1,3 +1,5 @@
+import { Skeleton } from "@mui/material";
+
 import { HeaderBasket } from "@/components/layout/header/HeaderBasket";
 import { HeaderUserMenu } from "@/components/layout/header/HeaderUserMenu";
 import { CurrencyRates } from "@/components/ui/currency-rates/CurrencyRates";
@@ -11,7 +13,17 @@ export const HeaderBottom = () => {
   const isAuthReady = useAuthStore(state => state.isAuthReady);
 
   if (!isAuthReady) {
-    return <div className="loadingBox">Загрузка...</div>;
+    return (
+      <div className={styles.headerBottom}>
+        <div className={`container ${styles.headerContainer}`}>
+          <div className={styles.headerBottomContainer}>
+            <Skeleton variant="rounded" width={280} height={60} />
+            <Skeleton variant="rounded" width={320} height={60} />
+            <Skeleton variant="rounded" width={240} height={60} />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (!isAuthenticated) {
