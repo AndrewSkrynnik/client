@@ -3,9 +3,9 @@ import { Metadata } from "next";
 import { OrdersTemplate } from "@/features/office/orders/components/OrdersTemplate";
 
 export const metadata: Metadata = {
-  title: "Заказы | Rotazap",
+  title: "Заказы | rotazap.ru",
   description:
-    "Страница 'Заказы' интернет-магазина автомобильных запчастей для иномарок Rotazap"
+    "История заказов в личном кабинете rotazap.ru: список оформленных заказов, статусы, состав, суммы и даты оформления."
 };
 
 export default function OrdersPage() {

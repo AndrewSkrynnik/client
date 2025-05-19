@@ -3,9 +3,9 @@ import { Metadata } from "next";
 import { WorkflowTemplate } from "@/features/info/components/WorkflowTemplate";
 
 export const metadata: Metadata = {
-  title: "ЭДО | Rotazap",
+  title: "Электронный документооборот | rotazap.ru",
   description:
-    "Страница 'Электронный документооборот' интернет-магазина автомобильных запчастей для иномарок Rotazap"
+    "Информация об использовании электронного документооборота (ЭДО) в интернет-магазине rotazap.ru: порядок подключения, форматы и преимущества для контрагентов."
 };
 
 export default function WorkflowPage() {

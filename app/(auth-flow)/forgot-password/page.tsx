@@ -3,17 +3,11 @@ import { Metadata } from "next";
 import { ForgotPasswordTemplate } from "@/features/password/components/ForgotPasswordTemplate";
 
 export const metadata: Metadata = {
-  title: "Авторизация | Rotazap",
+  title: "Восстановление пароля | rotazap.ru",
   description:
-    "Страница авторизации в интернет-магазине автомобильных запчастей для иномарок Rotazap",
-  applicationName: "rotazap.ru",
-  generator: "Next.js"
+    "Страница восстановления пароля на rotazap.ru. Предназначена для запроса ссылки на сброс пароля через адрес электронной почты."
 };
 
 export default function ForgotPasswordPage() {
-  return (
-    <>
-      <ForgotPasswordTemplate />
-    </>
-  );
+  return <ForgotPasswordTemplate />;
 }

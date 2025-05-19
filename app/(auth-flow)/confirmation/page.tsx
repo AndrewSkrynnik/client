@@ -3,17 +3,11 @@ import { Metadata } from "next";
 import { ConfirmationTemplate } from "@/features/confirmation/components/ConfirmationTemplate";
 
 export const metadata: Metadata = {
-  title: "Авторизация | Rotazap",
+  title: "Подтверждение аккаунта | rotazap.ru",
   description:
-    "Страница авторизации в интернет-магазине автомобильных запчастей для иномарок Rotazap",
-  applicationName: "rotazap.ru",
-  generator: "Next.js"
+    "Страница подтверждения аккаунта на rotazap.ru. Доступ к личному кабинету предоставляется после заключения договора и активации учетной записи."
 };
 
 export default function ConfirmationPage() {
-  return (
-    <>
-      <ConfirmationTemplate />
-    </>
-  );
+  return <ConfirmationTemplate />;
 }

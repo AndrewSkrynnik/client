@@ -3,9 +3,9 @@ import { Metadata } from "next";
 import { ContactsTemplate } from "@/features/info/components/ContactsTemplate";
 
 export const metadata: Metadata = {
-  title: "Контакты | Rotazap",
+  title: "Контакты | rotazap.ru",
   description:
-    "Страница 'Контакты' интернет-магазина автомобильных запчастей для иномарок Rotazap"
+    "Контактная информация интернет-магазина rotazap.ru: адрес, телефон, электронная почта и форма обратной связи."
 };
 
 export default function ContactsPage() {

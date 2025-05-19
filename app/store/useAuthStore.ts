@@ -70,7 +70,6 @@ export const useAuthStore = create<AuthState>()(
         user: state.user,
         isAuthenticated: state.isAuthenticated
       }),
-      /* TODO: onRehydrateStorage - применить логику прелоудера на основе UserInfo в других компонентах */
       onRehydrateStorage: () => state => {
         if (state?.setAuth) {
           state.setAuthReady(true);

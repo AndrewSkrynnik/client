@@ -8,6 +8,22 @@ import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
   title: "rotazap.ru",
+  description:
+    "rotazap.ru — интернет-магазин автозапчастей с быстрым поиском по артикулу, бренду, OEM и кросс-номерам. Онлайн-наличие и поддержка ABCP API.",
+  applicationName: "rotazap.ru",
+  generator: "Next.js",
+  keywords: [
+    "автозапчасти",
+    "поиск деталей",
+    "артикул",
+    "OEM",
+    "аналог",
+    "запчасти онлайн",
+    "rotazap",
+    "ABCP API"
+  ],
+  authors: [{ name: "rotazap.ru", url: "https://rotazap.ru" }],
+  metadataBase: new URL("https://rotazap.ru"),
   icons: [
     {
       rel: "icon",
@@ -27,8 +43,6 @@ export default function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  console.log("✅ ENV_FILE:", process.env.ENV_FILE);
-
   return (
     <html
       lang="ru"
