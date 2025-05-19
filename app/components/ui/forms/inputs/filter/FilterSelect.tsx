@@ -10,7 +10,7 @@ export const FilterSelect = <T extends FieldValues>({
   label,
   options,
   disabled = false,
-  placeholder = "Выберите..."
+  placeholder = "Все заказы"
 }: FilterSelectProps<T>) => (
   <Controller
     name={name}
