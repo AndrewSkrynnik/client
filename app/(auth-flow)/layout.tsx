@@ -10,7 +10,9 @@ export default function AuthFlowLayout({
 }>) {
   return (
     <>
-      <HeaderTop />
+      <header>
+        <HeaderTop />
+      </header>
       <main className="justify-center">{children}</main>
       <Footer />
     </>
