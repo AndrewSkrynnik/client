@@ -2,21 +2,21 @@
 
 import { useForm } from "react-hook-form";
 
-import { orderStatusDetails } from "@/features/office/orders/common/orders.data";
+import { orderStatus } from "@/features/office/orders/data/order-status-.data";
 import {
-  OrdersFilterFormProps,
-  OrdersFilterValues
+  OrderFilters,
+  OrdersFilterFormProps
 } from "@/features/office/orders/types";
 
 import { Button } from "@/components/ui/buttons/Button";
-import { DatePickerComponent } from "@/components/ui/date-picker/DatePicker";
+import { DatePickerComponent } from "@/components/ui/date-picker/DatePickerComponent";
 import { FilterInput } from "@/components/ui/forms/inputs/filter/FilterInput";
 import { FilterSelect } from "@/components/ui/forms/inputs/filter/FilterSelect";
 
 import styles from "@/styles/pages/office/orders/Orders.module.css";
 
 export const OrdersForm = ({ onFilter, onReset }: OrdersFilterFormProps) => {
-  const { control, handleSubmit, reset } = useForm<OrdersFilterValues>({
+  const { control, handleSubmit, reset } = useForm<OrderFilters>({
     defaultValues: {
       article: "",
       order_status: "",
@@ -24,7 +24,7 @@ export const OrdersForm = ({ onFilter, onReset }: OrdersFilterFormProps) => {
     }
   });
 
-  const statusOptions = orderStatusDetails.map(status => status.title);
+  const statusOptions = orderStatus.map(status => status.title);
 
   const handleFormReset = () => {
     reset();
@@ -52,6 +52,7 @@ export const OrdersForm = ({ onFilter, onReset }: OrdersFilterFormProps) => {
           options={statusOptions}
         />
       </div>
+
       <div style={{ display: "flex", gap: "8px" }}>
         <Button type="submit" size="Small">
           Применить фильтр

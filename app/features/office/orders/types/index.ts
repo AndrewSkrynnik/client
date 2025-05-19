@@ -1,36 +1,44 @@
-// Тип формы фильтра заказов
-export interface OrdersFilterValues {
-  article: string;
-  order_status: string;
-  date_range: [Date | null, Date | null];
+export interface OrdersFilters {
+  order_status?: string;
+  date_range?: [Date | null, Date | null];
+  article?: string; // ✅ Добавить это
 }
 
-// Пропсы компонента формы фильтра
 export interface OrdersFilterFormProps {
-  onFilter: (filters: OrdersFilterValues) => void;
+  onFilter: (filters: OrdersFilters) => void;
   onReset: () => void;
 }
 
-// Пропсы компонента пагинации заказов
 export interface OrdersPaginationProps {
   totalItems: number;
   rowsPerPage: number;
   currentPage: number;
   onChange: (page: number) => void;
 }
-// Модель одного заказа
-export interface OrderTableItem {
-  id: string; // Уникальный идентификатор
-  article: string; // Артикул детали
-  source: string; // Источник (поставщик)
-  date: string; // Дата заказа
-  price: string; // Цена за единицу
-  quantity: number; // Количество
-  total: string; // Общая сумма
-  status: string; // Статус заказа
+
+export interface OrderDetailsItem {
+  brand: string;
+  name: string;
+  article: string;
+  price: number;
+  qtyItem: number;
+  totalPrice: number;
 }
 
-// Пропсы для компонента таблицы заказов
+export interface OrderTableItem {
+  id: number;
+  paymentMethod: string;
+  orderDate: Date;
+  status: string;
+  details: OrderDetailsItem[];
+}
+
 export interface OrdersTableProps {
   orders: OrderTableItem[];
+}
+
+export interface OrderFilters {
+  order_status?: string;
+  date_range?: [Date | null, Date | null];
+  article?: string;
 }

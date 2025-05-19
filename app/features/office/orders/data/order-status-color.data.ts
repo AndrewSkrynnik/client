@@ -1,14 +1,3 @@
-// Конфигурация колонок таблицы заказов
-export const ordersTableColumns = [
-  { key: "article", label: "Деталь", width: "160px" },
-  { key: "source", label: "Откуда", width: "120px" },
-  { key: "date", label: "Дата", width: "120px" },
-  { key: "price", label: "Цена(руб.)", width: "120px" },
-  { key: "quantity", label: "Кол-во", width: "80px" },
-  { key: "total", label: "Сумма(руб.)", width: "120px" },
-  { key: "status", label: "Статус заказа", width: "160px" }
-] as const;
-
 // Цвета для статусов заказов в OrdersTable
 export const orderStatusColors: Record<string, string> = {
   "Готов к выдаче": "#66BB6A", // ярко-зелёный

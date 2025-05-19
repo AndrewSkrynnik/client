@@ -28,12 +28,16 @@ export const DatePickerComponent = <T extends FieldValues>({
         {label && <label>{label}</label>}
         <DatePicker
           selectsRange
+          showYearDropdown
+          scrollableYearDropdown
           startDate={field.value?.[0] || null}
           endDate={field.value?.[1] || null}
           onChange={(update: [Date | null, Date | null]) => {
             field.onChange(update);
           }}
           dateFormat="dd.MM.yyyy"
+          minDate={new Date(2025, 2, 1)} // Считает с 0
+          maxDate={new Date()}
           locale={ru}
           monthsShown={2}
           customInput={<CalendarTrigger />}

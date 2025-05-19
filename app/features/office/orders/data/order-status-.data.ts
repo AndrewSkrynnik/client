@@ -1,4 +1,4 @@
-export const orderStatusDetails = [
+export const orderStatus = [
   { title: "В работе" },
   { title: "Возвращено клиентом" },
   { title: "Готов к выдаче" },
