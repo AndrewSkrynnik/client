@@ -30,6 +30,7 @@ export interface OrderTableItem {
   paymentMethod: string;
   orderDate: Date;
   status: string;
+  address: string;
   details: OrderDetailsItem[];
 }
 

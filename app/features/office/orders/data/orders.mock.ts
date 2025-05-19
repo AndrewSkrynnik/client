@@ -1,3 +1,4 @@
+import { generateRandomAddress } from "@/features/office/orders/common/generate-address.utils";
 import { orderStatus } from "@/features/office/orders/data/order-status-.data";
 import {
   OrderDetailsItem,
@@ -28,11 +29,20 @@ const generateDetails = (seed: number): OrderDetailsItem[] => {
 
 export const orderMocks: OrderTableItem[] = Array.from(
   { length: 20 },
-  (_, i) => ({
-    id: 100 + i,
-    paymentMethod: i % 2 === 0 ? "Наличные" : "Безнал.",
-    orderDate: new Date(2025, 4, i + 1), // Месяц 4 = май (0-индекс)
-    status: orderStatus[i % orderStatus.length].title,
-    details: generateDetails(i)
-  })
+  (_, i) => {
+    const details = generateDetails(i);
+
+    return {
+      id: 100 + i,
+      paymentMethod: i % 2 === 0 ? "Наличные" : "Безнал.",
+      orderDate: new Date(2025, 4, i + 1),
+      status: orderStatus[i % orderStatus.length].title,
+      details,
+      totalPrice: details.reduce(
+        (sum, item) => sum + item.price * item.qtyItem,
+        0
+      ),
+      address: generateRandomAddress()
+    };
+  }
 );

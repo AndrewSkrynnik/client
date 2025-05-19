@@ -12,6 +12,8 @@ import {
 import { useState } from "react";
 
 import { getOrderSummary } from "@/features/office/orders/common/orders-table.utils";
+import { OrderInfo } from "@/features/office/orders/components/OrderInfo";
+import { OrderModal } from "@/features/office/orders/components/OrderModal";
 import { OrderDetailsTable } from "@/features/office/orders/components/tables/OrderDetailsTable";
 import { orderStatusColors } from "@/features/office/orders/data/order-status-color.data";
 import { ordersTableColumns } from "@/features/office/orders/data/orders-table.columns";
@@ -20,8 +22,6 @@ import {
   OrderTableItem,
   OrdersTableProps
 } from "@/features/office/orders/types";
-
-import { ModalWindowComponent } from "@/components/ui/modal-window/ModalWindowComponent";
 
 import { format } from "date-fns";
 
@@ -32,7 +32,70 @@ export const OrdersTable = ({
   const [selectedOrder, setSelectedOrder] = useState<OrderTableItem | null>(
     null
   );
+
   const handleClose = () => setSelectedOrder(null);
+
+  const renderOrdersBody = (
+    orders: OrderTableItem[],
+    setSelectedOrder: (order: OrderTableItem) => void
+  ) => {
+    if (!orders.length) {
+      return (
+        <TableRow>
+          <TableCell colSpan={ordersTableColumns.length} align="center">
+            У Вас пока нет заказов
+          </TableCell>
+        </TableRow>
+      );
+    }
+
+    return orders.map(order => {
+      const summary = getOrderSummary(order.details);
+
+      return (
+        <TableRow
+          key={order.id}
+          hover
+          sx={{ cursor: "pointer" }}
+          onClick={() => setSelectedOrder(order)}
+        >
+          {ordersTableColumns.map(({ key }) => {
+            let value: string | number;
+
+            if (key === "qty") {
+              value = summary.qty;
+            } else if (key === "totalPrice") {
+              value = formatCurrency(summary.total);
+            } else if (key === "orderDate") {
+              value = format(order.orderDate, "dd.MM.yyyy");
+            } else {
+              const raw = order[key];
+              value =
+                typeof raw === "string" || typeof raw === "number" ? raw : "-";
+            }
+
+            const color =
+              key === "status" ? orderStatusColors[order.status] : undefined;
+
+            return (
+              <TableCell
+                key={key}
+                sx={{
+                  height: 48,
+                  padding: "8px",
+                  wordBreak: "break-word",
+                  textAlign: "center",
+                  ...(color && { color })
+                }}
+              >
+                {value}
+              </TableCell>
+            );
+          })}
+        </TableRow>
+      );
+    });
+  };
 
   return (
     <>
@@ -67,79 +130,19 @@ export const OrdersTable = ({
             </TableRow>
           </TableHead>
 
-          <TableBody>
-            {orders.length ? (
-              orders.map(order => {
-                const summary = getOrderSummary(order.details);
-
-                return (
-                  <TableRow
-                    key={order.id}
-                    hover
-                    sx={{ cursor: "pointer" }}
-                    onClick={() => setSelectedOrder(order)}
-                  >
-                    {ordersTableColumns.map(({ key }) => {
-                      let value: string | number;
-
-                      if (key === "qty") {
-                        value = summary.qty;
-                      } else if (key === "totalPrice") {
-                        value = formatCurrency(summary.total);
-                      } else if (key === "orderDate") {
-                        value = format(order.orderDate, "dd.MM.yyyy");
-                      } else {
-                        const raw = order[key];
-                        value =
-                          typeof raw === "string" || typeof raw === "number"
-                            ? raw
-                            : "-";
-                      }
-
-                      const color =
-                        key === "status"
-                          ? orderStatusColors[order.status]
-                          : undefined;
-
-                      return (
-                        <TableCell
-                          key={key}
-                          sx={{
-                            height: 48,
-                            padding: "8px",
-                            wordBreak: "break-word",
-                            textAlign: "center",
-                            ...(color && { color })
-                          }}
-                        >
-                          {value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })
-            ) : (
-              <TableRow>
-                <TableCell colSpan={ordersTableColumns.length} align="center">
-                  Нет подходящих заказов
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
+          <TableBody>{renderOrdersBody(orders, setSelectedOrder)}</TableBody>
         </Table>
       </TableContainer>
 
-      <ModalWindowComponent
-        open={Boolean(selectedOrder)}
-        onClose={handleClose}
-        title={`Заказ №${selectedOrder?.id}`}
-      >
-        <OrderDetailsTable
-          items={selectedOrder?.details ?? []}
-          highlightArticle={highlightArticle}
-        />
-      </ModalWindowComponent>
+      <OrderModal open={Boolean(selectedOrder)} onClose={handleClose}>
+        <div className="flex flex-col gap-5">
+          {selectedOrder && <OrderInfo order={selectedOrder} />}
+          <OrderDetailsTable
+            items={selectedOrder?.details ?? []}
+            highlightArticle={highlightArticle}
+          />
+        </div>
+      </OrderModal>
     </>
   );
 };

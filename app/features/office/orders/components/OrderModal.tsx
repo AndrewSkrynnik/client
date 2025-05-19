@@ -4,18 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface Props {
-  title: string;
   children: React.ReactNode;
   open: boolean;
   onClose: () => void;
 }
 
-export const ModalWindowComponent = ({
-  title,
-  children,
-  open,
-  onClose
-}: Props) => {
+export const OrderModal = ({ children, open, onClose }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
@@ -79,7 +73,6 @@ export const ModalWindowComponent = ({
 
   return createPortal(
     <>
-      {/* Маска */}
       <div
         onClick={onClose}
         style={{
@@ -89,7 +82,6 @@ export const ModalWindowComponent = ({
           zIndex: 1299
         }}
       />
-      {/* Окно */}
       <div
         style={{
           position: "fixed",
@@ -142,10 +134,7 @@ export const ModalWindowComponent = ({
           </button>
         </div>
 
-        <div style={{ padding: 16 }}>
-          <h2 style={{ margin: "0 0 16px 0", fontSize: 18 }}>{title}</h2>
-          {children}
-        </div>
+        <div style={{ padding: 16 }}>{children}</div>
       </div>
     </>,
     document.body
