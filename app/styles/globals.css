@@ -94,6 +94,10 @@ li {
   min-height: 100vh;
 }
 
+.section {
+  margin-bottom: 32px;
+}
+
 .container {
   max-width: 1475px;
   padding: 0 40px;

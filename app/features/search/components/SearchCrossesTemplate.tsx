@@ -71,36 +71,38 @@ export const SearchCrossesTemplate = () => {
   const proposalWord = getProposalWord(proposalsCount);
 
   return (
-    <div className="container !mt-[32px]">
-      <div className="flex flex-col gap-y-8">
-        <div className="mx-auto flex w-full max-w-[768px] items-center">
-          <SearchForm />
+    <section className="section">
+      <div className="container !mt-[32px]">
+        <div className="flex flex-col gap-y-8">
+          <div className="mx-auto flex w-full max-w-[768px] items-center">
+            <SearchForm />
+          </div>
+          <BackLink />
+          <h2 className="text-xl">
+            Найдено{" "}
+            <span className="font-bold">
+              {proposalsCount} {proposalWord}
+            </span>{" "}
+            из прайс-листа по артикулу{" "}
+            <span className="text-peach font-bold">
+              {number} ({brand})
+            </span>
+          </h2>
+          {proposalsCount === 0 ? (
+            <p>Ничего не найдено.</p>
+          ) : (
+            <SearchCrossesTable
+              brand={brand}
+              descr={data?.descr || "Описание отсутствует"}
+              number={number}
+              outerNumber={data?.outerNumber || number}
+              crosses={data?.crosses || []}
+              properties={data?.properties || {}}
+              images={data?.images || []}
+            />
+          )}
         </div>
-        <BackLink />
-        <h2 className="text-xl">
-          Найдено{" "}
-          <span className="font-bold">
-            {proposalsCount} {proposalWord}
-          </span>{" "}
-          из прайс-листа по артикулу{" "}
-          <span className="text-peach font-bold">
-            {number} ({brand})
-          </span>
-        </h2>
-        {proposalsCount === 0 ? (
-          <p>Ничего не найдено.</p>
-        ) : (
-          <SearchCrossesTable
-            brand={brand}
-            descr={data?.descr || "Описание отсутствует"}
-            number={number}
-            outerNumber={data?.outerNumber || number}
-            crosses={data?.crosses || []}
-            properties={data?.properties || {}}
-            images={data?.images || []}
-          />
-        )}
       </div>
-    </div>
+    </section>
   );
 };

@@ -71,18 +71,20 @@ export const SearchResultTemplate = () => {
   })();
 
   return (
-    <div className="container !mt-[32px]">
-      <div className="flex flex-col gap-y-8">
-        <div className="mx-auto flex w-full max-w-[768px] items-center">
-          <SearchForm />
+    <section className="section">
+      <div className="container !mt-[32px]">
+        <div className="flex flex-col gap-y-8">
+          <div className="mx-auto flex w-full max-w-[768px] items-center">
+            <SearchForm />
+          </div>
+          <BackLink />
+          <h1>
+            Результаты поиска для артикула{" "}
+            <span className="text-peach">{number}</span>
+          </h1>
+          {renderContent}
         </div>
-        <BackLink />
-        <h1>
-          Результаты поиска для артикула{" "}
-          <span className="text-peach">{number}</span>
-        </h1>
-        {renderContent}
       </div>
-    </div>
+    </section>
   );
 };
