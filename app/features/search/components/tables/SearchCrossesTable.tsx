@@ -1,11 +1,20 @@
 "use client";
 
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
+import { OrdersPagination } from "@/features/office/orders/components/OrdersPagination";
 import { CartTotal } from "@/features/search/components/CartTotal";
 import { Counter } from "@/features/search/components/Counter";
-import { Pagination } from "@/features/search/components/Pagination";
 import { ModalImage } from "@/features/search/components/modals/ModalImage";
 import { ModalInfo } from "@/features/search/components/modals/ModalInfo";
 import { CrossesTableProps } from "@/features/search/types";
@@ -14,14 +23,14 @@ import { CameraAltIcon, InfoIcon } from "@/components/icons";
 import { TooltipComponent } from "@/components/ui/tooltip/TooltipComponent";
 
 const TABLE_HEAD_ITEMS = [
-  "Производитель",
+  "Бренд",
   "Артикул",
   "Описание",
   "Инфо",
   "Цена (₽)",
   "Наличие (шт)",
   "Количество",
-  "Итого"
+  " "
 ];
 
 const ROWS_PER_PAGE = 20;
@@ -37,10 +46,10 @@ export const SearchCrossesTable = ({
 
   const [modalState, setModalState] = useState<{
     image?: string;
-    info?: string;
+    info?: Record<string, string>;
   }>({
     image: searchParams.get("image") || undefined,
-    info: searchParams.get("info") || undefined
+    info: undefined
   });
 
   const [crossesWithData, setCrossesWithData] = useState<
@@ -110,7 +119,6 @@ export const SearchCrossesTable = ({
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(crossesWithData.length / ROWS_PER_PAGE);
   const currentCrosses = crossesWithData.slice(
     (currentPage - 1) * ROWS_PER_PAGE,
     currentPage * ROWS_PER_PAGE
@@ -121,8 +129,12 @@ export const SearchCrossesTable = ({
     router.replace("?", { scroll: false });
   }, [router]);
 
-  const openModal = (type: "image" | "info", value: string) => {
+  const openImageModal = (type: "image", value: string) => {
     setModalState(prev => ({ ...prev, [type]: value }));
+  };
+
+  const openInfoModal = (value: Record<string, string>) => {
+    setModalState(prev => ({ ...prev, info: value }));
   };
 
   const addToCart = (index: number, totalPrice: string) => {
@@ -138,97 +150,167 @@ export const SearchCrossesTable = ({
   };
 
   return (
-    <div className="flex flex-col gap-y-4">
-      <table className="w-full table-auto border-collapse border border-gray-200">
-        <thead>
-          <tr className="bg-gray-100">
-            {TABLE_HEAD_ITEMS.map((item, index) => (
-              <th
-                key={index}
-                className="border border-gray-300 px-2 py-2 text-center"
-              >
-                {item}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {currentCrosses.map((cross, index) => (
-            <tr key={index} className="hover:bg-gray-50">
-              <td className="border border-gray-300 px-4 py-2">
-                {cross.brand}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {cross.numberFix}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {descr || "Описание отсутствует"}
-              </td>
-              <td className="border border-gray-300 px-4 py-2 text-center">
-                <div className="flex justify-center gap-2">
-                  <TooltipComponent title="Информация о товаре">
-                    <InfoIcon
-                      onClick={() => openModal("info", cross.numberFix)}
-                      sx={{ cursor: "pointer" }}
-                    />
-                  </TooltipComponent>
-                  {images?.length > 0 && images[0]?.url && (
-                    <TooltipComponent title="Просмотр изображения">
-                      <CameraAltIcon
-                        onClick={() => openModal("image", images[0].url)}
+    <>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow
+              sx={{
+                fontWeight: "bold",
+                backgroundColor: "#f5f5f5"
+              }}
+            >
+              {TABLE_HEAD_ITEMS.map((label, index) => (
+                <TableCell
+                  key={index}
+                  align="center"
+                  sx={{
+                    height: 48,
+                    padding: "8px 16px",
+                    fontWeight: "bold",
+                    backgroundColor: "#f5f5f5",
+                    textAlign: "center"
+                  }}
+                >
+                  {label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {currentCrosses.map((cross, index) => (
+              <TableRow key={index}>
+                <TableCell
+                  sx={{
+                    height: 48,
+                    width: 140,
+                    padding: "8px 16px",
+                    textAlign: "center"
+                  }}
+                >
+                  {cross.brand}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    height: 48,
+                    width: 140,
+                    padding: "8px 16px",
+                    textAlign: "center"
+                  }}
+                >
+                  {cross.numberFix}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    height: 48,
+                    width: 240,
+                    padding: "8px 16px",
+                    textAlign: "center"
+                  }}
+                >
+                  {descr || "Описание отсутствует"}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    height: 48,
+                    width: 56,
+                    padding: "8px 16px",
+                    textAlign: "center"
+                  }}
+                >
+                  <div className="flex justify-center gap-2">
+                    <TooltipComponent title="Информация о товаре">
+                      <InfoIcon
+                        onClick={() => openInfoModal(properties)}
                         sx={{ cursor: "pointer" }}
                       />
                     </TooltipComponent>
-                  )}
-                </div>
-              </td>
-              <td className="border border-gray-300 px-4 py-2 text-center">
-                {cross.price}
-              </td>
-              <td className="w-[80px] border border-gray-300 px-4 py-2 text-center">
-                {cross.stock}
-              </td>
-              <td className="border border-gray-300 px-4 py-2 text-center">
-                <Counter
-                  index={(currentPage - 1) * ROWS_PER_PAGE + index} // Глобальный индекс
-                  count={cross.count}
-                  stock={cross.stock}
-                  price={cross.price}
-                  updateCount={updateCount}
-                  handleInputChange={handleInputChange}
-                />
-              </td>
-              <td className="border border-gray-300 px-4 py-2 text-center">
-                <CartTotal
-                  price={cross.price}
-                  count={cross.count}
-                  onAddToCart={() =>
-                    addToCart(
-                      index,
-                      (parseFloat(cross.price) * cross.count).toFixed(2)
-                    )
-                  }
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-        />
-      )}
-
-      {modalState.image && (
-        <ModalImage imageUrl={modalState.image} onClose={closeModal} />
-      )}
-      {modalState.info && (
-        <ModalInfo properties={properties || {}} onClose={closeModal} />
-      )}
-    </div>
+                    {images?.length > 0 && images[0]?.url && (
+                      <TooltipComponent title="Просмотр изображения">
+                        <CameraAltIcon
+                          onClick={() => openImageModal("image", images[0].url)}
+                          sx={{ cursor: "pointer" }}
+                        />
+                      </TooltipComponent>
+                    )}
+                  </div>
+                </TableCell>
+                <TableCell
+                  sx={{
+                    height: 48,
+                    width: 110,
+                    padding: "8px 16px",
+                    textAlign: "center"
+                  }}
+                >
+                  {cross.price}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    height: 48,
+                    width: 56,
+                    padding: "8px 16px",
+                    textAlign: "center"
+                  }}
+                >
+                  {cross.stock}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    height: 48,
+                    width: 140,
+                    padding: "8px 16px",
+                    textAlign: "center"
+                  }}
+                >
+                  <Counter
+                    index={(currentPage - 1) * ROWS_PER_PAGE + index}
+                    count={cross.count}
+                    stock={cross.stock}
+                    price={cross.price}
+                    updateCount={updateCount}
+                    handleInputChange={handleInputChange}
+                  />
+                </TableCell>
+                <TableCell
+                  sx={{
+                    height: 48,
+                    width: 56,
+                    padding: "8px 16px",
+                    textAlign: "center"
+                  }}
+                >
+                  <CartTotal
+                    count={cross.count}
+                    onAddToCart={() =>
+                      addToCart(
+                        index,
+                        (parseFloat(cross.price) * cross.count).toFixed(2)
+                      )
+                    }
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <OrdersPagination
+        totalItems={crossesWithData.length}
+        rowsPerPage={ROWS_PER_PAGE}
+        currentPage={currentPage}
+        onChange={setCurrentPage}
+      />
+      <ModalImage
+        open={Boolean(modalState.image)}
+        imageUrl={modalState.image ?? ""}
+        onClose={closeModal}
+      />
+      <ModalInfo
+        open={Boolean(modalState.info)}
+        properties={modalState.info ?? {}}
+        onClose={closeModal}
+      />
+    </>
   );
 };

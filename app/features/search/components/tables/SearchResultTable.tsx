@@ -1,10 +1,17 @@
 "use client";
 
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from "@mui/material";
 import { useRouter } from "next/navigation";
 
 import { SearchResultTableProps } from "@/features/search/types";
-
-import styles from "../SearchResult.module.css";
 
 export const SearchResultTable = ({
   brands,
@@ -34,29 +41,60 @@ export const SearchResultTable = ({
   };
 
   return (
-    <table className={styles.table}>
-      <thead>
-        <tr className={styles.th}>
-          <th className={styles.th}>Производитель</th>
-          <th className={styles.th}>Артикул (Номер)</th>
-          <th className={styles.th}>Описание</th>
-          <th className={styles.th} />
-        </tr>
-      </thead>
-      <tbody>
-        {brands.map(brand => (
-          <tr
-            key={brand.id}
-            className={styles.tr}
-            onClick={() => handleRowClick(brand.brand)}
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow
+            sx={{
+              fontWeight: "bold",
+              backgroundColor: "#f5f5f5"
+            }}
           >
-            <td className={styles.td}>{brand.brand}</td>
-            <td className={styles.td}>{brand.number}</td>
-            <td className={styles.td}>{brand.description}</td>
-            <td className={`${styles.td} ${styles.findButton}`}>Найти</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+            {["Производитель", "Артикул (Номер)", "Описание"].map(
+              (label, index) => (
+                <TableCell
+                  key={index}
+                  sx={{
+                    height: 48,
+                    padding: "8px 16px",
+                    fontWeight: "bold",
+                    backgroundColor: "#f5f5f5",
+                    textAlign: "center"
+                  }}
+                >
+                  {label}
+                </TableCell>
+              )
+            )}
+          </TableRow>
+        </TableHead>
+
+        <TableBody>
+          {brands.map(brand => (
+            <TableRow
+              key={brand.id}
+              hover
+              onClick={() => handleRowClick(brand.brand)}
+              sx={{ cursor: "pointer" }}
+            >
+              {[brand.brand, brand.number, brand.description].map(
+                (value, index) => (
+                  <TableCell
+                    key={index}
+                    sx={{
+                      height: 48,
+                      padding: "8px 16px",
+                      textAlign: "center"
+                    }}
+                  >
+                    {value}
+                  </TableCell>
+                )
+              )}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };

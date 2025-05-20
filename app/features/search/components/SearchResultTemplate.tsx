@@ -1,24 +1,22 @@
 "use client";
 
-import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { SearchForm } from "@/features/search/SearchForm";
 import { SearchResultTable } from "@/features/search/components/tables/SearchResultTable";
+import { fetchBrands } from "@/features/search/server/fetchBrands";
 import { SearchBrand } from "@/features/search/types";
 
-import { Button } from "@/components/ui/buttons/Button";
-
-import axiosInstance from "@/libs/axios";
+import { BackLink } from "@/components/ui/back-link/BackLink";
+import { SearchForm } from "@/components/ui/forms/inputs/search/SearchForm";
 
 export const SearchResultTemplate = () => {
   const params = useParams();
   const searchParams = useSearchParams();
   const [number, setNumber] = useState<string | null>(null);
   const [brands, setBrands] = useState<SearchBrand[]>([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const routeNumber = params?.number as string | undefined;
@@ -32,81 +30,59 @@ export const SearchResultTemplate = () => {
   }, [params, searchParams]);
 
   useEffect(() => {
-    const fetchBrands = async () => {
+    const load = async () => {
       if (!number) return;
 
       try {
-        const response = await axiosInstance.get(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/abcp/search-brands`,
-          {
-            params: { number }
-          }
-        );
-
-        const responseData = response.data;
-
-        if (responseData && typeof responseData === "object") {
-          const transformedBrands = Object.keys(responseData).map(key => ({
-            id: key,
-            brand: responseData[key].brand,
-            number: responseData[key].number,
-            numberFix: responseData[key].numberFix,
-            description:
-              responseData[key].description || "Описание отсутствует",
-            availability: responseData[key].availability || 0
-          }));
-          setBrands(transformedBrands);
-        } else {
-          console.error("Unexpected API response format:", response.data);
-          setError("Некорректный формат ответа от сервера");
-        }
+        const data = await fetchBrands(number);
+        setBrands(data);
+        setError(null);
       } catch (err: any) {
-        setError(err.response?.data?.message || "Ошибка загрузки данных");
+        setError(
+          err.response?.data?.message ||
+            err.message ||
+            "Ошибка при выполнении запроса к ABCP API"
+        );
       } finally {
-        setLoading(false);
+        setIsLoaded(true); // 🔥 Важно!
       }
     };
 
-    fetchBrands();
+    load();
   }, [number]);
 
-  if (loading) return <div>Загрузка...</div>;
-  if (brands.length === 0) {
-    return (
-      <div className="flex flex-col gap-y-8">
-        <h2 className="text-2xl">Результаты поиска</h2>
-        <p className="text-lg">
-          Запрошенный артикул детали{" "}
-          <span className="text-secondary font-bold">{number}</span> не найден
-        </p>
-        <Link className="max-w-[120px]" href="/">
-          <Button variant="PrimaryOutline" size="Medium">
-            Назад
-          </Button>
-        </Link>
-      </div>
-    );
-  }
-  if (error) return <div className="text-red-500">{error}</div>;
+  const renderContent = (() => {
+    if (!isLoaded) return null;
 
-  return (
-    <div className="flex flex-col gap-y-8">
-      <div className="mx-auto mt-[20px] mb-[-20px] flex w-full max-w-[768px] items-center">
-        <SearchForm />
-      </div>
-      <h1 className="text-2xl">
-        Результаты поиска для артикула{" "}
-        <span className="text-secondary">{number}</span>
-      </h1>
+    if (error) {
+      return <p className="text-red-500">{error}</p>;
+    }
+
+    if (brands.length === 0) {
+      return <p className="text-lg">Запрошенный артикул детали не найден</p>;
+    }
+
+    return (
       <SearchResultTable
         brands={brands}
         fallbackNumber={number || "Неизвестный артикул"}
       />
-      <Link className="max-w-[120px]" href="/">
-        <Button variant="PrimaryOutline" size="Medium">
-          Назад
-        </Button>
-      </Link>
+    );
+  })();
+
+  return (
+    <div className="container !mt-[32px]">
+      <div className="flex flex-col gap-y-8">
+        <div className="mx-auto flex w-full max-w-[768px] items-center">
+          <SearchForm />
+        </div>
+        <BackLink />
+        <h1>
+          Результаты поиска для артикула{" "}
+          <span className="text-peach">{number}</span>
+        </h1>
+        {renderContent}
+      </div>
     </div>
   );
 };

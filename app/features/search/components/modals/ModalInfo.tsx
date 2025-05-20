@@ -1,26 +1,25 @@
-"use client";
+import { OrderModal } from "@/features/office/orders/components/OrderModal";
 
-import styles from "../SearchResult.module.css";
+import styles from "@/styles/pages/search-results/SearchResults.module.css";
 
 interface ModalInfoProps {
   properties: Record<string, string>;
+  open: boolean;
   onClose: () => void;
 }
 
-export const ModalInfo = ({ properties, onClose }: ModalInfoProps) => (
-  <div className={styles.modalOverlay} onClick={onClose}>
-    <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
-      <button onClick={onClose} className={styles.modalClose}>
-        ✖
-      </button>
-      <h3 className="mb-4 text-lg font-semibold">Характеристики товара</h3>
-      <ul className="list-disc text-gray-800">
-        {Object.entries(properties || {}).map(([key, value]) => (
-          <li key={key}>
-            <strong>{key}:</strong> {value}
+export const ModalInfo = ({ properties, open, onClose }: ModalInfoProps) => (
+  <OrderModal open={open} onClose={onClose}>
+    <div className={styles.modalInfo}>
+      <h3 className={styles.modalInfoTitle}>Характеристики товара</h3>
+      <ul className={styles.modalInfoList}>
+        {Object.entries(properties).map(([key, value]) => (
+          <li className={styles.modalInfoItem} key={key}>
+            <p>{key}:</p>
+            <span>{value}</span>
           </li>
         ))}
       </ul>
     </div>
-  </div>
+  </OrderModal>
 );

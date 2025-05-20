@@ -3,11 +3,13 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { SearchForm } from "@/features/search/SearchForm";
 import { getProposalWord } from "@/features/search/common/getProposalWord";
 import { SearchCrossesTable } from "@/features/search/components/tables/SearchCrossesTable";
-import { fetchCrossesData } from "@/features/search/server/crossesService";
+import { fetchCrossesData } from "@/features/search/server/fetchCrosses";
 import { CrossData } from "@/features/search/types";
+
+import { BackLink } from "@/components/ui/back-link/BackLink";
+import { SearchForm } from "@/components/ui/forms/inputs/search/SearchForm";
 
 export const SearchCrossesTemplate = () => {
   const params = useParams();
@@ -15,76 +17,90 @@ export const SearchCrossesTemplate = () => {
   const brand = params.brand as string;
 
   const [data, setData] = useState<CrossData | null>(null);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isMinDelayPassed, setIsMinDelayPassed] = useState(false);
+
+  const isReady = data !== null;
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
+    const delay = setTimeout(() => setIsMinDelayPassed(true), 300); // минимум 300мс
+    return () => clearTimeout(delay);
+  }, []);
 
+  useEffect(() => {
+    let isActive = true;
+
+    const fetchData = async () => {
       try {
         const response = await fetchCrossesData(number, brand);
-        console.log("Данные в компоненте:", response);
-
-        if (!response) {
-          console.warn("API вернул пустые данные о кроссах.");
-          setData(null);
-        } else {
-          setData(response);
-        }
+        if (isActive) setData(response || null);
       } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Непредвиденная ошибка");
+        if (isActive) {
+          setError(
+            err instanceof Error ? err.message : "Непредвиденная ошибка"
+          );
         }
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchData();
+    return () => {
+      isActive = false;
+    };
   }, [number, brand]);
-
-  if (loading) {
-    return <div>Загрузка...</div>;
-  }
 
   if (error) {
     return <div className="text-red-500">Ошибка: {error}</div>;
   }
 
-  const proposalsCount = data?.crosses.length || 0;
+  if (!isReady || !isMinDelayPassed) {
+    return (
+      <div className="container !mt-[32px]">
+        <div className="flex flex-col gap-y-8">
+          <div className="mx-auto flex w-full max-w-[768px] items-center">
+            <SearchForm />
+          </div>
+          <BackLink />
+          <p className="text-gray-500">Загрузка предложений...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const proposalsCount = data.crosses.length;
   const proposalWord = getProposalWord(proposalsCount);
 
   return (
-    <div className="flex flex-col gap-y-8">
-      <div className="mx-auto mt-[20px] mb-[-20px] flex w-full max-w-[768px] items-center">
-        <SearchForm />
+    <div className="container !mt-[32px]">
+      <div className="flex flex-col gap-y-8">
+        <div className="mx-auto flex w-full max-w-[768px] items-center">
+          <SearchForm />
+        </div>
+        <BackLink />
+        <h2 className="text-xl">
+          Найдено{" "}
+          <span className="font-bold">
+            {proposalsCount} {proposalWord}
+          </span>{" "}
+          из прайс-листа по артикулу{" "}
+          <span className="text-peach font-bold">
+            {number} ({brand})
+          </span>
+        </h2>
+        {proposalsCount === 0 ? (
+          <p>Ничего не найдено.</p>
+        ) : (
+          <SearchCrossesTable
+            brand={brand}
+            descr={data?.descr || "Описание отсутствует"}
+            number={number}
+            outerNumber={data?.outerNumber || number}
+            crosses={data?.crosses || []}
+            properties={data?.properties || {}}
+            images={data?.images || []}
+          />
+        )}
       </div>
-      <h2 className="text-xl">
-        Найдено{" "}
-        <span className="text-secondary font-bold">
-          {proposalsCount} {proposalWord}
-        </span>{" "}
-        из прайс-листа по артикулу{" "}
-        <span className="text-secondary font-bold">{number} </span>{" "}
-        <span className="text-secondary font-bold">({brand})</span>
-      </h2>
-      {proposalsCount === 0 ? (
-        <p>Ничего не найдено.</p>
-      ) : (
-        <SearchCrossesTable
-          brand={brand}
-          descr={data?.descr || "Описание отсутствует"}
-          number={number}
-          outerNumber={data?.outerNumber || number}
-          crosses={data?.crosses || []}
-          properties={data?.properties || {}}
-          images={data?.images || []}
-        />
-      )}
     </div>
   );
 };

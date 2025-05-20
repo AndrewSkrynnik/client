@@ -15,8 +15,6 @@
   --color-black-light: #3a3a3a; /* Black Light: color for subtitle */
   --color-peach: #f76435; /* Peach: links, dividers */
   --color-error: #b00000; /* Red: error */
-
-  /* сделать все иконки белыми по дефолту */
   --color-white: #fff; /* White: header-title, button */
   --color-disabled: #969ba5; /* Gray: text in disabled-button */
 

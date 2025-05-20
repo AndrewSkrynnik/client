@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
   open: boolean;
   onClose: () => void;
 }

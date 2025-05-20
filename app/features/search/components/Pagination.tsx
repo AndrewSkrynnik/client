@@ -1,5 +1,6 @@
 import { Dispatch, FC, SetStateAction } from "react";
 
+/* Переделать MUI TODO: */
 interface PaginationProps {
   currentPage: number;
   totalPages: number;

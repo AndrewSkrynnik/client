@@ -3,11 +3,10 @@
 import { useRouter } from "next/navigation";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 
-import { SearchInput } from "@/features/search/SearchInput";
+import { SearchInput } from "@/components/ui/forms/inputs/search/SearchInput";
 
 import axiosInstance from "@/libs/axios";
 
-/* вынести стили  */
 import styles from "@/styles/components/ui/forms/SearchForm.module.css";
 
 interface Tip {

@@ -1,6 +1,5 @@
-import { SearchForm } from "@/features/search/SearchForm";
-
 import { SettingsIcon } from "@/components/icons";
+import { SearchForm } from "@/components/ui/forms/inputs/search/SearchForm";
 
 import styles from "@/styles/pages/home/Home.module.css";
 
