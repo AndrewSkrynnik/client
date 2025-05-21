@@ -4,6 +4,8 @@ import Link from "next/link";
 
 import { ShoppingCartIcon } from "@/components/icons";
 
+import { useBasketStore } from "@/store/useBasketStore";
+
 import styles from "@/styles/components/layout/header/Header.module.css";
 
 const pluralize = (
@@ -18,42 +20,37 @@ const pluralize = (
       ? few
       : many;
 
-export const HeaderBasket = () => (
-  /* const { totalQuantity, totalPrice, loadBasket } = useBasketStore();
+export const HeaderBasket = () => {
+  const totalCount = useBasketStore(state => state.getTotalCount());
+  const totalPrice = useBasketStore(state => state.getTotalPrice());
+  const hasHydrated = useBasketStore(state => state.hasHydrated);
 
-  useEffect(() => {
-    const userId = useAuthStore.getState().user?.id; // Получаем ID пользователя из authStore
-    if (userId) {
-      loadBasket(userId);
-    }
-  }, [loadBasket]);
- */
-  <Link href="/office/basket">
-    <div className={styles.basketMenu}>
-      <div className={styles.basketMenuIconWrapper}>
-        <ShoppingCartIcon fontSize="large" />
-        {/* {totalQuantity > 0 && (
-          <p className={styles.basketMenuIconCounter}>{totalQuantity}</p>
-        )} */}
+  return (
+    <Link href="/office/basket">
+      <div className={styles.basketMenu}>
+        <div className={styles.basketMenuIconWrapper}>
+          <ShoppingCartIcon fontSize="large" />
+        </div>
+        <div className="flex flex-col">
+          {!hasHydrated ? (
+            <p className={styles.basketMenuText}>Загрузка...</p>
+          ) : totalCount > 0 ? (
+            <>
+              <p className={styles.basketMenuTitle}>В корзине</p>
+              <span className={styles.basketMenuText}>
+                {totalCount}{" "}
+                {pluralize(totalCount, ["товар", "товара", "товаров"])}:{" "}
+                {totalPrice.toLocaleString("ru-RU", {
+                  style: "currency",
+                  currency: "RUB"
+                })}
+              </span>
+            </>
+          ) : (
+            <p className={styles.basketMenuText}>Корзина пуста</p>
+          )}
+        </div>
       </div>
-      <div className="flex flex-col">
-        корзина пуста
-        {/* {totalQuantity > 0 ? (
-          <>
-            <p className={styles.basketMenuTitle}>В корзине</p>
-            <span className={styles.basketMenuText}>
-              {totalQuantity}{" "}
-              {pluralize(totalQuantity, ["товар", "товара", "товаров"])}:{" "}
-              {totalPrice.toLocaleString("ru-RU", {
-                style: "currency",
-                currency: "RUB"
-              })}
-            </span>
-          </>
-        ) : (
-          <p className={styles.basketMenuText}>Корзина пуста</p>
-        )} */}
-      </div>
-    </div>
-  </Link>
-);
+    </Link>
+  );
+};

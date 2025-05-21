@@ -34,6 +34,10 @@ export const metadata: Metadata = {
       rel: "icon",
       url: "/favicon-dark.ico",
       media: "(prefers-color-scheme: dark)"
+    },
+    {
+      rel: "icon",
+      url: "/favicon.ico" // fallback
     }
   ]
 };

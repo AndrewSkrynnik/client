@@ -22,6 +22,8 @@ import { CrossesTableProps } from "@/features/search/types";
 import { CameraAltIcon, InfoIcon } from "@/components/icons";
 import { TooltipComponent } from "@/components/ui/tooltip/TooltipComponent";
 
+import { useBasketStore } from "@/store/useBasketStore";
+
 const TABLE_HEAD_ITEMS = [
   "Бренд",
   "Артикул",
@@ -39,7 +41,9 @@ export const SearchCrossesTable = ({
   descr,
   properties,
   images,
-  crosses
+  crosses,
+  isLoading = false,
+  isError = false
 }: CrossesTableProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -63,24 +67,14 @@ export const SearchCrossesTable = ({
   >([]);
 
   useEffect(() => {
-    const storedData = localStorage.getItem("crossesData");
-    if (storedData) {
-      setCrossesWithData(
-        JSON.parse(storedData).map((item: any) => ({
-          ...item,
-          count: isNaN(item.count) ? 0 : item.count
-        }))
-      );
-    } else {
-      const newData = crosses.map(cross => ({
-        ...cross,
-        price: (Math.random() * (10000 - 1000) + 1000).toFixed(2),
-        stock: Math.floor(Math.random() * 51),
-        count: 0
-      }));
-      setCrossesWithData(newData);
-      localStorage.setItem("crossesData", JSON.stringify(newData));
-    }
+    const newData = crosses.map(cross => ({
+      ...cross,
+      price: (Math.random() * (10000 - 1000) + 1000).toFixed(2),
+      stock: Math.floor(Math.random() * 51),
+      count: 0
+    }));
+
+    setCrossesWithData(newData);
   }, [crosses]);
 
   const updateCount = (rowIndex: number, value: number) => {
@@ -137,17 +131,42 @@ export const SearchCrossesTable = ({
     setModalState(prev => ({ ...prev, info: value }));
   };
 
-  const addToCart = (index: number, totalPrice: string) => {
-    console.log(
-      `Добавлено в корзину: ${crossesWithData[index].brand} - ${crossesWithData[index].numberFix}, на сумму ${totalPrice}₽`
-    );
+  const addToCart = (cross: {
+    brand: string;
+    number: string;
+    description: string;
+    price: string;
+    count: number;
+  }) => {
+    if (cross.count === 0) {
+      console.log("[addToCart] count = 0, skip");
+      return;
+    }
 
-    setCrossesWithData(prevState =>
-      prevState.map((item, idx) =>
-        idx === index ? { ...item, count: 0 } : item
-      )
-    );
+    console.log("[addToCart] adding", cross);
+
+    useBasketStore.getState().addItem({
+      brand: cross.brand,
+      number: cross.number,
+      description: cross.description,
+      price: parseFloat(cross.price),
+      count: cross.count
+    });
   };
+
+  if (isLoading) {
+    return <p className="text-gray-500">Загрузка предложений...</p>;
+  }
+
+  if (isError) {
+    return <p className="text-red-500">Ошибка при загрузке предложений.</p>;
+  }
+
+  if (!crosses || crosses.length === 0) {
+    return (
+      <p className="text-gray-500">Ничего не найдено по данному артикулу.</p>
+    );
+  }
 
   return (
     <>
@@ -283,10 +302,13 @@ export const SearchCrossesTable = ({
                   <CartTotal
                     count={cross.count}
                     onAddToCart={() =>
-                      addToCart(
-                        index,
-                        (parseFloat(cross.price) * cross.count).toFixed(2)
-                      )
+                      addToCart({
+                        brand: cross.brand,
+                        number: cross.numberFix,
+                        description: descr || "Описание отсутствует",
+                        price: cross.price,
+                        count: cross.count
+                      })
                     }
                   />
                 </TableCell>

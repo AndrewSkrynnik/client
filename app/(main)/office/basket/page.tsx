@@ -1,14 +1,14 @@
 import { Metadata } from "next";
 
-import { AccountTemplate } from "@/features/office/account/components/AccountTemplate";
+import { BasketTemplate } from "@/features/basket/components/BasketTemplate";
 
 /* TODO: поменять метадату */
 export const metadata: Metadata = {
-  title: "Учетная запись | Rotazap",
+  title: "Корзина | Rotazap",
   description:
     "Страница 'Учетная запись ' интернет-магазина автомобильных запчастей для иномарок Rotazap"
 };
 
-export default function AccountPage() {
-  return <AccountTemplate />;
+export default function BasketPage() {
+  return <BasketTemplate />;
 }

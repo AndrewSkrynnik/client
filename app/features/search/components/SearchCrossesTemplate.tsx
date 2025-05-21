@@ -33,7 +33,12 @@ export const SearchCrossesTemplate = () => {
     const fetchData = async () => {
       try {
         const response = await fetchCrossesData(number, brand);
-        if (isActive) setData(response || null);
+
+        if (!response) {
+          throw new Error("Ничего не найдено");
+        }
+
+        if (isActive) setData(response);
       } catch (err: unknown) {
         if (isActive) {
           setError(
@@ -50,7 +55,17 @@ export const SearchCrossesTemplate = () => {
   }, [number, brand]);
 
   if (error) {
-    return <div className="text-red-500">Ошибка: {error}</div>;
+    return (
+      <div className="container !mt-[32px]">
+        <div className="flex flex-col gap-y-8">
+          <div className="mx-auto flex w-full max-w-[768px] items-center">
+            <SearchForm />
+          </div>
+          <BackLink />
+          <p className="text-red-500">Ошибка: {error}</p>
+        </div>
+      </div>
+    );
   }
 
   if (!isReady || !isMinDelayPassed) {
@@ -99,6 +114,8 @@ export const SearchCrossesTemplate = () => {
               crosses={data?.crosses || []}
               properties={data?.properties || {}}
               images={data?.images || []}
+              isLoading={!isReady || !isMinDelayPassed}
+              isError={!!error}
             />
           )}
         </div>

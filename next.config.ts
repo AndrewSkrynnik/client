@@ -11,6 +11,15 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/favicon.ico",
+        destination: "/favicon-light.ico",
+        permanent: false
+      }
+    ];
+  },
   reactStrictMode: true,
   images: {
     formats: ["image/avif", "image/webp"],

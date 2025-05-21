@@ -41,38 +41,13 @@ export const StepOne = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex w-full max-w-md flex-col gap-4"
     >
-      <input
-        type="text"
-        name="fake-field"
-        autoComplete="off"
-        style={{
-          position: "absolute",
-          top: "-9999px",
-          left: "-9999px",
-          height: 0,
-          width: 0,
-          opacity: 0
-        }}
-      />
       <AuthInput
         control={control}
         name="username"
         label="Имя пользователя"
         type="text"
       />
-      <input
-        type="text"
-        name="fake-field"
-        autoComplete="off"
-        style={{
-          position: "absolute",
-          top: "-9999px",
-          left: "-9999px",
-          height: 0,
-          width: 0,
-          opacity: 0
-        }}
-      />
+
       <AuthInput control={control} name="email" label="Email" type="email" />
       <AuthPasswordInput
         control={control}

@@ -10,8 +10,12 @@ import { useAppInitialization } from "@/hooks/useAppInitialization";
 
 import { setupAxiosInterceptors } from "@/libs/axios-interceptors";
 
+import { useAuthStore } from "@/store/useAuthStore";
+
 export default function ClientLayout({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
+  const isAuthReady = useAuthStore(state => state.isAuthReady);
+
   useAppInitialization();
 
   useEffect(() => {
@@ -21,6 +25,8 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
 
     setupAxiosInterceptors();
   }, []);
+
+  if (!isAuthReady) return null;
 
   return (
     <QueryClientProvider client={queryClient}>

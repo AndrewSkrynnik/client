@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 
 import { Button } from "@/components/ui/buttons/Button";
 
@@ -30,7 +29,6 @@ export const ConfirmationTemplate = () => {
   // Автоматический редирект при смене роли с "pending"
   useEffect(() => {
     if (user?.role !== "pending") {
-      toast.success("Аккаунт подтвержден!");
       setTimeout(() => router.push("/"), 1500);
     }
   }, [user?.role, router]);

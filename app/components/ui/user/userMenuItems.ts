@@ -29,11 +29,11 @@ export interface MenuItemConfig {
 export const userMenuItems: MenuItemConfig[] = [
   {
     id: 0,
-    href: "/office/account",
-    title: "Учетная запись",
+    href: "/office/basket",
+    title: "Корзина",
     disabled: false,
     render: true,
-    icon: SwitchAccountIcon
+    icon: ShoppingCartIcon
   },
   {
     id: 1,
@@ -51,16 +51,9 @@ export const userMenuItems: MenuItemConfig[] = [
     render: true,
     icon: AssignmentReturnIcon
   },
+
   {
     id: 3,
-    href: "/office/basket",
-    title: "Корзина",
-    disabled: false,
-    render: true,
-    icon: ShoppingCartIcon
-  },
-  {
-    id: 4,
     href: "/office/favorites",
     title: "Избранное",
     disabled: false,
@@ -68,7 +61,7 @@ export const userMenuItems: MenuItemConfig[] = [
     icon: FavoriteIcon
   },
   {
-    id: 5,
+    id: 4,
     href: "/office/upload-files",
     title: "Загрузка из файла",
     disabled: false,
@@ -76,7 +69,7 @@ export const userMenuItems: MenuItemConfig[] = [
     icon: DownloadForOfflineIcon
   },
   {
-    id: 6,
+    id: 5,
     href: "/office/documents",
     title: "Документы",
     disabled: false,
@@ -84,7 +77,7 @@ export const userMenuItems: MenuItemConfig[] = [
     icon: ArticleIcon
   },
   {
-    id: 7,
+    id: 6,
     href: "/office/statutory-documents",
     title: "Уставные документы",
     disabled: false,
@@ -92,12 +85,20 @@ export const userMenuItems: MenuItemConfig[] = [
     icon: ContactPageIcon
   },
   {
-    id: 8,
+    id: 7,
     href: "/orders/balance",
     title: "Баланс",
     disabled: false,
     render: false,
     icon: AccountBalanceWalletIcon
+  },
+  {
+    id: 8,
+    href: "/office/account",
+    title: "Учетная запись",
+    disabled: false,
+    render: true,
+    icon: SwitchAccountIcon
   },
   {
     id: 9,
