@@ -9,6 +9,7 @@ export const StyledTableCellHead = styled(TableCell)({
 });
 
 export const StyledTableCellBody = styled(TableCell)({
+  textAlign: "center",
   padding: "8px 16px",
   height: 48
 });

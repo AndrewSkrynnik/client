@@ -14,7 +14,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import { OrdersPagination } from "@/features/office/orders/components/OrdersPagination";
 import { CartTotal } from "@/features/search/components/CartTotal";
-import { Counter } from "@/features/search/components/Counter";
+import { SearchCounter } from "@/features/search/components/SearchCounter";
 import { ModalImage } from "@/features/search/components/modals/ModalImage";
 import { ModalInfo } from "@/features/search/components/modals/ModalInfo";
 import { CrossesTableProps } from "@/features/search/types";
@@ -137,6 +137,7 @@ export const SearchCrossesTable = ({
     description: string;
     price: string;
     count: number;
+    stock: number;
   }) => {
     if (cross.count === 0) {
       console.log("[addToCart] count = 0, skip");
@@ -147,10 +148,11 @@ export const SearchCrossesTable = ({
 
     useBasketStore.getState().addItem({
       brand: cross.brand,
-      number: cross.number,
-      description: cross.description,
+      number: cross.number, // numberFix — это правильный артикул
+      description: descr || "Описание отсутствует",
       price: parseFloat(cross.price),
-      count: cross.count
+      count: cross.count,
+      stock: cross.stock // ✅ добавь это
     });
   };
 
@@ -282,7 +284,7 @@ export const SearchCrossesTable = ({
                     textAlign: "center"
                   }}
                 >
-                  <Counter
+                  <SearchCounter
                     index={(currentPage - 1) * ROWS_PER_PAGE + index}
                     count={cross.count}
                     stock={cross.stock}
@@ -307,7 +309,8 @@ export const SearchCrossesTable = ({
                         number: cross.numberFix,
                         description: descr || "Описание отсутствует",
                         price: cross.price,
-                        count: cross.count
+                        count: cross.count,
+                        stock: cross.stock
                       })
                     }
                   />

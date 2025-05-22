@@ -1,7 +1,7 @@
 "use client";
 
-import { BasketSummary } from "@/features/basket/components/BasketSummary";
-import { BasketTable } from "@/features/basket/components/tables/BasketTable";
+import { BasketSummary } from "@/features/office/basket/components/BasketSummary";
+import { BasketTable } from "@/features/office/basket/components/tables/BasketTable";
 
 import { useBasketStore } from "@/store/useBasketStore";
 

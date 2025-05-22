@@ -2,11 +2,10 @@ import { Metadata } from "next";
 
 import { AccountTemplate } from "@/features/office/account/components/AccountTemplate";
 
-/* TODO: поменять метадату */
 export const metadata: Metadata = {
-  title: "Учетная запись | Rotazap",
+  title: "Учетная запись | rotazap.ru",
   description:
-    "Страница 'Учетная запись ' интернет-магазина автомобильных запчастей для иномарок Rotazap"
+    "Страница учетной записи в личном кабинете rotazap.ru: просмотр и изменение личной информации, пароля и настроек профиля."
 };
 
 export default function AccountPage() {

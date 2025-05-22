@@ -22,6 +22,7 @@ export { default as CameraAltIcon } from "@mui/icons-material/CameraAlt";
 export { default as CloseIcon } from "@mui/icons-material/Close";
 export { default as ContactPageIcon } from "@mui/icons-material/ContactPage";
 export { default as DeleteIcon } from "@mui/icons-material/Delete";
+export { default as DeleteForeverIcon } from "@mui/icons-material/DeleteForever";
 export { default as DownloadForOfflineIcon } from "@mui/icons-material/DownloadForOffline";
 export { default as DriveEtaIcon } from "@mui/icons-material/DriveEta";
 export { default as ExitToAppIcon } from "@mui/icons-material/ExitToApp";

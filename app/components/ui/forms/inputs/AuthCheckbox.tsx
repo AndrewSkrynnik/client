@@ -26,7 +26,7 @@ export const AuthCheckbox = <T extends FieldValues>({
           label={label}
           sx={{
             "& .MuiFormControlLabel-label": {
-              color: fieldState.error ? "#d32f2f" : "inherit" // 💥 если ошибка — красный текст
+              color: fieldState.error ? "#d32f2f" : "inherit"
             }
           }}
         />

@@ -1,14 +1,12 @@
 import { Metadata } from "next";
 
-import { BasketTemplate } from "@/features/basket/components/BasketTemplate";
+import { BasketTemplate } from "@/features/office/basket/components/BasketTemplate";
 
-/* TODO: поменять метадату */
 export const metadata: Metadata = {
-  title: "Корзина | Rotazap",
+  title: "Корзина | rotazap.ru",
   description:
-    "Страница 'Учетная запись ' интернет-магазина автомобильных запчастей для иномарок Rotazap"
+    "Корзина покупок на сайте rotazap.ru: список выбранных автозапчастей, цены, количество и оформление заказа."
 };
-
 export default function BasketPage() {
   return <BasketTemplate />;
 }

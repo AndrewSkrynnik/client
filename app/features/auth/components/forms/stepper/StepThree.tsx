@@ -94,7 +94,7 @@ export const StepThree = () => {
         label="Вид деятельности"
         options={["Интернет-магазин", "СТО", "Розничный магазин", "Другое"]}
       />
-      <div className="flex flex-col justify-between gap-y-[6px]">
+      <div className="ml-[10px] flex flex-col justify-between gap-y-[6px]">
         <AuthCheckbox
           control={control}
           name="consent"
@@ -114,7 +114,7 @@ export const StepThree = () => {
             type="button"
             onClick={() => {
               const values = watch();
-              setData(values); // сохраняем текущие значения
+              setData(values);
               setStep(2);
             }}
           >
