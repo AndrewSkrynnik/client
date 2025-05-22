@@ -77,39 +77,14 @@ export const SearchCrossesTable = ({
     setCrossesWithData(newData);
   }, [crosses]);
 
-  const updateCount = (rowIndex: number, value: number) => {
-    setCrossesWithData(prevState => {
-      const globalIndex = (currentPage - 1) * ROWS_PER_PAGE + rowIndex; // Глобальный индекс
-
-      return prevState.map((item, index) => {
-        if (index === globalIndex) {
-          return {
-            ...item,
-            count: Math.max(0, Math.min(item.stock, item.count + value))
-          };
-        }
-        return item;
-      });
-    });
-  };
-
-  const handleInputChange = (rowIndex: number, value: string) => {
-    const parsedValue = parseInt(value, 10);
-    if (!isNaN(parsedValue)) {
-      setCrossesWithData(prevState => {
-        const globalIndex = (currentPage - 1) * ROWS_PER_PAGE + rowIndex;
-
-        return prevState.map((item, index) => {
-          if (index === globalIndex) {
-            return {
-              ...item,
-              count: Math.max(0, Math.min(item.stock, parsedValue))
-            };
-          }
-          return item;
-        });
-      });
-    }
+  const updateCrossCount = (index: number, value: number) => {
+    setCrossesWithData(prev =>
+      prev.map((item, i) =>
+        i === index
+          ? { ...item, count: Math.max(0, Math.min(item.stock, value)) }
+          : item
+      )
+    );
   };
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -285,12 +260,10 @@ export const SearchCrossesTable = ({
                   }}
                 >
                   <SearchCounter
-                    index={(currentPage - 1) * ROWS_PER_PAGE + index}
                     count={cross.count}
                     stock={cross.stock}
                     price={cross.price}
-                    updateCount={updateCount}
-                    handleInputChange={handleInputChange}
+                    onChange={value => updateCrossCount(index, value)}
                   />
                 </TableCell>
                 <TableCell
