@@ -95,10 +95,8 @@ export interface CrossesTableProps {
 
 /* Counter */
 export interface SearchCounterProps {
-  index: number;
   count: number;
   stock: number;
   price: string;
-  updateCount: (index: number, value: number) => void;
-  handleInputChange: (index: number, value: string) => void;
+  onChange: (value: number) => void;
 }

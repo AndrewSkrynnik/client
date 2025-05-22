@@ -1,20 +1,13 @@
-import { FC } from "react";
+import { SearchCounterProps } from "@/features/search/types";
 
 import styles from "@/styles/components/ui/counter/Counter.module.css";
 
-interface SearchCounterProps {
-  count: number;
-  stock: number;
-  price: string;
-  onChange: (value: number) => void;
-}
-
-export const SearchCounter: FC<SearchCounterProps> = ({
+export const SearchCounter = ({
   count,
   stock,
   price,
   onChange
-}) => {
+}: SearchCounterProps) => {
   const totalPrice = (parseFloat(price) * count).toFixed(2);
   const safeValue = Number.isFinite(count) ? count.toString() : "0";
 
