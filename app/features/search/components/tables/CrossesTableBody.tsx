@@ -1,28 +1,9 @@
 import { TableBody } from "@mui/material";
-import { FC } from "react";
 
 import { CrossesTableRow } from "@/features/search/components/tables/CrossesTableBodyRow";
+import { CrossesTableBodyProps } from "@/features/search/types/crosses.types";
 
-interface Cross {
-  brand: string;
-  numberFix: string;
-  price: string;
-  stock: number;
-  count: number;
-}
-
-interface CrossesTableBodyProps {
-  crosses: Cross[];
-  descr?: string;
-  properties?: Record<string, string>;
-  images?: { url: string }[];
-  onUpdateCount: (index: number, value: number) => void;
-  onOpenImageModal: (url: string) => void;
-  onOpenInfoModal: (info: Record<string, string>) => void;
-  onAddToCart: (index: number) => void;
-}
-
-export const CrossesTableBody: FC<CrossesTableBodyProps> = ({
+export const CrossesTableBody = ({
   crosses,
   descr,
   properties,
@@ -31,7 +12,7 @@ export const CrossesTableBody: FC<CrossesTableBodyProps> = ({
   onOpenImageModal,
   onOpenInfoModal,
   onAddToCart
-}) => (
+}: CrossesTableBodyProps) => (
   <TableBody>
     {crosses.map((cross, index) => (
       <CrossesTableRow

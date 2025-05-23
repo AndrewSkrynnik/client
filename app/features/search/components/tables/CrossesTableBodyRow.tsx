@@ -1,34 +1,17 @@
-import { TableRow } from "@mui/material";
-import { FC, memo } from "react";
+import { memo } from "react";
 
 import { CartTotal } from "@/features/search/components/CartTotal";
 import { SearchCounter } from "@/features/search/components/SearchCounter";
+import { CrossesTableRowProps } from "@/features/search/types/crosses.types";
 
 import { CameraAltIcon, InfoIcon } from "@/components/icons";
-import { StyledTableCellBody } from "@/components/styled/tables/StylesTables";
+import {
+  StyledTableCellBody,
+  StyledTableRowBody
+} from "@/components/styled/tables/StylesTables";
 import { TooltipComponent } from "@/components/ui/tooltip/TooltipComponent";
 
-interface Cross {
-  brand: string;
-  numberFix: string;
-  price: string;
-  stock: number;
-  count: number;
-}
-
-interface CrossesTableRowProps {
-  index: number;
-  cross: Cross;
-  descr?: string;
-  properties?: Record<string, string>;
-  images?: { url: string }[];
-  onUpdateCount: (index: number, value: number) => void;
-  onOpenImageModal: (url: string) => void;
-  onOpenInfoModal: (info: Record<string, string>) => void;
-  onAddToCart: (index: number) => void;
-}
-
-const CrossesTableRowComponent: FC<CrossesTableRowProps> = ({
+const CrossesTableRowComponent = ({
   index,
   cross,
   descr,
@@ -38,8 +21,8 @@ const CrossesTableRowComponent: FC<CrossesTableRowProps> = ({
   onOpenImageModal,
   onOpenInfoModal,
   onAddToCart
-}) => (
-  <TableRow>
+}: CrossesTableRowProps) => (
+  <StyledTableRowBody>
     <StyledTableCellBody>{cross.brand}</StyledTableCellBody>
     <StyledTableCellBody>{cross.numberFix}</StyledTableCellBody>
     <StyledTableCellBody>{descr || "Описание отсутствует"}</StyledTableCellBody>
@@ -74,7 +57,7 @@ const CrossesTableRowComponent: FC<CrossesTableRowProps> = ({
     <StyledTableCellBody>
       <CartTotal count={cross.count} onAddToCart={() => onAddToCart(index)} />
     </StyledTableCellBody>
-  </TableRow>
+  </StyledTableRowBody>
 );
 
 CrossesTableRowComponent.displayName = "CrossesTableRow";
