@@ -13,7 +13,6 @@ import { useState } from "react";
 
 import { getOrderSummary } from "@/features/office/orders/common/orders-table.utils";
 import { OrderInfo } from "@/features/office/orders/components/OrderInfo";
-import { OrderModal } from "@/features/office/orders/components/OrderModal";
 import { OrderDetailsTable } from "@/features/office/orders/components/tables/OrderDetailsTable";
 import { orderStatusColors } from "@/features/office/orders/data/order-status-color.data";
 import { ordersTableColumns } from "@/features/office/orders/data/orders-table.columns";
@@ -22,6 +21,8 @@ import {
   OrderTableItem,
   OrdersTableProps
 } from "@/features/office/orders/types";
+
+import { ModalComponent } from "@/components/ui/modal/ModalComponent";
 
 import { format } from "date-fns";
 
@@ -134,7 +135,7 @@ export const OrdersTable = ({
         </Table>
       </TableContainer>
 
-      <OrderModal open={Boolean(selectedOrder)} onClose={handleClose}>
+      <ModalComponent open={Boolean(selectedOrder)} onClose={handleClose}>
         <div className="flex flex-col gap-5">
           {selectedOrder && <OrderInfo order={selectedOrder} />}
           <OrderDetailsTable
@@ -142,7 +143,7 @@ export const OrdersTable = ({
             highlightArticle={highlightArticle}
           />
         </div>
-      </OrderModal>
+      </ModalComponent>
     </>
   );
 };

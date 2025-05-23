@@ -1,13 +1,18 @@
 import { Pagination } from "@mui/material";
 
-import { OrdersPaginationProps } from "@/features/office/orders/types";
+interface PaginationProps {
+  totalItems: number;
+  rowsPerPage: number;
+  currentPage: number;
+  onChange: (page: number) => void;
+}
 
-export const OrdersPagination = ({
+export const PaginationComponent = ({
   totalItems,
   rowsPerPage,
   currentPage,
   onChange
-}: OrdersPaginationProps) => {
+}: PaginationProps) => {
   if (totalItems <= rowsPerPage) return null;
 
   return (

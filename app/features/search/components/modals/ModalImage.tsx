@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { OrderModal } from "@/features/office/orders/components/OrderModal";
+import { ModalComponent } from "@/components/ui/modal/ModalComponent";
 
 interface ModalImageProps {
   imageUrl: string;
@@ -11,7 +11,7 @@ interface ModalImageProps {
 }
 
 export const ModalImage = ({ imageUrl, open, onClose }: ModalImageProps) => (
-  <OrderModal open={open} onClose={onClose}>
+  <ModalComponent open={open} onClose={onClose}>
     <Image
       src={imageUrl}
       alt="Изображение детали"
@@ -21,5 +21,5 @@ export const ModalImage = ({ imageUrl, open, onClose }: ModalImageProps) => (
       placeholder="blur"
       blurDataURL="/no-image.png"
     />
-  </OrderModal>
+  </ModalComponent>
 );

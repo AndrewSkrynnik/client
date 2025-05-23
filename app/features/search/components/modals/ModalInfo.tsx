@@ -1,4 +1,4 @@
-import { OrderModal } from "@/features/office/orders/components/OrderModal";
+import { ModalComponent } from "@/components/ui/modal/ModalComponent";
 
 import styles from "@/styles/pages/search/Search.module.css";
 
@@ -9,7 +9,7 @@ interface ModalInfoProps {
 }
 
 export const ModalInfo = ({ properties, open, onClose }: ModalInfoProps) => (
-  <OrderModal open={open} onClose={onClose}>
+  <ModalComponent open={open} onClose={onClose}>
     <div className={styles.modalInfo}>
       <h3 className={styles.modalInfoTitle}>Характеристики товара</h3>
       <ul className={styles.modalInfoList}>
@@ -21,5 +21,5 @@ export const ModalInfo = ({ properties, open, onClose }: ModalInfoProps) => (
         ))}
       </ul>
     </div>
-  </OrderModal>
+  </ModalComponent>
 );

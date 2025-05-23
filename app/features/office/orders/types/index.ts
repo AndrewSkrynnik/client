@@ -9,13 +9,6 @@ export interface OrdersFilterFormProps {
   onReset: () => void;
 }
 
-export interface OrdersPaginationProps {
-  totalItems: number;
-  rowsPerPage: number;
-  currentPage: number;
-  onChange: (page: number) => void;
-}
-
 export interface OrderDetailsItem {
   brand: string;
   name: string;

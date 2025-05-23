@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import { OrdersTemplate } from "@/features/office/orders/components/OrdersTemplate.1";
+import { OrdersTemplate } from "@/features/office/orders/components/OrdersTemplate";
 
 export const metadata: Metadata = {
   title: "Заказы | rotazap.ru",

@@ -9,7 +9,7 @@ interface Props {
   onClose: () => void;
 }
 
-export const OrderModal = ({ children, open, onClose }: Props) => {
+export const ModalComponent = ({ children, open, onClose }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);

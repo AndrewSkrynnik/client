@@ -4,13 +4,14 @@ import { Paper, Table, TableContainer } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
-import { OrdersPagination } from "@/features/office/orders/components/OrdersPagination";
 import { SEARCH_PAGINATION } from "@/features/search/common/constants";
 import { ModalImage } from "@/features/search/components/modals/ModalImage";
 import { ModalInfo } from "@/features/search/components/modals/ModalInfo";
 import { CrossesTableBody } from "@/features/search/components/tables/CrossesTableBody";
 import { CrossesTableHead } from "@/features/search/components/tables/CrossesTableHead";
 import { CrossesTableProps } from "@/features/search/types";
+
+import { PaginationComponent } from "@/components/ui/pagination/PaginationComponent";
 
 import { useBasketStore } from "@/store/useBasketStore";
 
@@ -124,7 +125,7 @@ export const CrossesTable = ({
           />
         </Table>
       </TableContainer>
-      <OrdersPagination
+      <PaginationComponent
         totalItems={crossesWithData.length}
         rowsPerPage={SEARCH_PAGINATION}
         currentPage={currentPage}

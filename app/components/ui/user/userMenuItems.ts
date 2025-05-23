@@ -1,5 +1,3 @@
-import { ComponentType } from "react";
-
 import {
   AccountBalanceWalletIcon,
   ArticleIcon,
@@ -13,18 +11,7 @@ import {
   SwitchAccountIcon,
   ViewQuiltIcon
 } from "@/components/icons";
-
-export interface MenuItemConfig {
-  id: number;
-  href: string;
-  title: string;
-  icon: ComponentType<{
-    className?: string;
-    fontSize?: "small" | "medium" | "large";
-  }>;
-  disabled?: boolean;
-  render?: boolean;
-}
+import { MenuItemConfig } from "@/components/ui/user/type";
 
 export const userMenuItems: MenuItemConfig[] = [
   {

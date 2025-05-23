@@ -125,10 +125,10 @@ export const useBasketStore = create<BasketState>()(
     }),
 
     {
-      name: "cart-storage",
+      name: "basket-storage",
       version: 1,
       onRehydrateStorage: () => state => {
-        console.log("[cart:persist] hydration complete");
+        console.log("[basket:persist] hydration complete");
         state?.setHasHydrated(true);
       }
     }

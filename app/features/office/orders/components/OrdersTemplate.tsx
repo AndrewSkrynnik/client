@@ -4,12 +4,13 @@ import { useMemo, useState } from "react";
 
 import { filterOrders } from "@/features/office/orders/common/filter-orders";
 import { paginate } from "@/features/office/orders/common/paginate";
-import { OrdersPagination } from "@/features/office/orders/components/OrdersPagination";
 import { OrdersForm } from "@/features/office/orders/components/forms/OrdersForm";
 import { OrdersTable } from "@/features/office/orders/components/tables/OrdersTable";
 import { orderMocks } from "@/features/office/orders/data/orders.mock";
 import { OrdersFilters } from "@/features/office/orders/types";
 import { ORDERS_PAGINATION } from "@/features/search/common/constants";
+
+import { PaginationComponent } from "@/components/ui/pagination/PaginationComponent";
 
 export const OrdersTemplate = () => {
   const [filters, setFilters] = useState<OrdersFilters>({});
@@ -44,7 +45,7 @@ export const OrdersTemplate = () => {
           orders={paginatedOrders}
           highlightArticle={filters.article}
         />
-        <OrdersPagination
+        <PaginationComponent
           totalItems={filteredOrders.length}
           rowsPerPage={ORDERS_PAGINATION}
           currentPage={page}
