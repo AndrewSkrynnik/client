@@ -1,6 +1,6 @@
 import { TableBody } from "@mui/material";
 
-import { CrossesTableRow } from "@/features/search/components/tables/CrossesTableBodyRow";
+import { CrossesTableRow } from "@/features/search/components/tables/crosses/CrossesTableBodyRow";
 import { CrossesTableBodyProps } from "@/features/search/types/crosses.types";
 
 export const CrossesTableBody = ({

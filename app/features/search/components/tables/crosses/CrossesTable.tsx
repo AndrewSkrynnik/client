@@ -7,8 +7,8 @@ import { useCallback, useEffect, useState } from "react";
 import { SEARCH_PAGINATION } from "@/features/search/common/constants";
 import { ModalImage } from "@/features/search/components/modals/ModalImage";
 import { ModalInfo } from "@/features/search/components/modals/ModalInfo";
-import { CrossesTableBody } from "@/features/search/components/tables/CrossesTableBody";
-import { CrossesTableHead } from "@/features/search/components/tables/CrossesTableHead";
+import { CrossesTableBody } from "@/features/search/components/tables/crosses/CrossesTableBody";
+import { CrossesTableHead } from "@/features/search/components/tables/crosses/CrossesTableHead";
 import { CrossesTableProps } from "@/features/search/types";
 
 import { PaginationComponent } from "@/components/ui/pagination/PaginationComponent";

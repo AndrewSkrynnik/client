@@ -23,3 +23,9 @@ export const SEARCH_RESULT_TABLE_HEAD: TableHeader[] = [
   { id: 6, label: "Кол-во / сумма" },
   { id: 7, label: "" }
 ];
+
+export const SEARCH_TABLE_HEAD: TableHeader[] = [
+  { id: 0, label: "Бренд" },
+  { id: 1, label: "Артикул" },
+  { id: 2, label: "Описание" }
+];

@@ -1,15 +1,16 @@
 import { memo } from "react";
 
-import { CartTotal } from "@/features/search/components/CartTotal";
 import { SearchCounter } from "@/features/search/components/SearchCounter";
 import { CrossesTableRowProps } from "@/features/search/types/crosses.types";
 
-import { CameraAltIcon, InfoIcon } from "@/components/icons";
+import { CameraAltIcon, InfoIcon, ShoppingCartIcon } from "@/components/icons";
 import {
   StyledTableCellBody,
   StyledTableRowBody
 } from "@/components/styled/tables/StylesTables";
 import { TooltipComponent } from "@/components/ui/tooltip/TooltipComponent";
+
+import styles from "@/styles/pages/search/Search.module.css";
 
 const CrossesTableRowComponent = ({
   index,
@@ -55,7 +56,19 @@ const CrossesTableRowComponent = ({
       />
     </StyledTableCellBody>
     <StyledTableCellBody>
-      <CartTotal count={cross.count} onAddToCart={() => onAddToCart(index)} />
+      {cross.count > 0 ? (
+        <TooltipComponent title="Добавить в корзину">
+          <ShoppingCartIcon
+            onClick={() => onAddToCart(index)}
+            className={styles.basketTotal}
+          />
+        </TooltipComponent>
+      ) : (
+        <ShoppingCartIcon
+          onClick={() => onAddToCart(index)}
+          className={styles.basketTotalEmpty}
+        />
+      )}
     </StyledTableCellBody>
   </StyledTableRowBody>
 );

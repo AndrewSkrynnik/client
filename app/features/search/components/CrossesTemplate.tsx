@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { getProposalWord } from "@/features/search/common/getProposalWord";
 import TemplateWrapper from "@/features/search/components/TemplateWrapper";
-import { CrossesTable } from "@/features/search/components/tables/CrossesTable";
+import { CrossesTable } from "@/features/search/components/tables/crosses/CrossesTable";
 import { fetchCrossesData } from "@/features/search/server/fetchCrosses";
 import { CrossData } from "@/features/search/types";
 
@@ -85,7 +85,7 @@ export const CrossesTemplate = () => {
     return (
       <>
         <h2 className={styles.title}>
-          Найдено {proposalsCount} {proposalWord} из прайс-листа по артикулу{" "}
+          Найдено {proposalsCount} {proposalWord} по артикулу{" "}
           <span>
             {number} ({brand})
           </span>

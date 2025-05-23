@@ -27,6 +27,12 @@ export interface SearchResultTableProps {
   fallbackNumber: string;
 }
 
+// Тип пропсов для компонента ResultTableBodyRow
+export interface ResultTableBodyRowProps {
+  item: SearchBrand;
+  onClick: () => void;
+}
+
 // Тип данных о кроссах в SearchCrossesTemplate
 export interface CrossData {
   brand: string;
@@ -97,4 +103,10 @@ export interface SearchCounterProps {
   stock: number;
   price: string;
   onChange: (value: number) => void;
+}
+
+/* BasketTotal */
+export interface BasketTotalProps {
+  count: number;
+  onAddToBasket: () => void;
 }

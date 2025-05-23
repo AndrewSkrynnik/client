@@ -4,7 +4,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 import TemplateWrapper from "@/features/search/components/TemplateWrapper";
-import { SearchResultTable } from "@/features/search/components/tables/SearchResultTable";
+import { ResultTable } from "@/features/search/components/tables/result/ResultTable";
 import { fetchBrands } from "@/features/search/server/fetchBrands";
 import { SearchBrand } from "@/features/search/types";
 
@@ -15,7 +15,7 @@ import styles from "@/styles/pages/search/Search.module.css";
  * Выполняет загрузку списка брендов по введённому номеру детали и отображает
  * возможные совпадения из базы ABCP.
  */
-export const SearchTemplate = () => {
+export const ResultTemplate = () => {
   // Получение параметров маршрута (/search/[number]) и строки запроса (?number=...)
   const params = useParams();
   const searchParams = useSearchParams();
@@ -87,7 +87,7 @@ export const SearchTemplate = () => {
         <h2 className={styles.title}>
           Результаты поиска для артикула <span>{number}</span>
         </h2>
-        <SearchResultTable
+        <ResultTable
           brands={brands}
           fallbackNumber={number || "Неизвестный артикул"}
         />

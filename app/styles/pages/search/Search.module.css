@@ -60,8 +60,8 @@
   }
 }
 
-/* TotalCart */
-.cartTotal {
+/* BasketTotal */
+.basketTotal {
   color: var(--color-peach);
   transition: var(--transition-color);
   cursor: pointer;
@@ -80,4 +80,9 @@
       cursor: not-allowed;
     }
   }
+}
+
+.basketTotalEmpty {
+  color: var(--color-disabled);
+  cursor: not-allowed;
 }
