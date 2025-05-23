@@ -35,9 +35,7 @@ export const SearchResultTable = ({
       console.error("Ошибка: номер артикула отсутствует!");
       return;
     }
-    router.push(
-      `/search-results/${number}/crosses/${encodeURIComponent(brand)}`
-    );
+    router.push(`/search/${number}/crosses/${encodeURIComponent(brand)}`);
   };
 
   return (

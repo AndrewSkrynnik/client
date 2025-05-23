@@ -69,12 +69,12 @@ export const SearchForm = () => {
   const handleSuggestionClick = (number: string) => {
     setQuery(number);
     setShowSuggestions(false);
-    router.push(`/search-results/${encodeURIComponent(number)}`);
+    router.push(`/search/${encodeURIComponent(number)}`);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && query.trim()) {
-      router.push(`/search-results/${encodeURIComponent(query)}`);
+      router.push(`/search/${encodeURIComponent(query)}`);
     }
   };
 
