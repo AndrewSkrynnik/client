@@ -89,8 +89,6 @@ export interface CrossesTableProps {
   crosses: CrossReplacement[];
   properties: Record<string, string>;
   images: CrossImage[];
-  isLoading?: boolean;
-  isError?: boolean;
 }
 
 /* Counter */

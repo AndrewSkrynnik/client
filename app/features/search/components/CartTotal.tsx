@@ -1,6 +1,6 @@
 import { ShoppingCartIcon } from "@/components/icons";
 
-import styles from "@/styles/pages/search-results/SearchResults.module.css";
+import styles from "@/styles/pages/search/Search.module.css";
 
 interface CartTotalProps {
   count: number;

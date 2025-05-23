@@ -1,6 +1,6 @@
 import { OrderModal } from "@/features/office/orders/components/OrderModal";
 
-import styles from "@/styles/pages/search-results/SearchResults.module.css";
+import styles from "@/styles/pages/search/Search.module.css";
 
 interface ModalInfoProps {
   properties: Record<string, string>;

@@ -9,7 +9,6 @@ import { OrdersForm } from "@/features/office/orders/components/forms/OrdersForm
 import { OrdersTable } from "@/features/office/orders/components/tables/OrdersTable";
 import { orderMocks } from "@/features/office/orders/data/orders.mock";
 import { OrdersFilters } from "@/features/office/orders/types";
-import { ORDERS_PAGINATION } from "@/features/search/common/constants";
 
 export const OrdersTemplate = () => {
   const [filters, setFilters] = useState<OrdersFilters>({});

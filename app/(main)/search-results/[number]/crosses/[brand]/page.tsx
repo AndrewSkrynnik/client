@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import { SearchCrossesTemplate } from "@/features/search/components/SearchCrossesTemplate";
+import { CrossesTemplate } from "@/features/search/components/CrossesTemplate";
 
 export const metadata: Metadata = {
   title: "Результаты поиска | rotazap.ru",
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function SearchCrossesPage() {
-  return <SearchCrossesTemplate />;
+  return <CrossesTemplate />;
 }

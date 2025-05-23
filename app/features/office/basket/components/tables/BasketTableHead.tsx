@@ -5,7 +5,7 @@ import {
 } from "@/components/styled/tables/StylesTables";
 import { CheckboxComponent } from "@/components/ui/forms/inputs/CheckboxComponent";
 
-import { BASKET_TABLE } from "@/data/table-header.data";
+import { BASKET_TABLE_HEAD } from "@/data/table-header.data";
 
 import { useBasketStore } from "@/store/useBasketStore";
 
@@ -17,7 +17,7 @@ export const BasketTableHead = () => {
   return (
     <thead>
       <StyledTableRowHead>
-        {BASKET_TABLE.map(itemHead => (
+        {BASKET_TABLE_HEAD.map(itemHead => (
           <StyledTableCellHead key={itemHead.id}>
             {itemHead.id === 6 ? (
               <CheckboxComponent

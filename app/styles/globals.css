@@ -55,6 +55,10 @@ main {
   flex-grow: 1;
 }
 
+section {
+  margin: 32px 0;
+}
+
 h1,
 h2,
 h3,
@@ -92,10 +96,6 @@ li {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-.section {
-  margin-bottom: 32px;
 }
 
 .container {

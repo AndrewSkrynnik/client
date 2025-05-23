@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import { SearchResultTemplate } from "@/features/search/components/SearchResultTemplate";
+import { SearchTemplate } from "@/features/search/components/SearchTemplate";
 
 export const metadata: Metadata = {
   title: "Результаты поиска | rotazap.ru",
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function SearchResultsPage() {
-  return <SearchResultTemplate />;
+  return <SearchTemplate />;
 }

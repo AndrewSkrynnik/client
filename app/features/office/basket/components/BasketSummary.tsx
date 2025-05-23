@@ -40,30 +40,38 @@ export const BasketSummary = () => {
 
   return (
     <div className={styles.summaryContainer}>
-      <div className={styles.summaryInfo}>
-        <div className={styles.summaryTitle}>Итого в корзине:</div>
-        <div className={styles.summaryInfoItem}>
-          <p>Количество товаров:</p> <span>{totalCount} шт.</span>
+      <div className={styles.summaryWrapper}>
+        <div className={styles.summaryInfo}>
+          <div className={styles.summaryTitle}>Итого в корзине:</div>
+          <div className={styles.summaryInfoItem}>
+            <p>Количество товаров:</p> <span>{totalCount} шт.</span>
+          </div>
+          <div className={styles.summaryInfoItem}>
+            <p>Общая стоимость:</p>
+            <span>{formatNumber(totalPrice)} ₽</span>
+          </div>
         </div>
-        <div className={styles.summaryInfoItem}>
-          <p>Общая стоимость:</p>
-          <span>{formatNumber(totalPrice)} ₽</span>
+
+        <div className={`${styles.summaryInfo} ${styles.summaryInfoOrder}`}>
+          <div className={`${styles.summaryTitle} ${styles.summaryTitleOrder}`}>
+            Итого в заказе:
+          </div>
+          <div className={styles.summaryInfoItem}>
+            <p>Количество товаров:</p> <span>{selectedCount} шт.</span>
+          </div>
+          <div className={styles.summaryInfoItem}>
+            <p>Общая стоимость:</p>
+            <span>{formatNumber(selectedPrice)} ₽</span>
+          </div>
         </div>
       </div>
-
-      <div className={styles.summaryInfo}>
-        <div className={styles.summaryTitle}>Итого в заказе:</div>
-        <div className={styles.summaryInfoItem}>
-          <p>Количество товаров:</p> <span>{selectedCount} шт.</span>
-        </div>
-        <div className={styles.summaryInfoItem}>
-          <p>Общая стоимость:</p>
-          <span>{formatNumber(selectedPrice)} ₽</span>
-        </div>
-      </div>
-
       <div className={styles.summaryButtonWrapper}>
-        <Button onClick={handleCheckout}>Оформить заказ</Button>
+        <Button
+          isDisabled={selectedItems.length === 0}
+          onClick={handleCheckout}
+        >
+          Оформить заказ
+        </Button>
       </div>
     </div>
   );
