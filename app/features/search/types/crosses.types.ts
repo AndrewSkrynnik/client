@@ -2,7 +2,7 @@
 export interface CrossItem {
   brand: string;
   numberFix: string;
-  price: string;
+  price: number;
   stock: number;
   count: number;
 }

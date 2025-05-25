@@ -8,7 +8,7 @@ export const BasketTableBody = () => {
   const items = useBasketStore(state => state.items);
   const hasHydrated = useBasketStore(state => state.hasHydrated);
 
-  if (!hasHydrated) return null; // 👈 гарантируем, что items готовы
+  if (!hasHydrated) return null;
 
   return (
     <TableBody>

@@ -36,7 +36,7 @@ export const CrossesTable = ({
     {
       brand: string;
       numberFix: string;
-      price: string;
+      price: number;
       stock: number;
       count: number;
     }[]
@@ -45,7 +45,7 @@ export const CrossesTable = ({
   useEffect(() => {
     const newData = crosses.map(cross => ({
       ...cross,
-      price: (Math.random() * (10000 - 1000) + 1000).toFixed(2),
+      price: Number((Math.random() * (10000 - 1000) + 1000).toFixed(2)),
       stock: Math.floor(Math.random() * 51),
       count: 0
     }));
@@ -86,7 +86,7 @@ export const CrossesTable = ({
     brand: string;
     number: string;
     description: string;
-    price: string;
+    price: number;
     count: number;
     stock: number;
   }) => {
@@ -96,7 +96,7 @@ export const CrossesTable = ({
       brand: cross.brand,
       number: cross.number,
       description: descr || "Описание отсутствует",
-      price: parseFloat(cross.price),
+      price: cross.price,
       count: cross.count,
       stock: cross.stock
     });

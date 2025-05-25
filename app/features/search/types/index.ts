@@ -101,7 +101,7 @@ export interface CrossesTableProps {
 export interface SearchCounterProps {
   count: number;
   stock: number;
-  price: string;
+  price: number;
   onInputChange?: (value: number) => void;
   onIncrement: () => void;
   onDecrement: () => void;

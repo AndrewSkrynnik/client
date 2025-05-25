@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 import { SearchCounterProps } from "@/features/search/types";
 
+import { formatNumber } from "@/utils/format-number";
+
 import styles from "@/styles/components/ui/counter/Counter.module.css";
 
 export const SearchCounter = ({
@@ -19,7 +21,7 @@ export const SearchCounter = ({
     setInputValue(count.toString());
   }, [count]);
 
-  const totalPrice = (parseFloat(price) * count).toFixed(2);
+  const totalPrice = formatNumber(price * count);
 
   const handleInput = (raw: string) => {
     const digits = raw.replace(/\D/g, "");
@@ -58,7 +60,7 @@ export const SearchCounter = ({
           +
         </button>
       </div>
-      <span className="text-sm">{totalPrice} ₽</span>
+      <span className="text-sm">{totalPrice}</span>
     </div>
   );
 };

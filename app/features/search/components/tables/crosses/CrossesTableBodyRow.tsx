@@ -12,6 +12,8 @@ import { TooltipComponent } from "@/components/ui/tooltip/TooltipComponent";
 
 import { useBasketStore } from "@/store/useBasketStore";
 
+import { formatNumber } from "@/utils/format-number";
+
 const CrossesTableRowComponent = ({
   cross,
   descr,
@@ -56,7 +58,7 @@ const CrossesTableRowComponent = ({
           )}
         </div>
       </StyledTableCellBody>
-      <StyledTableCellBody>{cross.price}</StyledTableCellBody>
+      <StyledTableCellBody>{formatNumber(cross.price)}</StyledTableCellBody>
       <StyledTableCellBody>{cross.stock}</StyledTableCellBody>
       <StyledTableCellBody>
         <SearchCounter
@@ -68,7 +70,7 @@ const CrossesTableRowComponent = ({
               brand: cross.brand,
               number: cross.numberFix,
               description: descr || "Описание отсутствует",
-              price: parseFloat(cross.price),
+              price: cross.price,
               stock: cross.stock,
               count: 1
             })
