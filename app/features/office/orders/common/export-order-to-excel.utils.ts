@@ -22,9 +22,9 @@ export const exportOrderToExcel = (
     [`Заказ №${orderId}`],
     ["Дата заказа:", orderDate.toLocaleDateString("ru-RU")],
     ["Адрес доставки:", address],
-    ["Сумма заказа:", total],
+    ["Сумма, руб.:", total],
     [],
-    ["Бренд", "Деталь", "Артикул", "Цена, шт.", "Кол-во деталей", "Сумма"],
+    ["Бренд", "Деталь", "Артикул", "Цена, шт.", "Кол-во, шт.", "Сумма"],
     ...items.map(item => [
       item.brand,
       item.name,

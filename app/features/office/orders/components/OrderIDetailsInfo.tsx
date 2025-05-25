@@ -4,6 +4,9 @@ import { exportOrderToExcel } from "@/features/office/orders/common/export-order
 import { formatCurrency } from "@/features/office/orders/data/orders-table.format";
 import { OrderTableItem } from "@/features/office/orders/types";
 
+import { DownloadForOfflineIcon } from "@/components/icons";
+import { TooltipComponent } from "@/components/ui/tooltip/TooltipComponent";
+
 import styles from "@/styles/pages/office/orders/Orders.module.css";
 
 import { format } from "date-fns";
@@ -12,24 +15,24 @@ interface OrderInfoProps {
   order: OrderTableItem;
 }
 
-export const OrderInfo = ({ order }: OrderInfoProps) => (
+export const OrderDetailsInfo = ({ order }: OrderInfoProps) => (
   <div className={styles.orderInfoContainer}>
     <div className={styles.orderInfoHeader}>
       <h3 className={styles.orderInfoTitle}>Заказ №{order.id}</h3>
-
-      <button
-        onClick={() =>
-          exportOrderToExcel(
-            order.id,
-            order.orderDate,
-            order.address,
-            order.details
-          )
-        }
-        className="link"
-      >
-        Скачать Excel
-      </button>
+      <TooltipComponent title="Выгрузить заказ в Excel">
+        <DownloadForOfflineIcon
+          onClick={() =>
+            exportOrderToExcel(
+              order.id,
+              order.orderDate,
+              order.address,
+              order.details
+            )
+          }
+          fontSize="large"
+          className="closeButton"
+        />
+      </TooltipComponent>
     </div>
 
     <ul className={styles.orderInfoList}>
