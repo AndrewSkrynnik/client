@@ -63,9 +63,7 @@ export const StepThree = () => {
       setAuth(response.data.user);
       toast.success("Регистрация прошла успешно!");
       reset();
-      setTimeout(() => {
-        router.push("/confirmation");
-      }, 1500); //
+      router.push("/confirmation");
     } catch (error) {
       showAuthError(error);
     }

@@ -1,6 +1,7 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -20,6 +21,8 @@ import { showAuthError } from "@/common/showAuthError";
 import styles from "@/styles/pages/auth/Auth.module.css";
 
 export const AuthSignInForm = () => {
+  const router = useRouter();
+
   const setAuth = useAuthStore(state => state.setAuth);
 
   const {
@@ -39,10 +42,7 @@ export const AuthSignInForm = () => {
 
       setAuth(user);
       toast.success("Вход выполнен!");
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
+      router.push("/confirmation");
     } catch (error: any) {
       if (error.response?.data?.message) {
         toast.error(error.response.data.message);
