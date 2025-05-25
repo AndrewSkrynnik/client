@@ -20,8 +20,7 @@ export const SEARCH_RESULT_TABLE_HEAD: TableHeader[] = [
   { id: 3, label: "Инфо" },
   { id: 4, label: "Цена, руб." },
   { id: 5, label: "Наличие, шт." },
-  { id: 6, label: "Кол-во / сумма" },
-  { id: 7, label: "" }
+  { id: 6, label: "В корзину" }
 ];
 
 export const SEARCH_TABLE_HEAD: TableHeader[] = [

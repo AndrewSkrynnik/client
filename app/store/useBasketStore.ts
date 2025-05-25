@@ -8,15 +8,15 @@ export type BasketItem = {
   price: number;
   count: number;
   totalPrice: number;
-  selected?: boolean;
   stock: number;
+  selected?: boolean;
 };
-
 interface BasketState {
   items: BasketItem[];
   hasHydrated: boolean;
   setHasHydrated: (value: boolean) => void;
 
+  // старые
   addItem: (item: Omit<BasketItem, "totalPrice">) => void;
   removeItem: (number: string, brand: string) => void;
   updateCount: (number: string, brand: string, count: number) => void;
@@ -26,6 +26,10 @@ interface BasketState {
   selectItem: (number: string, brand: string, selected: boolean) => void;
   selectAll: (selected: boolean) => void;
   removeSelectedItems: () => void;
+
+  // новые
+  incrementItemCount: (item: Omit<BasketItem, "totalPrice">) => void;
+  decrementItemCount: (number: string, brand: string) => void;
 }
 
 export const useBasketStore = create<BasketState>()(
@@ -121,6 +125,62 @@ export const useBasketStore = create<BasketState>()(
         set(state => ({
           items: state.items.filter(item => !item.selected)
         }));
+      },
+
+      incrementItemCount: (item: Omit<BasketItem, "totalPrice">) => {
+        const existing = get().items.find(
+          i => i.number === item.number && i.brand === item.brand
+        );
+
+        if (existing) {
+          const newCount = Math.min(existing.count + 1, existing.stock);
+          set({
+            items: get().items.map(i =>
+              i.number === item.number && i.brand === item.brand
+                ? {
+                    ...i,
+                    count: newCount,
+                    totalPrice: newCount * i.price
+                  }
+                : i
+            )
+          });
+        } else {
+          set({
+            items: [
+              ...get().items,
+              {
+                ...item,
+                count: 1,
+                totalPrice: item.price
+              }
+            ]
+          });
+        }
+      },
+      decrementItemCount: (number: string, brand: string) => {
+        const existing = get().items.find(
+          i => i.number === number && i.brand === brand
+        );
+
+        if (!existing) return;
+
+        if (existing.count <= 1) {
+          get().removeItem(number, brand);
+        } else {
+          const newCount = existing.count - 1;
+          set({
+            items: get().items.map(i =>
+              i.number === number && i.brand === brand
+                ? {
+                    ...i,
+                    count: newCount,
+                    totalPrice: newCount * i.price
+                  }
+                : i
+            )
+          });
+        }
       }
     }),
 

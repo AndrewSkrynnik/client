@@ -9,6 +9,8 @@ import { CrossesTable } from "@/features/search/components/tables/crosses/Crosse
 import { fetchCrossesData } from "@/features/search/server/fetchCrosses";
 import { CrossData } from "@/features/search/types";
 
+import { useBasketStore } from "@/store/useBasketStore";
+
 import styles from "@/styles/pages/search/Search.module.css";
 
 /**
@@ -17,6 +19,7 @@ import styles from "@/styles/pages/search/Search.module.css";
  * подробной информации о товаре и его аналогах.
  */
 export const CrossesTemplate = () => {
+  const rehydrate = useBasketStore.persist?.rehydrate;
   // Извлекаем параметры из маршрута: бренд и номер детали
   const params = useParams();
   const number = params.number as string;
@@ -28,6 +31,17 @@ export const CrossesTemplate = () => {
 
   // Флаг готовности данных (по сути: загрузка завершена успешно)
   const isReady = data !== null;
+
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "basket-storage") {
+        rehydrate?.();
+      }
+    };
+
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, [rehydrate]);
 
   /**
    * Эффект загрузки данных с API по номеру и бренду.

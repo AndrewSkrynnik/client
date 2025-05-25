@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { SearchCounterProps } from "@/features/search/types";
 
 import styles from "@/styles/components/ui/counter/Counter.module.css";
@@ -6,34 +8,50 @@ export const SearchCounter = ({
   count,
   stock,
   price,
-  onChange
+  onIncrement,
+  onDecrement,
+  onInputChange
 }: SearchCounterProps) => {
+  const [inputValue, setInputValue] = useState(count.toString());
+
+  // синхронизируем ввод при изменении count извне
+  useEffect(() => {
+    setInputValue(count.toString());
+  }, [count]);
+
   const totalPrice = (parseFloat(price) * count).toFixed(2);
-  const safeValue = Number.isFinite(count) ? count.toString() : "0";
+
+  const handleInput = (raw: string) => {
+    const digits = raw.replace(/\D/g, "");
+    const trimmed = digits.replace(/^0+(?!$)/, ""); // убираем leading zero
+    const parsed = parseInt(trimmed || "0", 10);
+
+    const clamped = Math.min(parsed, stock);
+    setInputValue(clamped.toString());
+    onInputChange?.(clamped);
+  };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <button
-          onClick={() => onChange(Math.max(0, count - 1))}
+          onClick={onDecrement}
           disabled={count === 0}
           className={`${styles.button} ${count === 0 ? styles.buttonDisabled : styles.buttonActive}`}
         >
           –
         </button>
+
         <input
           type="text"
           inputMode="numeric"
-          value={safeValue}
-          onChange={e => {
-            const raw = e.target.value.replace(/\D/g, "");
-            const parsed = parseInt(raw, 10);
-            onChange(isNaN(parsed) ? 0 : Math.min(parsed, stock));
-          }}
+          value={inputValue}
+          onChange={e => handleInput(e.target.value)}
           className={styles.input}
         />
+
         <button
-          onClick={() => onChange(Math.min(count + 1, stock))}
+          onClick={onIncrement}
           disabled={count >= stock}
           className={`${styles.button} ${count >= stock ? styles.buttonDisabled : styles.buttonActive}`}
         >

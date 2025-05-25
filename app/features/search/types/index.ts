@@ -102,7 +102,9 @@ export interface SearchCounterProps {
   count: number;
   stock: number;
   price: string;
-  onChange: (value: number) => void;
+  onInputChange?: (value: number) => void;
+  onIncrement: () => void;
+  onDecrement: () => void;
 }
 
 /* BasketTotal */

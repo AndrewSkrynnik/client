@@ -59,30 +59,3 @@
     font-weight: 700;
   }
 }
-
-/* BasketTotal */
-.basketTotal {
-  color: var(--color-peach);
-  transition: var(--transition-color);
-  cursor: pointer;
-
-  @media (width >= 769px) {
-    &:hover {
-      color: var(--hover-peach);
-    }
-
-    &:active {
-      color: var(--opacity);
-    }
-
-    &:disabled {
-      color: var(--color-disabled);
-      cursor: not-allowed;
-    }
-  }
-}
-
-.basketTotalEmpty {
-  color: var(--color-disabled);
-  cursor: not-allowed;
-}

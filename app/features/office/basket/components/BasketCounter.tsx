@@ -1,18 +1,50 @@
+"use client";
+
+import { FC, useEffect, useState } from "react";
+
 import { BasketCounterProps } from "@/features/office/basket/types";
+
+import { useBasketStore } from "@/store/useBasketStore";
 
 import styles from "@/styles/components/ui/counter/Counter.module.css";
 
-export const BasketCounter = ({
-  count = 1, // ✅ минимум по умолчанию 1
-  stock = 1,
-  onChange
-}: BasketCounterProps) => {
-  const safeValue = Number.isFinite(count) ? count.toString() : "1"; // ✅ показываем "1", а не "0"
+export const BasketCounter: FC<BasketCounterProps> = ({ brand, number }) => {
+  const update = useBasketStore(state => state.updateCount);
+  const increment = useBasketStore(state => state.incrementItemCount);
+  const decrement = useBasketStore(state => state.decrementItemCount);
+
+  const item = useBasketStore(state =>
+    state.items.find(i => i.brand === brand && i.number === number)
+  );
+
+  // fallback значения для item, чтобы не вызывать хуки условно
+  const count = item?.count ?? 1;
+  const stock = item?.stock ?? 1;
+  const price = item?.price ?? 0;
+  const description = item?.description ?? "";
+
+  const [inputValue, setInputValue] = useState(count.toString());
+
+  useEffect(() => {
+    setInputValue(count.toString());
+  }, [count]);
+
+  const handleInput = (raw: string) => {
+    const digits = raw.replace(/\D/g, "");
+    const trimmed = digits.replace(/^0+(?!$)/, "");
+    const parsed = parseInt(trimmed || "1", 10);
+    const clamped = Math.min(Math.max(parsed, 1), stock);
+
+    setInputValue(clamped.toString());
+    update(number, brand, clamped);
+  };
+
+  if (!item) return null;
 
   return (
     <div className={styles.container}>
       <button
-        onClick={() => onChange(Math.max(1, count - 1))} // ✅ минимум 1
+        onClick={() => decrement(number, brand)}
         disabled={count <= 1}
         className={`${styles.button} ${count <= 1 ? styles.buttonDisabled : styles.buttonActive}`}
       >
@@ -22,18 +54,15 @@ export const BasketCounter = ({
       <input
         type="text"
         inputMode="numeric"
-        value={safeValue}
-        onChange={e => {
-          const raw = e.target.value.replace(/\D/g, "");
-          const parsed = parseInt(raw, 10);
-          const next = isNaN(parsed) ? 1 : Math.max(1, Math.min(parsed, stock)); // ✅ min 1
-          onChange(next);
-        }}
+        value={inputValue}
+        onChange={e => handleInput(e.target.value)}
         className={styles.input}
       />
 
       <button
-        onClick={() => onChange(Math.min(count + 1, stock))}
+        onClick={() =>
+          increment({ number, brand, price, description, stock, count: 1 })
+        }
         disabled={count >= stock}
         className={`${styles.button} ${count >= stock ? styles.buttonDisabled : styles.buttonActive}`}
       >
