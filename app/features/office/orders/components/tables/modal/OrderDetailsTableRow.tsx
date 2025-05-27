@@ -1,7 +1,9 @@
-import { TableCell, TableRow } from "@mui/material";
+import { TableCell } from "@mui/material";
 
 import { HighlightMatch } from "@/features/office/orders/components/HighlightMatch";
 import { OrderDetailsItem } from "@/features/office/orders/types";
+
+import { StyledTableRowBody } from "@/components/styled/tables/StylesTables";
 
 import { ORDERS_DETAILS_TABLE_HEAD } from "@/data/table-header.data";
 
@@ -16,15 +18,21 @@ export const OrderDetailsTableRow = ({
   item,
   highlightArticle = ""
 }: OrderDetailsTableRowProps) => (
-  <TableRow>
-    {ORDERS_DETAILS_TABLE_HEAD.map(({ key }) => (
-      <TableCell key={key} align="center">
-        {key === "article"
-          ? HighlightMatch(item[key], highlightArticle)
-          : typeof item[key] === "number"
-            ? formatNumber(item[key] as number)
-            : String(item[key] ?? "-")}
-      </TableCell>
-    ))}
-  </TableRow>
+  <StyledTableRowBody>
+    {ORDERS_DETAILS_TABLE_HEAD.map(({ key }) => {
+      const value = item[key as keyof OrderDetailsItem];
+
+      return (
+        <TableCell key={key} align="center">
+          {key === "article"
+            ? HighlightMatch(String(value), highlightArticle)
+            : key === "qtyItem"
+              ? Math.trunc(Number(value))
+              : typeof value === "number"
+                ? formatNumber(value)
+                : String(value ?? "-")}
+        </TableCell>
+      );
+    })}
+  </StyledTableRowBody>
 );
