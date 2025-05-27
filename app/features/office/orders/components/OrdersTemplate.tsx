@@ -6,19 +6,21 @@ import { filterOrders } from "@/features/office/orders/common/filter-orders";
 import { paginate } from "@/features/office/orders/common/paginate";
 import { OrdersForm } from "@/features/office/orders/components/forms/OrdersForm";
 import { OrdersTable } from "@/features/office/orders/components/tables/OrdersTable";
-import { orderMocks } from "@/features/office/orders/data/orders.mock";
 import { OrdersFilters } from "@/features/office/orders/types";
 import { ORDERS_PAGINATION } from "@/features/search/common/constants";
 
 import { PaginationComponent } from "@/components/ui/pagination/PaginationComponent";
 
+import { useOrderStore } from "@/store/useOrderStore";
+
 export const OrdersTemplate = () => {
+  const orders = useOrderStore(state => state.orders);
   const [filters, setFilters] = useState<OrdersFilters>({});
   const [page, setPage] = useState(1);
 
   const filteredOrders = useMemo(
-    () => filterOrders(orderMocks, filters),
-    [filters]
+    () => filterOrders(orders, filters),
+    [orders, filters]
   );
 
   const paginatedOrders = useMemo(

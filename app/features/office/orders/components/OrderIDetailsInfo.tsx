@@ -26,7 +26,8 @@ export const OrderDetailsInfo = ({ order }: OrderInfoProps) => (
               order.id,
               order.orderDate,
               order.address,
-              order.details
+              order.details,
+              order.fullName
             )
           }
           fontSize="large"
@@ -39,6 +40,9 @@ export const OrderDetailsInfo = ({ order }: OrderInfoProps) => (
       <li className={styles.orderInfoItem}>
         <span>Дата заказа:</span>
         {format(order.orderDate, "dd.MM.yyyy")}
+      </li>
+      <li className={styles.orderInfoItem}>
+        <span>ФИО клиента:</span> {order.fullName}
       </li>
       <li className={styles.orderInfoItem}>
         <span>Адрес доставки:</span> {order.address}

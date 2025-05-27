@@ -6,6 +6,7 @@ export interface User {
   fullName?: string;
   phoneNumber?: string;
   role?: string;
+  address: string;
 }
 
 export interface AuthState {

@@ -3,32 +3,27 @@ import * as XLSX from "xlsx";
 
 import { OrderDetailsItem } from "@/features/office/orders/types";
 
-/**
- * Экспорт заказа в Excel
- * @param orderId — номер заказа
- * @param orderDate — дата заказа
- * @param address — адрес доставки
- * @param items — массив товаров в заказе
- */
 export const exportOrderToExcel = (
-  orderId: number,
-  orderDate: Date,
+  orderId: string,
+  orderDate: Date | string,
   address: string,
-  items: OrderDetailsItem[]
+  items: OrderDetailsItem[],
+  fullName: string
 ) => {
   const total = items.reduce((sum, item) => sum + item.totalPrice, 0);
 
   const worksheetData = [
     [`Заказ №${orderId}`],
-    ["Дата заказа:", orderDate.toLocaleDateString("ru-RU")],
+    ["Дата заказа:", new Date(orderDate).toLocaleDateString("ru-RU")],
+    ["ФИО клиента:", fullName],
     ["Адрес доставки:", address],
     ["Сумма, руб.:", total],
     [],
-    ["Бренд", "Деталь", "Артикул", "Цена, шт.", "Кол-во, шт.", "Сумма"],
+    ["Бренд", "Артикул", "Описание", "Цена, шт.", "Кол-во, шт.", "Сумма, руб."],
     ...items.map(item => [
       item.brand,
-      item.name,
       item.article,
+      item.name,
       item.price,
       item.qtyItem,
       item.totalPrice

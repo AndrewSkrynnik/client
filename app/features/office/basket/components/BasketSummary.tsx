@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/buttons/Button";
 
 import { useBasketStore } from "@/store/useBasketStore";
+import { useOrderStore } from "@/store/useOrderStore";
 
 import { formatNumber } from "@/utils/format-number";
 
@@ -33,9 +34,18 @@ export const BasketSummary = () => {
       return;
     }
 
-    console.log("[checkout]: оформленные товары", selectedItems);
-    alert("Товары успешно добавлены в заказ!");
+    const orderItems = selectedItems.map(item => ({
+      brand: item.brand,
+      article: item.number,
+      name: item.description,
+      price: item.price,
+      qtyItem: item.count,
+      totalPrice: item.totalPrice
+    }));
+
+    useOrderStore.getState().createOrder(orderItems, selectedPrice);
     removeSelectedItems();
+    alert("Товары успешно добавлены в заказ!");
   };
 
   return (

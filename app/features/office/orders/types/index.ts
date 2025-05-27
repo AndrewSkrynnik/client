@@ -19,11 +19,12 @@ export interface OrderDetailsItem {
 }
 
 export interface OrderTableItem {
-  id: number;
+  id: string;
   paymentMethod: string;
   orderDate: Date;
   status: string;
   address: string;
+  fullName: string;
   details: OrderDetailsItem[];
 }
 
