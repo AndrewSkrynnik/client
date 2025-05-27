@@ -15,6 +15,7 @@ interface AuthResponse {
     email: string;
     username: string;
     role: string;
+    address: string;
   };
 }
 

@@ -3,27 +3,26 @@ import { useEffect } from "react";
 import { useOrderStore } from "@/store/useOrderStore";
 
 export const useOrderSync = () => {
-  const set = useOrderStore.setState;
-  const get = useOrderStore.getState;
-
   useEffect(() => {
-    // 1. Пометить, что store готов
-    set({ hasHydrated: true });
+    const { setState, getState } = useOrderStore;
 
-    // 2. Слушать события из других вкладок
+    // 1. Установка hasHydrated
+    setState({ hasHydrated: true });
+
+    // 2. Слушатель для синхронизации
     const handler = (event: StorageEvent) => {
       if (event.key !== "order-storage") return;
 
       try {
         const newData = JSON.parse(event.newValue || "{}");
         const newOrders = newData?.state?.orders;
-        const currentOrders = get().orders;
+        const currentOrders = getState().orders;
 
         const changed =
           JSON.stringify(currentOrders) !== JSON.stringify(newOrders);
 
         if (changed && Array.isArray(newOrders)) {
-          set({ orders: newOrders });
+          setState({ orders: newOrders });
         }
       } catch (e) {
         console.warn("Ошибка синхронизации заказов", e);
