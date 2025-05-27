@@ -1,3 +1,6 @@
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+
 import { Button } from "@/components/ui/buttons/Button";
 
 import { useBasketStore } from "@/store/useBasketStore";
@@ -8,10 +11,13 @@ import { formatNumber } from "@/utils/format-number";
 import styles from "@/styles/pages/office/basket/Basket.module.css";
 
 export const BasketSummary = () => {
+  const createOrder = useOrderStore(state => state.createOrder);
   const items = useBasketStore(state => state.items);
   const removeSelectedItems = useBasketStore(
     state => state.removeSelectedItems
   );
+
+  const router = useRouter();
 
   const selectedItems = items.filter(item => item.selected);
   const totalItems = items;
@@ -29,11 +35,6 @@ export const BasketSummary = () => {
   const totalPrice = totalItems.reduce((acc, item) => acc + item.totalPrice, 0);
 
   const handleCheckout = () => {
-    if (selectedItems.length === 0) {
-      alert("Выберите товары для оформления заказа.");
-      return;
-    }
-
     const orderItems = selectedItems.map(item => ({
       brand: item.brand,
       article: item.number,
@@ -43,9 +44,17 @@ export const BasketSummary = () => {
       totalPrice: item.totalPrice
     }));
 
-    useOrderStore.getState().createOrder(orderItems, selectedPrice);
-    removeSelectedItems();
-    alert("Товары успешно добавлены в заказ!");
+    try {
+      createOrder(orderItems, selectedPrice);
+      removeSelectedItems();
+
+      console.log("✅ заказ создан — до toast");
+      toast.success("Заказ успешно оформлен!");
+      router.push("/office/orders");
+    } catch (error: any) {
+      toast.error(error?.message || "Ошибка при оформлении заказа");
+      console.error("[checkout error]", error);
+    }
   };
 
   return (

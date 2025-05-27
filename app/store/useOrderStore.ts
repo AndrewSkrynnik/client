@@ -28,12 +28,17 @@ export interface Order {
 interface OrderState {
   orders: Order[];
   createOrder: (details: OrderItem[], totalPrice: number) => void;
+  hasHydrated: boolean;
+  setHasHydrated: (value: boolean) => void;
 }
 
 export const useOrderStore = create<OrderState>()(
   persist(
     (set, get) => ({
       orders: [],
+      hasHydrated: false,
+      setHasHydrated: value => set({ hasHydrated: value }),
+
       createOrder: (details, totalPrice) => {
         const authUser = useAuthStore.getState().user;
 
@@ -61,7 +66,10 @@ export const useOrderStore = create<OrderState>()(
     }),
     {
       name: "order-storage",
-      version: 1
+      version: 1,
+      onRehydrateStorage: () => state => {
+        state?.setHasHydrated(true);
+      }
     }
   )
 );

@@ -4,6 +4,8 @@ import Link from "next/link";
 
 import { ShoppingCartIcon } from "@/components/icons";
 
+import { useBasketSync } from "@/hooks/useBasketSync";
+
 import { useBasketStore } from "@/store/useBasketStore";
 
 import { pluralize } from "@/utils/pluralize";
@@ -11,6 +13,7 @@ import { pluralize } from "@/utils/pluralize";
 import styles from "@/styles/components/layout/header/Header.module.css";
 
 export const HeaderBasket = () => {
+  useBasketSync();
   const totalCount = useBasketStore(state => state.getTotalCount());
   const totalPrice = useBasketStore(state => state.getTotalPrice());
   const hasHydrated = useBasketStore(state => state.hasHydrated);

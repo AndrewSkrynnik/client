@@ -10,12 +10,20 @@ import { ORDERS_PAGINATION } from "@/features/search/common/constants";
 
 import { PaginationComponent } from "@/components/ui/pagination/PaginationComponent";
 
+import { useOrderSync } from "@/hooks/useOrderSync";
+
 import { useOrderStore } from "@/store/useOrderStore";
+
+// 👈
 
 import { paginate } from "@/utils/paginate";
 
 export const OrdersTemplate = () => {
+  useOrderSync(); // локальная инициализация
+
   const orders = useOrderStore(state => state.orders);
+  const hasHydrated = useOrderStore(state => state.hasHydrated);
+
   const [filters, setFilters] = useState<OrdersFilters>({});
   const [page, setPage] = useState(1);
 
@@ -47,6 +55,8 @@ export const OrdersTemplate = () => {
     setFilters({});
     setPage(1);
   };
+
+  if (!hasHydrated) return <p>Загрузка заказов...</p>;
 
   return (
     <div className="officePage">
