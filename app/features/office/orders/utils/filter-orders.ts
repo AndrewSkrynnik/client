@@ -1,6 +1,6 @@
 import { OrderFilters, OrderTableItem } from "@/features/office/orders/types";
 
-import { isWithinInterval } from "date-fns";
+import { endOfDay, isWithinInterval } from "date-fns";
 
 /** Применяет фильтры к списку заказов */
 export const filterOrders = (
@@ -13,9 +13,9 @@ export const filterOrders = (
 
     const matchDate =
       Array.isArray(date_range) && date_range[0] && date_range[1]
-        ? isWithinInterval(order.orderDate, {
+        ? isWithinInterval(new Date(order.orderDate), {
             start: date_range[0],
-            end: date_range[1]
+            end: endOfDay(date_range[1])
           })
         : true;
     const matchArticle = article
