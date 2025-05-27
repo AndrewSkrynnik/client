@@ -2,25 +2,35 @@
 
 import { useMemo, useState } from "react";
 
-import { filterOrders } from "@/features/office/orders/common/filter-orders";
-import { paginate } from "@/features/office/orders/common/paginate";
 import { OrdersForm } from "@/features/office/orders/components/forms/OrdersForm";
 import { OrdersTable } from "@/features/office/orders/components/tables/OrdersTable";
 import { OrdersFilters } from "@/features/office/orders/types";
+import { filterOrders } from "@/features/office/orders/utils/filter-orders";
 import { ORDERS_PAGINATION } from "@/features/search/common/constants";
 
 import { PaginationComponent } from "@/components/ui/pagination/PaginationComponent";
 
 import { useOrderStore } from "@/store/useOrderStore";
 
+import { paginate } from "@/utils/paginate";
+
 export const OrdersTemplate = () => {
   const orders = useOrderStore(state => state.orders);
   const [filters, setFilters] = useState<OrdersFilters>({});
   const [page, setPage] = useState(1);
 
+  const sortedOrders = useMemo(
+    () =>
+      [...orders].sort(
+        (a, b) =>
+          new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()
+      ),
+    [orders]
+  );
+
   const filteredOrders = useMemo(
-    () => filterOrders(orders, filters),
-    [orders, filters]
+    () => filterOrders(sortedOrders, filters),
+    [sortedOrders, filters]
   );
 
   const paginatedOrders = useMemo(

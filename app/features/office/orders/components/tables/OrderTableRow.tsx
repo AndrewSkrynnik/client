@@ -1,11 +1,12 @@
 import { TableCell, TableRow } from "@mui/material";
 
-import { getOrderSummary } from "@/features/office/orders/common/orders-table.utils";
 import { orderStatusColors } from "@/features/office/orders/data/order-status-color.data";
-import { formatCurrency } from "@/features/office/orders/data/orders-table.format";
 import { OrderTableItem } from "@/features/office/orders/types";
+import { getOrderSummary } from "@/features/office/orders/utils/orders-table";
 
 import { ORDERS_TABLE_HEAD } from "@/data/table-header.data";
+
+import { formatNumber } from "@/utils/format-number";
 
 import { format } from "date-fns";
 
@@ -30,7 +31,7 @@ export const OrderTableRow = ({ order, onSelect }: OrderTableRowProps) => {
         if (key === "qty") {
           value = summary.qty;
         } else if (key === "totalPrice") {
-          value = formatCurrency(summary.total);
+          value = formatNumber(summary.total);
         } else if (key === "orderDate") {
           value = format(order.orderDate, "dd.MM.yyyy");
         } else {

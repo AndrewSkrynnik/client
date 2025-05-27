@@ -1,4 +1,3 @@
-// utils/generate-order-id.ts
 export const generateOrderId = (existingOrderIds: string[]): string => {
   const date = new Date();
   const yyyymmdd = date.toISOString().slice(0, 10).replace(/-/g, "");

@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { useAuthStore } from "@/store/useAuthStore";
+import { generateOrderId } from "@/features/office/orders/utils/generate-order-id";
 
-import { generateOrderId } from "@/utils/generate-order-id";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export interface OrderItem {
   brand: string;

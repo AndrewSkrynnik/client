@@ -1,11 +1,12 @@
 "use client";
 
-import { exportOrderToExcel } from "@/features/office/orders/common/export-order-to-excel.utils";
-import { formatCurrency } from "@/features/office/orders/data/orders-table.format";
 import { OrderTableItem } from "@/features/office/orders/types";
+import { exportOrderToExcel } from "@/features/office/orders/utils/export-order-to-excel";
 
 import { DownloadForOfflineIcon } from "@/components/icons";
 import { TooltipComponent } from "@/components/ui/tooltip/TooltipComponent";
+
+import { formatNumber } from "@/utils/format-number";
 
 import styles from "@/styles/pages/office/orders/Orders.module.css";
 
@@ -49,9 +50,10 @@ export const OrderDetailsInfo = ({ order }: OrderInfoProps) => (
       </li>
       <li className={styles.orderInfoItem}>
         <span>Сумма заказа:</span>
-        {formatCurrency(
+        {formatNumber(
           order.details.reduce((sum, item) => sum + item.totalPrice, 0)
-        )}
+        )}{" "}
+        руб.
       </li>
     </ul>
   </div>

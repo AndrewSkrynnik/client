@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 
-import { orderStatus } from "@/features/office/orders/data/order-status-.data";
+import { orderStatus } from "@/features/office/orders/data/order-status.data";
 import {
   OrderFilters,
   OrdersFilterFormProps

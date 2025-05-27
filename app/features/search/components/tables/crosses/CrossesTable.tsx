@@ -2,7 +2,7 @@
 
 import { Paper, Table, TableContainer } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { SEARCH_PAGINATION } from "@/features/search/common/constants";
 import { ModalImage } from "@/features/search/components/modals/ModalImage";
@@ -14,6 +14,8 @@ import { CrossesTableProps } from "@/features/search/types";
 import { PaginationComponent } from "@/components/ui/pagination/PaginationComponent";
 
 import { useBasketStore } from "@/store/useBasketStore";
+
+import { paginate } from "@/utils/paginate";
 
 export const CrossesTable = ({
   descr,
@@ -64,9 +66,9 @@ export const CrossesTable = ({
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const currentCrosses = crossesWithData.slice(
-    (currentPage - 1) * SEARCH_PAGINATION,
-    currentPage * SEARCH_PAGINATION
+  const paginatedCrosses = useMemo(
+    () => paginate(crossesWithData, currentPage, SEARCH_PAGINATION),
+    [crossesWithData, currentPage]
   );
 
   const closeModal = useCallback(() => {
@@ -82,19 +84,12 @@ export const CrossesTable = ({
     setModalState(prev => ({ ...prev, info: value }));
   };
 
-  const addToCart = (cross: {
-    brand: string;
-    number: string;
-    description: string;
-    price: number;
-    count: number;
-    stock: number;
-  }) => {
+  const addToCart = (cross: (typeof crossesWithData)[number]) => {
     if (cross.count === 0) return;
 
     useBasketStore.getState().addItem({
       brand: cross.brand,
-      number: cross.number,
+      number: cross.numberFix, // ← здесь можно сразу использовать numberFix
       description: descr || "Описание отсутствует",
       price: cross.price,
       count: cross.count,
@@ -108,20 +103,14 @@ export const CrossesTable = ({
         <Table>
           <CrossesTableHead />
           <CrossesTableBody
-            crosses={currentCrosses}
+            crosses={paginatedCrosses}
             descr={descr}
             properties={properties}
             images={images}
             onUpdateCount={updateCrossCount}
             onOpenImageModal={url => openImageModal("image", url)}
             onOpenInfoModal={openInfoModal}
-            onAddToCart={index =>
-              addToCart({
-                ...currentCrosses[index],
-                number: currentCrosses[index].numberFix,
-                description: descr || "Описание отсутствует"
-              })
-            }
+            onAddToCart={index => addToCart(paginatedCrosses[index])}
           />
         </Table>
       </TableContainer>

@@ -106,8 +106,5 @@ export const CrossesTemplate = () => {
     );
   })();
 
-  /**
-   * Layout-обёртка: форма поиска, кнопка назад и контейнер для контента
-   */
   return <TemplateWrapper>{renderContent}</TemplateWrapper>;
 };
