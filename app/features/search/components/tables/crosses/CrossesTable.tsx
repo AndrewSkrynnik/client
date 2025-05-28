@@ -4,7 +4,6 @@ import { Paper, Table, TableContainer } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { SEARCH_PAGINATION } from "@/features/search/common/constants";
 import { ModalImage } from "@/features/search/components/modals/ModalImage";
 import { ModalInfo } from "@/features/search/components/modals/ModalInfo";
 import { CrossesTableBody } from "@/features/search/components/tables/crosses/CrossesTableBody";
@@ -16,6 +15,8 @@ import { PaginationComponent } from "@/components/ui/pagination/PaginationCompon
 import { useBasketStore } from "@/store/useBasketStore";
 
 import { paginate } from "@/utils/paginate";
+
+import { SEARCH_PAGINATION } from "@/common/constants";
 
 export const CrossesTable = ({
   descr,

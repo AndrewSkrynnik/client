@@ -3,13 +3,14 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { getProposalWord } from "@/features/search/common/getProposalWord";
 import TemplateWrapper from "@/features/search/components/TemplateWrapper";
 import { CrossesTable } from "@/features/search/components/tables/crosses/CrossesTable";
 import { fetchCrossesData } from "@/features/search/server/fetchCrosses";
 import { CrossData } from "@/features/search/types";
 
 import { useBasketSync } from "@/hooks/useBasketSync";
+
+import { getProposalWord } from "@/utils/get-proposal-word";
 
 import styles from "@/styles/pages/search/Search.module.css";
 

@@ -6,7 +6,6 @@ import { OrdersForm } from "@/features/office/orders/components/forms/OrdersForm
 import { OrdersTable } from "@/features/office/orders/components/tables/OrdersTable";
 import { OrdersFilters } from "@/features/office/orders/types";
 import { filterOrders } from "@/features/office/orders/utils/filter-orders";
-import { ORDERS_PAGINATION } from "@/features/search/common/constants";
 
 import { PaginationComponent } from "@/components/ui/pagination/PaginationComponent";
 
@@ -17,6 +16,8 @@ import { useOrderStore } from "@/store/useOrderStore";
 // 👈
 
 import { paginate } from "@/utils/paginate";
+
+import { ORDERS_PAGINATION } from "@/common/constants";
 
 export const OrdersTemplate = () => {
   useOrderSync(); // локальная инициализация
