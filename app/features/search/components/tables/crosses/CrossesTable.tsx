@@ -46,14 +46,21 @@ export const CrossesTable = ({
   >([]);
 
   useEffect(() => {
-    const newData = crosses.map(cross => ({
-      ...cross,
-      price: Number((Math.random() * (10000 - 1000) + 1000).toFixed(2)),
-      stock: Math.floor(Math.random() * 51),
-      count: 0
-    }));
+    setCrossesWithData(
+      crosses.flatMap(cross => {
+        if (!cross.localOffers?.length) return [];
 
-    setCrossesWithData(newData);
+        return cross.localOffers.flatMap(offerGroup =>
+          offerGroup.offers.map(offer => ({
+            brand: offerGroup.brand,
+            numberFix: offerGroup.number,
+            price: offer.price,
+            stock: offer.qty,
+            count: 0
+          }))
+        );
+      })
+    );
   }, [crosses]);
 
   const updateCrossCount = (index: number, value: number) => {

@@ -54,6 +54,19 @@ export interface CrossReplacement {
   reliable: boolean;
   images: { name: string }[];
   properties?: Record<string, string>;
+  localOffers?: LocalOfferGroup[];
+}
+
+export interface LocalOfferGroup {
+  brand: string;
+  number: string;
+  offers: {
+    skuId: number;
+    supplierId: number;
+    price: number;
+    isCustomPrice: boolean;
+    qty: number;
+  }[];
 }
 
 // Тип объекта "изображения"
@@ -61,18 +74,6 @@ export interface CrossImage {
   name: string;
   order: number;
   url: string;
-}
-
-// Тип основного объекта "Cross"
-export interface Cross {
-  brand: string; // Бренд оригинальной детали
-  number: string; // Оригинальный номер детали
-  outerNumber: string; // Альтернативный номер детали
-  properties: Record<string, string>; // Свойства детали (например, вес, описание)
-  crosses: CrossReplacement[]; // Массив кроссов
-  images: CrossImage[]; // Массив изображений
-  imagesCount: number; // Количество изображений
-  descr: string; // Описание детали
 }
 
 // Тип ответа API ABCP

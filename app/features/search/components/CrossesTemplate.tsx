@@ -10,40 +10,39 @@ import { CrossData } from "@/features/search/types";
 
 import { useBasketSync } from "@/hooks/useBasketSync";
 
+import { useAuthStore } from "@/store/useAuthStore";
+
+// 🔹 добавлено
+
 import { getProposalWord } from "@/utils/get-proposal-word";
 
 import styles from "@/styles/pages/search/Search.module.css";
 
-/**
- * Компонент отображает результаты второго этапа поиска запчастей.
- * Использует параметры маршрута (`/search/[brand]/[number]`) для загрузки
- * подробной информации о товаре и его аналогах.
- */
 export const CrossesTemplate = () => {
   useBasketSync();
-  // Извлекаем параметры из маршрута: бренд и номер детали
+
   const params = useParams();
   const number = params.number as string;
   const brand = params.brand as string;
 
-  // Состояние: данные по кроссам и возможная ошибка
+  const userId = useAuthStore(state => state.user?.id); // 🔹 вытягиваем userId
+
   const [data, setData] = useState<CrossData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Флаг готовности данных (по сути: загрузка завершена успешно)
   const isReady = data !== null;
 
-  /**
-   * Эффект загрузки данных с API по номеру и бренду.
-   * Используется флаг `isActive`, чтобы избежать установки состояния,
-   * если компонент размонтирован до завершения запроса.
-   */
   useEffect(() => {
     let isActive = true;
 
     const fetchData = async () => {
       try {
-        const response = await fetchCrossesData(number, brand);
+        if (!userId) {
+          setError("Пользователь не авторизован");
+          return;
+        }
+
+        const response = await fetchCrossesData(number, brand, userId); // 🔹 передаём userId
 
         if (!response) throw new Error("Ничего не найдено");
 
@@ -61,15 +60,8 @@ export const CrossesTemplate = () => {
     return () => {
       isActive = false;
     };
-  }, [number, brand]);
+  }, [number, brand, userId]); // 🔹 добавлен userId в зависимости
 
-  /**
-   * Рендер контента в зависимости от состояния:
-   * - ошибка
-   * - загрузка
-   * - пустой результат
-   * - успешная загрузка
-   */
   const renderContent = (() => {
     if (error) {
       return <h2 className={styles.titleError}>Ошибка: {error}</h2>;
