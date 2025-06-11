@@ -1,6 +1,8 @@
 import {
   AbcpResponse,
   CrossData,
+  CrossImage,
+  // тип изображений
   CrossReplacement,
   LocalOfferGroup
 } from "@/features/search/types";
@@ -40,6 +42,28 @@ export const fetchCrossesData = async (
 
     const localOffers: LocalOfferGroup[] = (data as any).localOffers || [];
 
+    // 💬 Отладка и фильтрация изображений
+    const rawImages =
+      Array.isArray(data.images) && typeof data.images[0] === "string"
+        ? (data.images as unknown as string[])
+        : [];
+    console.log("📦 [ABCP] Raw images:", rawImages);
+
+    const mappedImages: CrossImage[] = rawImages
+      .filter((img: string, i) => {
+        const valid = typeof img === "string" && img.trim().length > 0;
+        if (!valid) {
+          console.warn(`⚠️ [ABCP] Невалидное изображение [${i}]:`, img);
+        }
+        return valid;
+      })
+      .map(img => {
+        const name = img.split("/").pop() ?? "unnamed";
+        const url = img;
+        console.log(`✅ [ABCP] Картинка: ${name} → ${url}`);
+        return { name, order: 0, url };
+      });
+
     const mapped: CrossData = {
       brand: data.brand || "Неизвестный бренд",
       number: data.number || number,
@@ -55,13 +79,7 @@ export const fetchCrossesData = async (
             )
           }))
         : [],
-      images: Array.isArray(data.images)
-        ? data.images.map((img: any) => ({
-            name: img.name,
-            order: img.order ?? 0,
-            url: img.url ?? `https://pubimg.nodacdn.net/images/${img.name}`
-          }))
-        : [],
+      images: mappedImages,
       imagesCount: data.images_count || 0
     };
 
