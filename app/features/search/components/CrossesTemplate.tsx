@@ -60,7 +60,7 @@ export const CrossesTemplate = () => {
     return () => {
       isActive = false;
     };
-  }, [number, brand, userId]); // 🔹 добавлен userId в зависимости
+  }, [number, brand, userId]);
 
   const renderContent = (() => {
     if (error) {
@@ -71,7 +71,9 @@ export const CrossesTemplate = () => {
       return <h2 className={styles.title}>Загрузка предложений...</h2>;
     }
 
-    const proposalsCount = data.crosses.length;
+    const proposalsCount =
+      data.localOffers?.reduce((sum, group) => sum + group.offers.length, 0) ??
+      0;
     const proposalWord = getProposalWord(proposalsCount);
 
     if (proposalsCount === 0) {
@@ -91,7 +93,7 @@ export const CrossesTemplate = () => {
           descr={data.descr || "Описание отсутствует"}
           number={number}
           outerNumber={data.outerNumber || number}
-          crosses={data.crosses}
+          crosses={data.localOffers}
           properties={data.properties}
           images={data.images}
         />

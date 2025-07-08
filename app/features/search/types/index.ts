@@ -40,7 +40,7 @@ export interface CrossData {
   outerNumber: string;
   descr: string;
   properties: Record<string, string>;
-  crosses: CrossReplacement[];
+  localOffers: LocalOfferGroup[];
   images: CrossImage[];
   imagesCount: number;
 }
@@ -93,7 +93,7 @@ export interface CrossesTableProps {
   descr: string;
   number: string;
   outerNumber: string;
-  crosses: CrossReplacement[];
+  crosses: LocalOfferGroup[];
   properties: Record<string, string>;
   images: CrossImage[];
 }

@@ -13,10 +13,7 @@ export const BasketTableBody = () => {
   return (
     <TableBody>
       {items.map(item => (
-        <BasketTableRow
-          key={`${item.brand}-${item.number}`}
-          itemKey={{ brand: item.brand, number: item.number }}
-        />
+        <BasketTableRow key={item.id} id={item.id} />
       ))}
     </TableBody>
   );

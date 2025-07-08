@@ -47,19 +47,15 @@ export const CrossesTable = ({
 
   useEffect(() => {
     setCrossesWithData(
-      crosses.flatMap(cross => {
-        if (!cross.localOffers?.length) return [];
-
-        return cross.localOffers.flatMap(offerGroup =>
-          offerGroup.offers.map(offer => ({
-            brand: offerGroup.brand,
-            numberFix: offerGroup.number,
-            price: offer.price,
-            stock: offer.qty,
-            count: 0
-          }))
-        );
-      })
+      crosses.flatMap(offerGroup =>
+        offerGroup.offers.map(offer => ({
+          brand: offerGroup.brand,
+          numberFix: offerGroup.number,
+          price: offer.price,
+          stock: offer.qty,
+          count: 0
+        }))
+      )
     );
   }, [crosses]);
 
@@ -96,6 +92,7 @@ export const CrossesTable = ({
     if (cross.count === 0) return;
 
     useBasketStore.getState().addItem({
+      id: `${cross.brand}-${cross.numberFix}`,
       brand: cross.brand,
       number: cross.numberFix, // ← здесь можно сразу использовать numberFix
       description: descr || "Описание отсутствует",

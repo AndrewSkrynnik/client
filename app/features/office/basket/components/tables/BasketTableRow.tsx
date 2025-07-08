@@ -15,15 +15,11 @@ import { useBasketStore } from "@/store/useBasketStore";
 import { formatNumber } from "@/utils/format-number";
 
 interface BasketTableRowProps {
-  itemKey: { brand: string; number: string };
+  id: string; // 🔹 передаём id напрямую
 }
 
-export const BasketTableRow: FC<BasketTableRowProps> = ({ itemKey }) => {
-  const { brand, number } = itemKey;
-
-  const item = useBasketStore(state =>
-    state.items.find(i => i.number === number && i.brand === brand)
-  );
+export const BasketTableRow: FC<BasketTableRowProps> = ({ id }) => {
+  const item = useBasketStore(state => state.items.find(i => i.id === id));
 
   const removeItem = useBasketStore(state => state.removeItem);
   const selectItem = useBasketStore(state => state.selectItem);
@@ -37,7 +33,7 @@ export const BasketTableRow: FC<BasketTableRowProps> = ({ itemKey }) => {
       <StyledTableCellBody>{item.description}</StyledTableCellBody>
       <StyledTableCellBody>{formatNumber(item.price)}</StyledTableCellBody>
       <StyledTableCellBody>
-        <BasketCounter number={item.number} brand={item.brand} />
+        <BasketCounter id={item.id} number={item.number} brand={item.brand} />
       </StyledTableCellBody>
       <StyledTableCellBody>{formatNumber(item.totalPrice)}</StyledTableCellBody>
       <StyledTableCellBody sx={{ textAlign: "center" }}>
@@ -45,13 +41,13 @@ export const BasketTableRow: FC<BasketTableRowProps> = ({ itemKey }) => {
           <CheckboxComponent
             size="small"
             checked={item.selected ?? false}
-            onChange={checked => selectItem(item.number, item.brand, checked)}
+            onChange={checked => selectItem(item.id, checked)} // ✅ по id
           />
         </TooltipComponent>
       </StyledTableCellBody>
       <StyledTableCellBody>
         <CloseIcon
-          onClick={() => removeItem(item.number, item.brand)}
+          onClick={() => removeItem(item.id)} // ✅ по id
           fontSize="small"
           className="closeButton"
         />

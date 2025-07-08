@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export type BasketItem = {
+  id: string; // Уникальный ключ строки
   brand: string;
   number: string;
   description: string;
@@ -11,25 +12,23 @@ export type BasketItem = {
   stock: number;
   selected?: boolean;
 };
+
 interface BasketState {
   items: BasketItem[];
   hasHydrated: boolean;
   setHasHydrated: (value: boolean) => void;
 
-  // старые
   addItem: (item: Omit<BasketItem, "totalPrice">) => void;
-  removeItem: (number: string, brand: string) => void;
-  updateCount: (number: string, brand: string, count: number) => void;
+  removeItem: (id: string) => void;
+  updateCount: (id: string, count: number) => void;
   clearCart: () => void;
   getTotalCount: () => number;
   getTotalPrice: () => number;
-  selectItem: (number: string, brand: string, selected: boolean) => void;
+  selectItem: (id: string, selected: boolean) => void;
   selectAll: (selected: boolean) => void;
   removeSelectedItems: () => void;
-
-  // новые
   incrementItemCount: (item: Omit<BasketItem, "totalPrice">) => void;
-  decrementItemCount: (number: string, brand: string) => void;
+  decrementItemCount: (id: string) => void;
 }
 
 export const useBasketStore = create<BasketState>()(
@@ -40,9 +39,7 @@ export const useBasketStore = create<BasketState>()(
       setHasHydrated: value => set({ hasHydrated: value }),
 
       addItem: item => {
-        const existing = get().items.find(
-          i => i.number === item.number && i.brand === item.brand
-        );
+        const existing = get().items.find(i => i.id === item.id);
 
         if (existing) {
           const newCount = Math.min(
@@ -51,7 +48,7 @@ export const useBasketStore = create<BasketState>()(
           );
           set({
             items: get().items.map(i =>
-              i.number === item.number && i.brand === item.brand
+              i.id === item.id
                 ? {
                     ...i,
                     count: newCount,
@@ -74,18 +71,16 @@ export const useBasketStore = create<BasketState>()(
         }
       },
 
-      removeItem: (number, brand) => {
+      removeItem: id => {
         set({
-          items: get().items.filter(
-            i => !(i.number === number && i.brand === brand)
-          )
+          items: get().items.filter(i => i.id !== id)
         });
       },
 
-      updateCount: (number, brand, count) => {
+      updateCount: (id, count) => {
         set({
           items: get().items.map(i =>
-            i.number === number && i.brand === brand
+            i.id === id
               ? {
                   ...i,
                   count: Math.min(count, i.stock),
@@ -96,47 +91,14 @@ export const useBasketStore = create<BasketState>()(
         });
       },
 
-      selectItem: (number, brand, selected) =>
-        set(state => ({
-          items: state.items.map(item =>
-            item.number === number && item.brand === brand
-              ? { ...item, selected }
-              : item
-          )
-        })),
-
-      selectAll: selected =>
-        set(state => ({
-          items: state.items.map(item => ({ ...item, selected }))
-        })),
-
-      clearCart: () => set({ items: [] }),
-
-      getTotalCount: () => get().items.reduce((acc, i) => acc + i.count, 0),
-
-      getTotalPrice: () =>
-        parseFloat(
-          get()
-            .items.reduce((acc, i) => acc + i.totalPrice, 0)
-            .toFixed(2)
-        ),
-      /* Удаление товара после оформление заказа */
-      removeSelectedItems: () => {
-        set(state => ({
-          items: state.items.filter(item => !item.selected)
-        }));
-      },
-
-      incrementItemCount: (item: Omit<BasketItem, "totalPrice">) => {
-        const existing = get().items.find(
-          i => i.number === item.number && i.brand === item.brand
-        );
+      incrementItemCount: item => {
+        const existing = get().items.find(i => i.id === item.id);
 
         if (existing) {
           const newCount = Math.min(existing.count + 1, existing.stock);
           set({
             items: get().items.map(i =>
-              i.number === item.number && i.brand === item.brand
+              i.id === item.id
                 ? {
                     ...i,
                     count: newCount,
@@ -158,20 +120,18 @@ export const useBasketStore = create<BasketState>()(
           });
         }
       },
-      decrementItemCount: (number: string, brand: string) => {
-        const existing = get().items.find(
-          i => i.number === number && i.brand === brand
-        );
 
+      decrementItemCount: id => {
+        const existing = get().items.find(i => i.id === id);
         if (!existing) return;
 
         if (existing.count <= 1) {
-          get().removeItem(number, brand);
+          get().removeItem(id);
         } else {
           const newCount = existing.count - 1;
           set({
             items: get().items.map(i =>
-              i.number === number && i.brand === brand
+              i.id === id
                 ? {
                     ...i,
                     count: newCount,
@@ -181,9 +141,37 @@ export const useBasketStore = create<BasketState>()(
             )
           });
         }
+      },
+
+      selectItem: (id, selected) =>
+        set(state => ({
+          items: state.items.map(item =>
+            item.id === id ? { ...item, selected } : item
+          )
+        })),
+
+      selectAll: selected =>
+        set(state => ({
+          items: state.items.map(item => ({ ...item, selected }))
+        })),
+
+      clearCart: () => set({ items: [] }),
+
+      getTotalCount: () => get().items.reduce((acc, i) => acc + i.count, 0),
+
+      getTotalPrice: () =>
+        parseFloat(
+          get()
+            .items.reduce((acc, i) => acc + i.totalPrice, 0)
+            .toFixed(2)
+        ),
+
+      removeSelectedItems: () => {
+        set(state => ({
+          items: state.items.filter(item => !item.selected)
+        }));
       }
     }),
-
     {
       name: "basket-storage",
       version: 1,

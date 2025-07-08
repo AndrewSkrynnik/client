@@ -2,8 +2,6 @@ import {
   AbcpResponse,
   CrossData,
   CrossImage,
-  // тип изображений
-  CrossReplacement,
   LocalOfferGroup
 } from "@/features/search/types";
 
@@ -70,15 +68,7 @@ export const fetchCrossesData = async (
       outerNumber: data.outer_number || number,
       descr: data.descr || "Описание отсутствует",
       properties: data.properties || {},
-      crosses: Array.isArray(data.crosses)
-        ? (data.crosses as CrossReplacement[]).map(cross => ({
-            ...cross,
-            localOffers: localOffers.filter(
-              offer =>
-                offer.brand === cross.brand && offer.number === cross.number
-            )
-          }))
-        : [],
+      localOffers, // ✅ напрямую, без map
       images: mappedImages,
       imagesCount: data.images_count || 0
     };

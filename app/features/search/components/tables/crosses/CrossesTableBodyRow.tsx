@@ -26,11 +26,10 @@ const CrossesTableRowComponent = ({
   const decrement = useBasketStore(state => state.decrementItemCount);
   const update = useBasketStore(state => state.updateCount);
 
+  const rowId = `${cross.brand}_${cross.numberFix}_${cross.price}_${cross.stock}`;
+
   const count = useBasketStore(
-    state =>
-      state.items.find(
-        i => i.number === cross.numberFix && i.brand === cross.brand
-      )?.count ?? 0
+    state => state.items.find(i => i.id === rowId)?.count ?? 0
   );
 
   return (
@@ -67,6 +66,7 @@ const CrossesTableRowComponent = ({
           price={cross.price}
           onIncrement={() =>
             increment({
+              id: rowId,
               brand: cross.brand,
               number: cross.numberFix,
               description: descr || "Описание отсутствует",
@@ -75,8 +75,8 @@ const CrossesTableRowComponent = ({
               count: 1
             })
           }
-          onDecrement={() => decrement(cross.numberFix, cross.brand)}
-          onInputChange={value => update(cross.numberFix, cross.brand, value)}
+          onDecrement={() => decrement(rowId)}
+          onInputChange={value => update(rowId, value)}
         />
       </StyledTableCellBody>
     </StyledTableRowBody>
