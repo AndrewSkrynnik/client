@@ -1,14 +1,8 @@
-import { OrderTableItem } from "@/features/office/orders/types";
+import { OrderDetailsItem } from "@/features/office/orders/types";
 
-/** Агрегация количества и суммы из деталей */
-export const getOrderSummary = (
-  details: OrderTableItem["details"] | undefined
-) =>
-  (details ?? []).reduce(
-    (acc, item) => {
-      acc.qty += item.qtyItem;
-      acc.total += item.totalPrice;
-      return acc;
-    },
-    { qty: 0, total: 0 }
-  );
+export const getOrderSummary = (details: OrderDetailsItem[] = []) => {
+  const qty = details.reduce((acc, item) => acc + (item.qty ?? 0), 0);
+  const total = details.reduce((acc, item) => acc + (item.totalPrice ?? 0), 0);
+
+  return { qty, total };
+};

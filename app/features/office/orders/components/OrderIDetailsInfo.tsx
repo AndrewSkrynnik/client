@@ -6,6 +6,8 @@ import { exportOrderToExcel } from "@/features/office/orders/utils/export-order-
 import { DownloadForOfflineIcon } from "@/components/icons";
 import { TooltipComponent } from "@/components/ui/tooltip/TooltipComponent";
 
+import { useAuthStore } from "@/store/useAuthStore";
+
 import { formatNumber } from "@/utils/format-number";
 
 import styles from "@/styles/pages/office/orders/Orders.module.css";
@@ -16,45 +18,57 @@ interface OrderInfoProps {
   order: OrderTableItem;
 }
 
-export const OrderDetailsInfo = ({ order }: OrderInfoProps) => (
-  <div className={styles.orderInfoContainer}>
-    <div className={styles.orderInfoHeader}>
-      <h3 className={styles.orderInfoTitle}>Заказ № {order.id}</h3>
-      <TooltipComponent title="Выгрузить заказ в Excel">
-        <DownloadForOfflineIcon
-          onClick={() =>
-            exportOrderToExcel(
-              order.id,
-              order.orderDate,
-              order.address,
-              order.details,
-              order.fullName
-            )
-          }
-          fontSize="large"
-          className="closeButton"
-        />
-      </TooltipComponent>
-    </div>
+export const OrderDetailsInfo = ({ order }: OrderInfoProps) => {
+  const fullName = useAuthStore(state => state.user?.fullName ?? "-");
+  const address = useAuthStore(state => state.user?.address ?? "-");
 
-    <ul className={styles.orderInfoList}>
-      <li className={styles.orderInfoItem}>
-        <span>Дата заказа:</span>
-        {format(order.orderDate, "dd.MM.yyyy")}
-      </li>
-      <li className={styles.orderInfoItem}>
-        <span>ФИО клиента:</span> {order.fullName}
-      </li>
-      <li className={styles.orderInfoItem}>
-        <span>Адрес доставки:</span> {order.address}
-      </li>
-      <li className={styles.orderInfoItem}>
-        <span>Сумма заказа:</span>
-        {formatNumber(
-          order.details.reduce((sum, item) => sum + item.totalPrice, 0)
-        )}{" "}
-        руб.
-      </li>
-    </ul>
-  </div>
-);
+  return (
+    <div className={styles.orderInfoContainer}>
+      <div className={styles.orderInfoHeader}>
+        <h3 className={styles.orderInfoTitle}>Заказ № {order.id}</h3>
+        <TooltipComponent title="Выгрузить заказ в Excel">
+          <DownloadForOfflineIcon
+            onClick={() =>
+              exportOrderToExcel(
+                order.id,
+                order.orderDate,
+                address,
+                order.details,
+                fullName
+              )
+            }
+            fontSize="large"
+            className="closeButton"
+          />
+        </TooltipComponent>
+      </div>
+
+      <ul className={styles.orderInfoList}>
+        <li className={styles.orderInfoItem}>
+          <span>Дата заказа:</span>
+          {order.orderDate
+            ? format(new Date(order.orderDate), "dd.MM.yyyy")
+            : "-"}
+        </li>
+        <li className={styles.orderInfoItem}>
+          <span>ФИО клиента:</span> {fullName}
+        </li>
+        <li className={styles.orderInfoItem}>
+          <span>Адрес доставки:</span> {address}
+        </li>
+        <li className={styles.orderInfoItem}>
+          <span>Сумма заказа:</span>
+          {formatNumber(
+            Array.isArray(order.details)
+              ? order.details.reduce(
+                  (sum, item) => sum + item.clientPrice * item.qty,
+                  0
+                )
+              : 0
+          )}{" "}
+          руб.
+        </li>
+      </ul>
+    </div>
+  );
+};

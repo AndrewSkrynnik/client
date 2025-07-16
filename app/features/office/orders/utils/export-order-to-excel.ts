@@ -23,9 +23,9 @@ export const exportOrderToExcel = (
     ...items.map(item => [
       item.brand,
       item.article,
-      item.name,
-      item.price,
-      item.qtyItem,
+      item.description,
+      item.clientPrice,
+      item.qty,
       item.totalPrice
     ])
   ];

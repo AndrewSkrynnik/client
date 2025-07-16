@@ -1,3 +1,5 @@
+import { OrderItem } from "@/libs/api/orders";
+
 export interface OrdersFilters {
   order_status?: string;
   date_range?: [Date | null, Date | null];
@@ -11,21 +13,20 @@ export interface OrdersFilterFormProps {
 
 export interface OrderDetailsItem {
   brand: string;
-  name: string;
+  description: string;
   article: string;
-  price: number;
-  qtyItem: number;
+  clientPrice: number;
+  qty: number;
   totalPrice: number;
 }
 
 export interface OrderTableItem {
   id: string;
-  paymentMethod: string;
   orderDate: Date;
+  details: OrderItem[];
   status: string;
-  address: string;
   fullName: string;
-  details: OrderDetailsItem[];
+  address: string;
 }
 
 export interface OrdersTableProps {

@@ -4,19 +4,17 @@ import Link from "next/link";
 
 import { ShoppingCartIcon } from "@/components/icons";
 
-import { useBasketSync } from "@/hooks/useBasketSync";
-
-import { useBasketStore } from "@/store/useBasketStore";
+import { useBasket } from "@/hooks/useBasket";
 
 import { pluralize } from "@/utils/pluralize";
 
 import styles from "@/styles/components/layout/header/Header.module.css";
 
 export const HeaderBasket = () => {
-  useBasketSync();
-  const totalCount = useBasketStore(state => state.getTotalCount());
-  const totalPrice = useBasketStore(state => state.getTotalPrice());
-  const hasHydrated = useBasketStore(state => state.hasHydrated);
+  const { items, isLoading } = useBasket();
+
+  const totalCount = items.reduce((sum, i) => sum + i.qty, 0);
+  const totalPrice = items.reduce((sum, i) => sum + i.qty * i.price, 0);
 
   return (
     <Link href="/office/basket">
@@ -25,7 +23,7 @@ export const HeaderBasket = () => {
           <ShoppingCartIcon fontSize="large" />
         </div>
         <div className="flex flex-col">
-          {!hasHydrated ? (
+          {isLoading ? (
             <p className={styles.basketMenuText}>Загрузка...</p>
           ) : totalCount > 0 ? (
             <>

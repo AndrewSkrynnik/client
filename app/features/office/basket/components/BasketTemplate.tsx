@@ -1,26 +1,38 @@
 "use client";
 
+import { useState } from "react";
+
+import { BasketEmpty } from "@/features/office/basket/components/BasketEmpty";
 import { BasketSummary } from "@/features/office/basket/components/BasketSummary";
 import { BasketTable } from "@/features/office/basket/components/tables/BasketTable";
 
-import { useBasketSync } from "@/hooks/useBasketSync";
-
-import { useBasketStore } from "@/store/useBasketStore";
+import { useBasket } from "@/hooks/useBasket";
 
 export const BasketTemplate = () => {
-  useBasketSync();
+  const [selectedSet, setSelectedSet] = useState<Set<string>>(new Set());
 
-  const hasHydrated = useBasketStore(state => state.hasHydrated);
-  const items = useBasketStore(state => state.items);
+  const { items, isLoading } = useBasket({ selectedSet, setSelectedSet });
 
-  if (!hasHydrated) return <p>Загрузка...</p>;
+  if (isLoading) return <p>Загрузка...</p>;
 
   return (
     <div className="officePage">
       <h2 className="officePageTitle">Корзина</h2>
       <div className="officePageContent">
-        <BasketTable />
-        {items.length > 0 && <BasketSummary />}
+        {items.length > 0 ? (
+          <>
+            <BasketTable
+              selectedSet={selectedSet}
+              setSelectedSet={setSelectedSet}
+            />
+            <BasketSummary
+              selectedSet={selectedSet}
+              setSelectedSet={setSelectedSet}
+            />
+          </>
+        ) : (
+          <BasketEmpty />
+        )}
       </div>
     </div>
   );

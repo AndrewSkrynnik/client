@@ -1,3 +1,7 @@
+"use client";
+
+import { FC } from "react";
+
 import { DeleteForeverIcon } from "@/components/icons";
 import {
   StyledTableCellHead,
@@ -7,12 +11,27 @@ import { CheckboxComponent } from "@/components/ui/forms/inputs/CheckboxComponen
 
 import { BASKET_TABLE_HEAD } from "@/data/table-header.data";
 
-import { useBasketStore } from "@/store/useBasketStore";
+import { useBasket } from "@/hooks/useBasket";
 
-export const BasketTableHead = () => {
-  const items = useBasketStore(state => state.items);
-  const selectAll = useBasketStore(state => state.selectAll);
-  const clearCart = useBasketStore(state => state.clearCart);
+interface BasketTableHeadProps {
+  selectedSet: Set<string>;
+  setSelectedSet: React.Dispatch<React.SetStateAction<Set<string>>>;
+}
+
+export const BasketTableHead: FC<BasketTableHeadProps> = ({
+  selectedSet,
+  setSelectedSet
+}) => {
+  const { items, clear, selectAllItems } = useBasket({
+    selectedSet,
+    setSelectedSet
+  });
+
+  const isAllSelected = items.length > 0 && items.every(item => item.selected);
+
+  const handleSelectAll = (checked: boolean) => {
+    selectAllItems(checked);
+  };
 
   return (
     <thead>
@@ -21,15 +40,15 @@ export const BasketTableHead = () => {
           <StyledTableCellHead key={itemHead.id}>
             {itemHead.id === 6 ? (
               <CheckboxComponent
-                checked={items.every(item => item.selected)}
-                onChange={checked => selectAll(checked)}
+                checked={isAllSelected}
+                onChange={handleSelectAll}
                 size="large"
               />
             ) : itemHead.id === 7 ? (
               <DeleteForeverIcon
                 className="closeButton"
                 fontSize="medium"
-                onClick={clearCart}
+                onClick={clear}
               />
             ) : (
               itemHead.label

@@ -33,7 +33,6 @@ export const SEARCH_TABLE_HEAD: TableHeader[] = [
 
 export const ORDERS_TABLE_HEAD = [
   { key: "id", label: "№ заказа", width: "100px" },
-  { key: "paymentMethod", label: "Метод оплаты", width: "160px" },
   { key: "orderDate", label: "Дата заказа", width: "140px" },
   { key: "qty", label: "Кол-во, шт.", width: "140px" },
   { key: "totalPrice", label: "Сумма, руб", width: "140px" },
@@ -47,8 +46,8 @@ export const ORDERS_DETAILS_TABLE_HEAD: {
 }[] = [
   { key: "brand", label: "Бренд", width: "140px" },
   { key: "article", label: "Артикул", width: "140px" },
-  { key: "name", label: "Описание" },
-  { key: "price", label: "Цена, руб.", width: "120px" },
-  { key: "qtyItem", label: "Кол-во, шт.", width: "150px" },
+  { key: "description", label: "Описание" },
+  { key: "clientPrice", label: "Цена, руб.", width: "120px" },
+  { key: "qty", label: "Кол-во, шт.", width: "150px" },
   { key: "totalPrice", label: "Сумма, руб.", width: "140px" }
 ];

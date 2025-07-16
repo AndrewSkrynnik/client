@@ -12,6 +12,8 @@ import { setupAxiosInterceptors } from "@/libs/axios-interceptors";
 
 import { useAuthStore } from "@/store/useAuthStore";
 
+import { BasketSyncInitializer } from "@/BasketSyncInitializer";
+
 export default function ClientLayout({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
   const isAuthReady = useAuthStore(state => state.isAuthReady);
@@ -30,6 +32,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <BasketSyncInitializer />
       {children}
       <ToastComponent />
       <DrawerComponent />

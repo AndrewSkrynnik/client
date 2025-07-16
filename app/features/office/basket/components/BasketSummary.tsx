@@ -1,55 +1,74 @@
+"use client";
+
 import { useRouter } from "next/navigation";
+import { useMemo } from "react";
 import { toast } from "react-toastify";
 
 import { Button } from "@/components/ui/buttons/Button";
 
-import { useBasketStore } from "@/store/useBasketStore";
-import { useOrderStore } from "@/store/useOrderStore";
+import { useBasket } from "@/hooks/useBasket";
+import { useOrders } from "@/hooks/useOrders";
 
 import { formatNumber } from "@/utils/format-number";
 
 import styles from "@/styles/pages/office/basket/Basket.module.css";
 
-export const BasketSummary = () => {
-  const createOrder = useOrderStore(state => state.createOrder);
-  const items = useBasketStore(state => state.items);
-  const removeSelectedItems = useBasketStore(
-    state => state.removeSelectedItems
-  );
+interface BasketSummaryProps {
+  selectedSet: Set<string>;
+  setSelectedSet: React.Dispatch<React.SetStateAction<Set<string>>>;
+}
 
+export const BasketSummary = ({
+  selectedSet,
+  setSelectedSet
+}: BasketSummaryProps) => {
   const router = useRouter();
 
-  const selectedItems = items.filter(item => item.selected);
-  const totalItems = items;
+  const { items, clear } = useBasket({ selectedSet, setSelectedSet });
+  const { createOrderAsync } = useOrders();
 
-  const selectedCount = selectedItems.reduce(
-    (acc, item) => acc + item.count,
-    0
-  );
-  const selectedPrice = selectedItems.reduce(
-    (acc, item) => acc + item.totalPrice,
-    0
+  const selectedItems = useMemo(
+    () => items.filter(item => item.selected),
+    [items]
   );
 
-  const totalCount = totalItems.reduce((acc, item) => acc + item.count, 0);
-  const totalPrice = totalItems.reduce((acc, item) => acc + item.totalPrice, 0);
+  const selectedCount = useMemo(
+    () => selectedItems.reduce((acc, item) => acc + item.qty, 0),
+    [selectedItems]
+  );
 
-  const handleCheckout = () => {
-    const orderItems = selectedItems.map(item => ({
-      brand: item.brand,
-      article: item.number,
-      name: item.description,
-      price: item.price,
-      qtyItem: item.count,
-      totalPrice: item.totalPrice
-    }));
+  const selectedPrice = useMemo(
+    () => selectedItems.reduce((acc, item) => acc + item.price * item.qty, 0),
+    [selectedItems]
+  );
 
+  const totalCount = useMemo(
+    () => items.reduce((acc, item) => acc + item.qty, 0),
+    [items]
+  );
+
+  const totalPrice = useMemo(
+    () => items.reduce((acc, item) => acc + item.price * item.qty, 0),
+    [items]
+  );
+
+  const handleCheckout = async () => {
     try {
-      createOrder(orderItems, selectedPrice);
-      removeSelectedItems();
+      const payload = selectedItems.map(item => ({
+        skuId: item.skuId,
+        supplierId: item.supplierId,
+        qty: item.qty,
+        article: item.article,
+        brand: item.brand,
+        description: item.description, // 👈 ОБЯЗАТЕЛЬНО
+        clientPrice: item.price,
+        totalPrice: item.price * item.qty
+      }));
+      console.log("🛒 Отправляем заказ:", payload);
 
-      console.log("✅ заказ создан — до toast");
+      await createOrderAsync(payload);
       toast.success("Заказ успешно оформлен!");
+      await clear();
       router.push("/office/orders");
     } catch (error: any) {
       toast.error(error?.message || "Ошибка при оформлении заказа");

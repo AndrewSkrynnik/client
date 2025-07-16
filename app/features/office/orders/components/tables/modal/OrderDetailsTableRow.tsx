@@ -17,22 +17,29 @@ interface OrderDetailsTableRowProps {
 export const OrderDetailsTableRow = ({
   item,
   highlightArticle = ""
-}: OrderDetailsTableRowProps) => (
-  <StyledTableRowBody>
-    {ORDERS_DETAILS_TABLE_HEAD.map(({ key }) => {
-      const value = item[key as keyof OrderDetailsItem];
+}: OrderDetailsTableRowProps) => {
+  const extendedItem = {
+    ...item,
+    totalPrice: item.qty * (item.clientPrice ?? 0)
+  };
 
-      return (
-        <TableCell key={key} align="center">
-          {key === "article"
-            ? HighlightMatch(String(value), highlightArticle)
-            : key === "qtyItem"
-              ? Math.trunc(Number(value))
-              : typeof value === "number"
-                ? formatNumber(value)
-                : String(value ?? "-")}
-        </TableCell>
-      );
-    })}
-  </StyledTableRowBody>
-);
+  return (
+    <StyledTableRowBody>
+      {ORDERS_DETAILS_TABLE_HEAD.map(({ key }) => {
+        const value = extendedItem[key as keyof typeof extendedItem];
+
+        return (
+          <TableCell key={key} align="center">
+            {key === "article"
+              ? HighlightMatch(String(value), highlightArticle)
+              : key === "qty"
+                ? Math.trunc(Number(value))
+                : typeof value === "number"
+                  ? formatNumber(value)
+                  : String(value ?? "-")}
+          </TableCell>
+        );
+      })}
+    </StyledTableRowBody>
+  );
+};

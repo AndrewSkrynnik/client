@@ -10,7 +10,7 @@ import {
 } from "@/components/styled/tables/StylesTables";
 import { TooltipComponent } from "@/components/ui/tooltip/TooltipComponent";
 
-import { useBasketStore } from "@/store/useBasketStore";
+import { useBasket } from "@/hooks/useBasket";
 
 import { formatNumber } from "@/utils/format-number";
 
@@ -22,15 +22,13 @@ const CrossesTableRowComponent = ({
   onOpenImageModal,
   onOpenInfoModal
 }: CrossesTableRowProps) => {
-  const increment = useBasketStore(state => state.incrementItemCount);
-  const decrement = useBasketStore(state => state.decrementItemCount);
-  const update = useBasketStore(state => state.updateCount);
+  const { items, addItem, removeItem } = useBasket();
 
-  const rowId = `${cross.brand}_${cross.numberFix}_${cross.price}_${cross.stock}`;
-
-  const count = useBasketStore(
-    state => state.items.find(i => i.id === rowId)?.count ?? 0
+  const item = items.find(
+    i => i.skuId === cross.skuId && i.supplierId === cross.supplierId
   );
+
+  const count = item?.qty ?? 0;
 
   return (
     <StyledTableRowBody>
@@ -65,18 +63,21 @@ const CrossesTableRowComponent = ({
           stock={cross.stock}
           price={cross.price}
           onIncrement={() =>
-            increment({
-              id: rowId,
+            addItem({
+              skuId: cross.skuId,
+              supplierId: cross.supplierId,
               brand: cross.brand,
-              number: cross.numberFix,
+              article: cross.numberFix,
               description: descr || "Описание отсутствует",
               price: cross.price,
-              stock: cross.stock,
-              count: 1
+              qty: 1,
+              selected: true
             })
           }
-          onDecrement={() => decrement(rowId)}
-          onInputChange={value => update(rowId, value)}
+          onDecrement={() =>
+            removeItem({ skuId: cross.skuId, supplierId: cross.supplierId })
+          }
+          onInputChange={() => {}}
         />
       </StyledTableCellBody>
     </StyledTableRowBody>
@@ -85,11 +86,4 @@ const CrossesTableRowComponent = ({
 
 CrossesTableRowComponent.displayName = "CrossesTableRow";
 
-export const CrossesTableRow = memo(
-  CrossesTableRowComponent,
-  (prev, next) =>
-    prev.cross.brand === next.cross.brand &&
-    prev.cross.numberFix === next.cross.numberFix &&
-    prev.cross.price === next.cross.price &&
-    prev.cross.stock === next.cross.stock
-);
+export const CrossesTableRow = memo(CrossesTableRowComponent);

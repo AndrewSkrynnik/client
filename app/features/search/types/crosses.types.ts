@@ -1,5 +1,7 @@
 /* Представляет одну позицию (товар) из кросс-номеров */
 export interface CrossItem {
+  skuId: number;
+  supplierId: number;
   brand: string;
   numberFix: string;
   price: number;

@@ -1,26 +1,43 @@
 "use client";
 
-import { Paper, Table, TableContainer } from "@mui/material";
+import { FC } from "react";
 
-import { BasketEmpty } from "@/features/office/basket/components/BasketEmpty";
-import { BasketTableBody } from "@/features/office/basket/components/tables/BasketTableBody";
 import { BasketTableHead } from "@/features/office/basket/components/tables/BasketTableHead";
+import { BasketTableRow } from "@/features/office/basket/components/tables/BasketTableRow";
 
-import { useBasketStore } from "@/store/useBasketStore";
+import { useBasket } from "@/hooks/useBasket";
 
-export const BasketTable = () => {
-  const items = useBasketStore(state => state.items);
-  const hasHydrated = useBasketStore(state => state.hasHydrated);
+interface BasketTableProps {
+  selectedSet: Set<string>;
+  setSelectedSet: React.Dispatch<React.SetStateAction<Set<string>>>;
+}
 
-  if (!hasHydrated) return <p>Загрузка корзины...</p>;
-  if (items.length === 0) return <BasketEmpty />;
+export const BasketTable: FC<BasketTableProps> = ({
+  selectedSet,
+  setSelectedSet
+}) => {
+  const { items } = useBasket({ selectedSet, setSelectedSet });
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <BasketTableHead />
-        <BasketTableBody />
-      </Table>
-    </TableContainer>
+    <table>
+      <BasketTableHead
+        selectedSet={selectedSet}
+        setSelectedSet={setSelectedSet}
+      />
+      <tbody>
+        {items.map(item => (
+          <BasketTableRow
+            key={`${item.skuId}_${item.supplierId}`}
+            skuId={item.skuId}
+            supplierId={item.supplierId}
+            brand={item.brand}
+            description={item.description}
+            number={item.article}
+            selectedSet={selectedSet}
+            setSelectedSet={setSelectedSet}
+          />
+        ))}
+      </tbody>
+    </table>
   );
 };

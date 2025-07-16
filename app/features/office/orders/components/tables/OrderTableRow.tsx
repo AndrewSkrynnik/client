@@ -2,7 +2,6 @@ import { TableCell, TableRow } from "@mui/material";
 
 import { orderStatusColors } from "@/features/office/orders/data/order-status-color.data";
 import { OrderTableItem } from "@/features/office/orders/types";
-import { getOrderSummary } from "@/features/office/orders/utils/orders-table";
 
 import { ORDERS_TABLE_HEAD } from "@/data/table-header.data";
 
@@ -16,7 +15,11 @@ interface OrderTableRowProps {
 }
 
 export const OrderTableRow = ({ order, onSelect }: OrderTableRowProps) => {
-  const summary = getOrderSummary(order.details);
+  const totalQty = order.details.reduce((sum, item) => sum + item.qty, 0);
+  const totalPrice = order.details.reduce(
+    (sum, item) => sum + item.clientPrice * item.qty,
+    0
+  );
 
   return (
     <TableRow
@@ -29,11 +32,12 @@ export const OrderTableRow = ({ order, onSelect }: OrderTableRowProps) => {
         let value: string | number;
 
         if (key === "qty") {
-          value = summary.qty;
+          value = totalQty;
         } else if (key === "totalPrice") {
-          value = formatNumber(summary.total);
+          value = formatNumber(totalPrice);
         } else if (key === "orderDate") {
-          value = format(order.orderDate, "dd.MM.yyyy");
+          const date = new Date(order.orderDate);
+          value = isNaN(date.getTime()) ? "-" : format(date, "dd.MM.yyyy");
         } else {
           const raw = order[key];
           value =
@@ -41,7 +45,9 @@ export const OrderTableRow = ({ order, onSelect }: OrderTableRowProps) => {
         }
 
         const color =
-          key === "status" ? orderStatusColors[order.status] : undefined;
+          key === "status"
+            ? (orderStatusColors[order.status] ?? undefined)
+            : undefined;
 
         return (
           <TableCell

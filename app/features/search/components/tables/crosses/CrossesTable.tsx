@@ -12,7 +12,7 @@ import { CrossesTableProps } from "@/features/search/types";
 
 import { PaginationComponent } from "@/components/ui/pagination/PaginationComponent";
 
-import { useBasketStore } from "@/store/useBasketStore";
+import { useBasket } from "@/hooks/useBasket";
 
 import { paginate } from "@/utils/paginate";
 
@@ -37,6 +37,8 @@ export const CrossesTable = ({
 
   const [crossesWithData, setCrossesWithData] = useState<
     {
+      skuId: number;
+      supplierId: number;
       brand: string;
       numberFix: string;
       price: number;
@@ -49,6 +51,8 @@ export const CrossesTable = ({
     setCrossesWithData(
       crosses.flatMap(offerGroup =>
         offerGroup.offers.map(offer => ({
+          skuId: offer.skuId,
+          supplierId: offer.supplierId,
           brand: offerGroup.brand,
           numberFix: offerGroup.number,
           price: offer.price,
@@ -88,18 +92,14 @@ export const CrossesTable = ({
     setModalState(prev => ({ ...prev, info: value }));
   };
 
+  const { addItem } = useBasket();
+
   const addToCart = (cross: (typeof crossesWithData)[number]) => {
     if (cross.count === 0) return;
 
-    useBasketStore.getState().addItem({
-      id: `${cross.brand}-${cross.numberFix}`,
-      brand: cross.brand,
-      number: cross.numberFix, // ← здесь можно сразу использовать numberFix
-      description: descr || "Описание отсутствует",
-      price: cross.price,
-      count: cross.count,
-      stock: cross.stock
-    });
+    for (let i = 0; i < cross.count; i++) {
+      addItem({ skuId: cross.skuId, supplierId: cross.supplierId });
+    }
   };
 
   return (

@@ -8,8 +8,6 @@ import { CrossesTable } from "@/features/search/components/tables/crosses/Crosse
 import { fetchCrossesData } from "@/features/search/server/fetchCrosses";
 import { CrossData } from "@/features/search/types";
 
-import { useBasketSync } from "@/hooks/useBasketSync";
-
 import { useAuthStore } from "@/store/useAuthStore";
 
 // 🔹 добавлено
@@ -19,8 +17,6 @@ import { getProposalWord } from "@/utils/get-proposal-word";
 import styles from "@/styles/pages/search/Search.module.css";
 
 export const CrossesTemplate = () => {
-  useBasketSync();
-
   const params = useParams();
   const number = params.number as string;
   const brand = params.brand as string;
