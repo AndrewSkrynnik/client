@@ -5,4 +5,5 @@ export interface BasketCounterProps {
   number: string;
   skuId: number;
   supplierId: number;
+  hash: string;
 }

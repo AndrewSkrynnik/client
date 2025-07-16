@@ -20,27 +20,22 @@ export const BasketCounter: FC<BasketCounterProps> = ({
 
   if (!item) return null;
 
-  const count = item.qty;
+  const { qty: count, hash } = item;
 
   return (
     <div className={styles.container}>
       <button
-        onClick={() => removeItem({ skuId, supplierId })}
+        onClick={() => removeItem({ skuId, supplierId, hash })}
         disabled={count <= 1}
         className={`${styles.button} ${count <= 1 ? styles.buttonDisabled : styles.buttonActive}`}
       >
         –
       </button>
 
-      <input
-        type="text"
-        value={count}
-        className={styles.input}
-        disabled // 👈 ручной ввод отключён — API не поддерживает
-      />
+      <input type="text" value={count} className={styles.input} disabled />
 
       <button
-        onClick={() => addItem({ skuId, supplierId })}
+        onClick={() => addItem({ skuId, supplierId, hash })}
         className={`${styles.button} ${styles.buttonActive}`}
       >
         +

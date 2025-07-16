@@ -10,7 +10,7 @@ import {
   removeFromBasket
 } from "@/libs/api/basket";
 
-type BasketActionInput = Pick<BasketItem, "skuId" | "supplierId"> & {
+type BasketActionInput = Pick<BasketItem, "skuId" | "supplierId" | "hash"> & {
   brand?: string;
   article?: string;
   description?: string;
@@ -39,23 +39,29 @@ export const useBasket = (params?: UseBasketParams) => {
     queryFn: fetchBasket
   });
 
-  const getKey = (skuId: number, supplierId: number) =>
-    `${skuId}_${supplierId}`;
+  const getKey = (skuId: number, supplierId: number, hash: string) =>
+    `${skuId}_${supplierId}_${hash}`;
 
   const extendedItems = useMemo(
     () =>
       items.map(item => ({
         ...item,
-        selected: selectedSet?.has(getKey(item.skuId, item.supplierId)) ?? false
+        selected:
+          selectedSet?.has(getKey(item.skuId, item.supplierId, item.hash)) ??
+          false
       })),
     [items, selectedSet]
   );
 
-  const toggleItemSelection = (skuId: number, supplierId: number) => {
-    if (!setSelectedSet || !selectedSet) return;
+  const toggleItemSelection = (
+    skuId: number,
+    supplierId: number,
+    hash: string
+  ) => {
+    if (!setSelectedSet || !selectedSet || !hash) return;
 
+    const key = getKey(skuId, supplierId, hash);
     setSelectedSet(prev => {
-      const key = getKey(skuId, supplierId);
       const newSet = new Set(prev);
       newSet.has(key) ? newSet.delete(key) : newSet.add(key);
       return newSet;
@@ -66,7 +72,7 @@ export const useBasket = (params?: UseBasketParams) => {
     if (!setSelectedSet) return;
 
     if (checked) {
-      const all = items.map(i => getKey(i.skuId, i.supplierId));
+      const all = items.map(i => getKey(i.skuId, i.supplierId, i.hash));
       setSelectedSet(new Set(all));
     } else {
       setSelectedSet(new Set());
@@ -82,24 +88,27 @@ export const useBasket = (params?: UseBasketParams) => {
   });
 
   const removeMutation = useMutation({
-    mutationFn: ({ skuId, supplierId }: BasketActionInput) =>
-      removeFromBasket(skuId, supplierId),
+    mutationFn: ({ skuId, supplierId, hash }: BasketActionInput) => {
+      if (!hash) throw new Error("Missing hash for removeItem");
+      return removeFromBasket(skuId, supplierId, hash);
+    },
     onSuccess: invalidate
   });
 
   const deleteMutation = useMutation({
-    mutationFn: ({ skuId, supplierId }: BasketActionInput) =>
-      deleteFromBasket(skuId, supplierId),
-    onSuccess: (_, { skuId, supplierId }) => {
+    mutationFn: ({ skuId, supplierId, hash }: BasketActionInput) => {
+      if (!hash) throw new Error("Missing hash for deleteItem");
+      return deleteFromBasket(skuId, supplierId, hash);
+    },
+    onSuccess: (_, { skuId, supplierId, hash }) => {
       invalidate();
-      if (setSelectedSet) {
-        const key = getKey(skuId, supplierId);
-        setSelectedSet(prev => {
-          const copy = new Set(prev);
-          copy.delete(key);
-          return copy;
-        });
-      }
+      if (!setSelectedSet || !hash) return;
+      const key = getKey(skuId, supplierId, hash);
+      setSelectedSet(prev => {
+        const copy = new Set(prev);
+        copy.delete(key);
+        return copy;
+      });
     }
   });
 
@@ -111,15 +120,36 @@ export const useBasket = (params?: UseBasketParams) => {
     }
   });
 
+  const deleteSelectedAsync = async () => {
+    if (!selectedSet || selectedSet.size === 0) return;
+
+    const selectedItems = items.filter(item =>
+      selectedSet.has(getKey(item.skuId, item.supplierId, item.hash))
+    );
+
+    await Promise.all(
+      selectedItems.map(item =>
+        deleteMutation.mutateAsync({
+          skuId: item.skuId,
+          supplierId: item.supplierId,
+          hash: item.hash
+        })
+      )
+    );
+  };
+
   return {
     items: extendedItems,
     isLoading,
     error,
 
     addItem: (input: BasketActionInput) => {
+      if (!input.hash) throw new Error("Missing hash for addItem");
+
       const basketItem: BasketItem = {
         skuId: input.skuId,
         supplierId: input.supplierId,
+        hash: input.hash,
         brand: input.brand ?? "",
         article: input.article ?? "",
         description: input.description ?? "",
@@ -127,8 +157,10 @@ export const useBasket = (params?: UseBasketParams) => {
         qty: input.qty ?? 0,
         selected: input.selected ?? false
       };
+
       addMutation.mutate(basketItem);
     },
+
     removeItem: (input: BasketActionInput) => removeMutation.mutate(input),
     deleteItem: (input: BasketActionInput) => deleteMutation.mutate(input),
     clear: () => clearMutation.mutate(),
@@ -137,6 +169,7 @@ export const useBasket = (params?: UseBasketParams) => {
     removeItemAsync: removeMutation.mutateAsync,
     deleteItemAsync: deleteMutation.mutateAsync,
     clearAsync: clearMutation.mutateAsync,
+    deleteSelectedAsync, // ✅ доступен для вызова после оформления заказа
 
     toggleItemSelection,
     selectAllItems

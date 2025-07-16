@@ -14,6 +14,10 @@ import { useBasket } from "@/hooks/useBasket";
 
 import { formatNumber } from "@/utils/format-number";
 
+// 🔐 Генерация fallback-хэша
+const generateHash = (skuId: number, supplierId: number, price: number) =>
+  `${skuId}-${supplierId}-${price}`;
+
 const CrossesTableRowComponent = ({
   cross,
   descr,
@@ -24,8 +28,14 @@ const CrossesTableRowComponent = ({
 }: CrossesTableRowProps) => {
   const { items, addItem, removeItem } = useBasket();
 
+  const hash =
+    cross.hash || generateHash(cross.skuId, cross.supplierId, cross.price);
+
   const item = items.find(
-    i => i.skuId === cross.skuId && i.supplierId === cross.supplierId
+    i =>
+      i.skuId === cross.skuId &&
+      i.supplierId === cross.supplierId &&
+      i.hash === hash
   );
 
   const count = item?.qty ?? 0;
@@ -66,6 +76,7 @@ const CrossesTableRowComponent = ({
             addItem({
               skuId: cross.skuId,
               supplierId: cross.supplierId,
+              hash,
               brand: cross.brand,
               article: cross.numberFix,
               description: descr || "Описание отсутствует",
@@ -75,7 +86,11 @@ const CrossesTableRowComponent = ({
             })
           }
           onDecrement={() =>
-            removeItem({ skuId: cross.skuId, supplierId: cross.supplierId })
+            removeItem({
+              skuId: cross.skuId,
+              supplierId: cross.supplierId,
+              hash
+            })
           }
           onInputChange={() => {}}
         />

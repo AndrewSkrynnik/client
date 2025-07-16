@@ -16,7 +16,7 @@ export const CrossesTableBody = ({
   <TableBody>
     {crosses.map((cross, index) => (
       <CrossesTableRow
-        key={index}
+        key={`${cross.skuId}_${cross.supplierId}_${cross.hash}`}
         index={index}
         cross={cross}
         descr={descr}

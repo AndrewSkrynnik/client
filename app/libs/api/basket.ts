@@ -3,6 +3,7 @@ import axios from "axios";
 export type BasketItem = {
   skuId: number;
   supplierId: number;
+  hash: string;
   brand: string;
   article: string;
   description: string;
@@ -26,6 +27,7 @@ export const fetchBasket = async (): Promise<BasketItem[]> => {
   return res.data.map((item: any) => ({
     skuId: item.skuId,
     supplierId: item.supplierId,
+    hash: item.hash,
     brand: item.brand,
     article: item.article,
     description: item.description,
@@ -40,28 +42,32 @@ export const addToBasket = async (item: BasketItem) => {
   notifyBasketUpdate();
 };
 
-export const removeFromBasket = async (skuId: number, supplierId: number) => {
+export const removeFromBasket = async (
+  skuId: number,
+  supplierId: number,
+  hash: string
+) => {
   await axios.post(
     `${API_URL}/basket/remove`,
-    { skuId, supplierId },
+    { skuId, supplierId, hash },
     withCredentials
   );
-  notifyBasketUpdate(); // 🔔 уведомляем
+  notifyBasketUpdate();
 };
 
-export const deleteFromBasket = async (skuId: number, supplierId: number) => {
-  await fetch(`${API_URL}/basket`, {
-    method: "DELETE",
-    credentials: "include", // 🔹 передаём cookie (JWT)
-    body: JSON.stringify({ skuId, supplierId }),
-    headers: {
-      "Content-Type": "application/json"
-    }
+export const deleteFromBasket = async (
+  skuId: number,
+  supplierId: number,
+  hash: string
+) => {
+  await axios.delete(`${API_URL}/basket/delete`, {
+    data: { skuId, supplierId, hash },
+    ...withCredentials
   });
-  notifyBasketUpdate(); // 🔔 уведомляем
+  notifyBasketUpdate();
 };
 
 export const clearBasket = async () => {
   await axios.delete(`${API_URL}/basket/clear`, withCredentials);
-  notifyBasketUpdate(); // 🔔 уведомляем
+  notifyBasketUpdate();
 };

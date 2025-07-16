@@ -24,7 +24,10 @@ export const BasketSummary = ({
 }: BasketSummaryProps) => {
   const router = useRouter();
 
-  const { items, clear } = useBasket({ selectedSet, setSelectedSet });
+  const { items, deleteSelectedAsync } = useBasket({
+    selectedSet,
+    setSelectedSet
+  });
   const { createOrderAsync } = useOrders();
 
   const selectedItems = useMemo(
@@ -68,7 +71,7 @@ export const BasketSummary = ({
 
       await createOrderAsync(payload);
       toast.success("Заказ успешно оформлен!");
-      await clear();
+      await deleteSelectedAsync();
       router.push("/office/orders");
     } catch (error: any) {
       toast.error(error?.message || "Ошибка при оформлении заказа");

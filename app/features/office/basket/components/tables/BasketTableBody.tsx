@@ -23,19 +23,20 @@ export const BasketTableBody: FC<BasketTableBodyProps> = ({
   return (
     <TableBody>
       {items.map(item => {
-        if (!item.skuId || !item.supplierId) {
-          console.warn("⛔ Basket item has no skuId/supplierId", item);
+        if (!item.skuId || !item.supplierId || !item.hash) {
+          console.warn("⛔ Basket item missing skuId/supplierId/hash", item);
           return null;
         }
 
         return (
           <BasketTableRow
-            key={`${item.skuId}_${item.supplierId}`}
+            key={`${item.skuId}_${item.supplierId}_${item.hash}`}
             skuId={item.skuId}
             supplierId={item.supplierId}
             brand={item.brand}
             description={item.description}
             number={item.article}
+            hash={item.hash}
             selectedSet={selectedSet}
             setSelectedSet={setSelectedSet}
           />

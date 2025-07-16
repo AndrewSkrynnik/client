@@ -44,6 +44,7 @@ export const CrossesTable = ({
       price: number;
       stock: number;
       count: number;
+      hash: string;
     }[]
   >([]);
 
@@ -57,7 +58,8 @@ export const CrossesTable = ({
           numberFix: offerGroup.number,
           price: offer.price,
           stock: offer.qty,
-          count: 0
+          count: 0,
+          hash: `${offer.price}-${offer.qty}` // ✅ стабильный hash
         }))
       )
     );
@@ -98,7 +100,17 @@ export const CrossesTable = ({
     if (cross.count === 0) return;
 
     for (let i = 0; i < cross.count; i++) {
-      addItem({ skuId: cross.skuId, supplierId: cross.supplierId });
+      addItem({
+        skuId: cross.skuId,
+        supplierId: cross.supplierId,
+        hash: cross.hash,
+        brand: cross.brand,
+        article: cross.numberFix,
+        description: descr || "Описание отсутствует",
+        price: cross.price,
+        qty: 1,
+        selected: true
+      });
     }
   };
 

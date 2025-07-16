@@ -25,18 +25,21 @@ export const BasketTable: FC<BasketTableProps> = ({
         setSelectedSet={setSelectedSet}
       />
       <tbody>
-        {items.map(item => (
-          <BasketTableRow
-            key={`${item.skuId}_${item.supplierId}`}
-            skuId={item.skuId}
-            supplierId={item.supplierId}
-            brand={item.brand}
-            description={item.description}
-            number={item.article}
-            selectedSet={selectedSet}
-            setSelectedSet={setSelectedSet}
-          />
-        ))}
+        {[...items]
+          .sort((a, b) => a.hash.localeCompare(b.hash))
+          .map(item => (
+            <BasketTableRow
+              key={`${item.skuId}_${item.supplierId}_${item.hash}`}
+              skuId={item.skuId}
+              supplierId={item.supplierId}
+              brand={item.brand}
+              description={item.description}
+              number={item.article}
+              hash={item.hash}
+              selectedSet={selectedSet}
+              setSelectedSet={setSelectedSet}
+            />
+          ))}
       </tbody>
     </table>
   );

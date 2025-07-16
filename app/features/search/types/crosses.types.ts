@@ -7,6 +7,7 @@ export interface CrossItem {
   price: number;
   stock: number;
   count: number;
+  hash: string;
 }
 
 /* Общие обработчики и дополнительные данные для таблицы и строки */

@@ -21,6 +21,7 @@ interface BasketTableRowProps {
   supplierId: number;
   brand: string;
   number: string;
+  hash: string;
   description: string;
   selectedSet: Set<string>;
   setSelectedSet: React.Dispatch<React.SetStateAction<Set<string>>>;
@@ -42,6 +43,7 @@ export const BasketTableRow: FC<BasketTableRowProps> = ({
   );
 
   if (!item) return null;
+  const { hash } = item; // ❗️добавь обязательно
 
   return (
     <StyledTableRowBody>
@@ -53,7 +55,8 @@ export const BasketTableRow: FC<BasketTableRowProps> = ({
         <BasketCounter
           skuId={skuId}
           supplierId={supplierId}
-          id={`${skuId}_${supplierId}`}
+          hash={hash} // ✅ обязательно
+          id={`${skuId}_${supplierId}_${hash}`}
           brand={item.brand}
           number={item.article}
         />
@@ -66,13 +69,23 @@ export const BasketTableRow: FC<BasketTableRowProps> = ({
           <CheckboxComponent
             size="small"
             checked={item.selected ?? false}
-            onChange={() => toggleItemSelection(skuId, supplierId)}
+            onChange={() => {
+              console.log("☑️ Переключение выбора:", {
+                skuId,
+                supplierId,
+                hash
+              });
+              toggleItemSelection(skuId, supplierId, hash);
+            }}
           />
         </TooltipComponent>
       </StyledTableCellBody>
       <StyledTableCellBody>
         <CloseIcon
-          onClick={() => deleteItem({ skuId, supplierId })} // 🔹 полное удаление
+          onClick={() => {
+            console.log("🗑 Удаление товара:", { skuId, supplierId, hash });
+            deleteItem({ skuId, supplierId, hash });
+          }}
           fontSize="small"
           className="closeButton"
         />

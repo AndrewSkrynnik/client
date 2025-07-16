@@ -15,12 +15,6 @@ export interface OrderItem {
   description: string;
   clientPrice: number;
   totalPrice: number;
-  statuses: {
-    id: number;
-    status: string;
-    qty: number;
-    createdAt: string;
-  }[];
 }
 
 export interface OrderResponse {
