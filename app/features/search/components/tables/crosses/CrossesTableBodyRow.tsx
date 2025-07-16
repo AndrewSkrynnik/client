@@ -26,7 +26,7 @@ const CrossesTableRowComponent = ({
   onOpenImageModal,
   onOpenInfoModal
 }: CrossesTableRowProps) => {
-  const { items, addItem, removeItem } = useBasket();
+  const { items, addItem, removeItem, updateItem, deleteItem } = useBasket();
 
   const hash =
     cross.hash || generateHash(cross.skuId, cross.supplierId, cross.price);
@@ -39,6 +39,42 @@ const CrossesTableRowComponent = ({
   );
 
   const count = item?.qty ?? 0;
+
+  const handleInputChange = (newQty: number) => {
+    if (newQty === 0) {
+      deleteItem({
+        skuId: cross.skuId,
+        supplierId: cross.supplierId,
+        hash
+      });
+      return;
+    }
+
+    if (count === 0) {
+      addItem({
+        skuId: cross.skuId,
+        supplierId: cross.supplierId,
+        hash,
+        brand: cross.brand,
+        article: cross.numberFix,
+        description: descr || "Описание отсутствует",
+        price: cross.price,
+        qty: newQty,
+        selected: true
+      });
+      return;
+    }
+
+    if (newQty !== count) {
+      updateItem({
+        skuId: cross.skuId,
+        supplierId: cross.supplierId,
+        hash,
+        qty: newQty,
+        price: cross.price
+      });
+    }
+  };
 
   return (
     <StyledTableRowBody>
@@ -92,7 +128,7 @@ const CrossesTableRowComponent = ({
               hash
             })
           }
-          onInputChange={() => {}}
+          onInputChange={handleInputChange}
         />
       </StyledTableCellBody>
     </StyledTableRowBody>

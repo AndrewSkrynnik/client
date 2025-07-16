@@ -16,21 +16,33 @@ export const SearchCounter = ({
 }: SearchCounterProps) => {
   const [inputValue, setInputValue] = useState(count.toString());
 
-  // синхронизируем ввод при изменении count извне
   useEffect(() => {
     setInputValue(count.toString());
   }, [count]);
 
   const totalPrice = formatNumber(price * count);
 
-  const handleInput = (raw: string) => {
+  const handleInputChange = (raw: string) => {
     const digits = raw.replace(/\D/g, "");
-    const trimmed = digits.replace(/^0+(?!$)/, ""); // убираем leading zero
-    const parsed = parseInt(trimmed || "0", 10);
+    const trimmed = digits.replace(/^0+(?!$)/, "");
+    setInputValue(trimmed || "0");
+  };
 
+  const handleBlur = () => {
+    const parsed = parseInt(inputValue || "0", 10);
     const clamped = Math.min(parsed, stock);
+
+    if (clamped === 0) {
+      // 👇 ручной ввод 0 — сигнал на удаление
+      onInputChange?.(0);
+      return;
+    }
+
+    if (clamped !== count) {
+      onInputChange?.(clamped);
+    }
+
     setInputValue(clamped.toString());
-    onInputChange?.(clamped);
   };
 
   return (
@@ -48,7 +60,8 @@ export const SearchCounter = ({
           type="text"
           inputMode="numeric"
           value={inputValue}
-          onChange={e => handleInput(e.target.value)}
+          onChange={e => handleInputChange(e.target.value)}
+          onBlur={handleBlur}
           className={styles.input}
         />
 

@@ -70,11 +70,6 @@ export const BasketTableRow: FC<BasketTableRowProps> = ({
             size="small"
             checked={item.selected ?? false}
             onChange={() => {
-              console.log("☑️ Переключение выбора:", {
-                skuId,
-                supplierId,
-                hash
-              });
               toggleItemSelection(skuId, supplierId, hash);
             }}
           />

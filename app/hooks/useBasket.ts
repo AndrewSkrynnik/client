@@ -7,7 +7,8 @@ import {
   clearBasket,
   deleteFromBasket,
   fetchBasket,
-  removeFromBasket
+  removeFromBasket,
+  updateBasketQty // 👈 PATCH метод
 } from "@/libs/api/basket";
 
 type BasketActionInput = Pick<BasketItem, "skuId" | "supplierId" | "hash"> & {
@@ -112,6 +113,21 @@ export const useBasket = (params?: UseBasketParams) => {
     }
   });
 
+  const updateMutation = useMutation({
+    mutationFn: ({
+      skuId,
+      supplierId,
+      hash,
+      qty,
+      price
+    }: BasketActionInput) => {
+      if (!hash || typeof qty !== "number")
+        throw new Error("Missing hash or qty for updateItem");
+      return updateBasketQty(skuId, supplierId, hash, qty, price);
+    },
+    onSuccess: invalidate
+  });
+
   const clearMutation = useMutation({
     mutationFn: clearBasket,
     onSuccess: () => {
@@ -154,8 +170,9 @@ export const useBasket = (params?: UseBasketParams) => {
         article: input.article ?? "",
         description: input.description ?? "",
         price: input.price ?? 0,
-        qty: input.qty ?? 0,
-        selected: input.selected ?? false
+        qty: input.qty ?? 1, // 👈 тут по умолчанию 1, но можем передать больше
+        selected: input.selected ?? false,
+        availableQty: input.qty ?? 0
       };
 
       addMutation.mutate(basketItem);
@@ -163,13 +180,15 @@ export const useBasket = (params?: UseBasketParams) => {
 
     removeItem: (input: BasketActionInput) => removeMutation.mutate(input),
     deleteItem: (input: BasketActionInput) => deleteMutation.mutate(input),
+    updateItem: (input: BasketActionInput) => updateMutation.mutate(input), // ✅
     clear: () => clearMutation.mutate(),
 
     addItemAsync: addMutation.mutateAsync,
     removeItemAsync: removeMutation.mutateAsync,
     deleteItemAsync: deleteMutation.mutateAsync,
+    updateItemAsync: updateMutation.mutateAsync, // ✅
     clearAsync: clearMutation.mutateAsync,
-    deleteSelectedAsync, // ✅ доступен для вызова после оформления заказа
+    deleteSelectedAsync,
 
     toggleItemSelection,
     selectAllItems

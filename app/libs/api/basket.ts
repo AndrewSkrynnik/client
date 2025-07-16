@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export type BasketItem = {
+export interface BasketItem {
+  selected: boolean;
   skuId: number;
   supplierId: number;
   hash: string;
@@ -9,8 +10,8 @@ export type BasketItem = {
   description: string;
   price: number;
   qty: number;
-  selected: boolean;
-};
+  availableQty: number; // 👈 обязательно
+}
 
 const API_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 const withCredentials = { withCredentials: true };
@@ -24,6 +25,7 @@ const notifyBasketUpdate = () => {
 
 export const fetchBasket = async (): Promise<BasketItem[]> => {
   const res = await axios.get(`${API_URL}/basket`, withCredentials);
+
   return res.data.map((item: any) => ({
     skuId: item.skuId,
     supplierId: item.supplierId,
@@ -33,6 +35,7 @@ export const fetchBasket = async (): Promise<BasketItem[]> => {
     description: item.description,
     price: item.price,
     qty: item.qty,
+    availableQty: item.availableQty ?? 0, // 👈 безопасное добавление
     selected: item.selected ?? false
   }));
 };
@@ -69,5 +72,20 @@ export const deleteFromBasket = async (
 
 export const clearBasket = async () => {
   await axios.delete(`${API_URL}/basket/clear`, withCredentials);
+  notifyBasketUpdate();
+};
+
+export const updateBasketQty = async (
+  skuId: number,
+  supplierId: number,
+  hash: string,
+  qty: number,
+  price?: number
+) => {
+  await axios.patch(
+    `${API_URL}/basket/update`,
+    { skuId, supplierId, hash, qty, price },
+    withCredentials
+  );
   notifyBasketUpdate();
 };
