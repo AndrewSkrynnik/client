@@ -22,13 +22,10 @@ export const BasketTableBody: FC<BasketTableBodyProps> = ({
 
   return (
     <TableBody>
-      {items.map(item => {
-        if (!item.skuId || !item.supplierId || !item.hash) {
-          console.warn("⛔ Basket item missing skuId/supplierId/hash", item);
-          return null;
-        }
-
-        return (
+      {[...items]
+        .filter(item => item.skuId && item.supplierId && item.hash)
+        .sort((a, b) => a.hash.localeCompare(b.hash))
+        .map(item => (
           <BasketTableRow
             key={`${item.skuId}_${item.supplierId}_${item.hash}`}
             skuId={item.skuId}
@@ -40,8 +37,7 @@ export const BasketTableBody: FC<BasketTableBodyProps> = ({
             selectedSet={selectedSet}
             setSelectedSet={setSelectedSet}
           />
-        );
-      })}
+        ))}
     </TableBody>
   );
 };

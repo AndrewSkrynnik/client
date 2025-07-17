@@ -1,46 +1,29 @@
 "use client";
 
-import { FC } from "react";
+import { Paper, Table, TableContainer } from "@mui/material";
 
+import { BasketTableBody } from "@/features/office/basket/components/tables/BasketTableBody";
 import { BasketTableHead } from "@/features/office/basket/components/tables/BasketTableHead";
-import { BasketTableRow } from "@/features/office/basket/components/tables/BasketTableRow";
-
-import { useBasket } from "@/hooks/useBasket";
 
 interface BasketTableProps {
   selectedSet: Set<string>;
   setSelectedSet: React.Dispatch<React.SetStateAction<Set<string>>>;
 }
 
-export const BasketTable: FC<BasketTableProps> = ({
+export const BasketTable = ({
   selectedSet,
   setSelectedSet
-}) => {
-  const { items } = useBasket({ selectedSet, setSelectedSet });
-
-  return (
-    <table>
+}: BasketTableProps) => (
+  <TableContainer component={Paper}>
+    <Table>
       <BasketTableHead
         selectedSet={selectedSet}
         setSelectedSet={setSelectedSet}
       />
-      <tbody>
-        {[...items]
-          .sort((a, b) => a.hash.localeCompare(b.hash))
-          .map(item => (
-            <BasketTableRow
-              key={`${item.skuId}_${item.supplierId}_${item.hash}`}
-              skuId={item.skuId}
-              supplierId={item.supplierId}
-              brand={item.brand}
-              description={item.description}
-              number={item.article}
-              hash={item.hash}
-              selectedSet={selectedSet}
-              setSelectedSet={setSelectedSet}
-            />
-          ))}
-      </tbody>
-    </table>
-  );
-};
+      <BasketTableBody
+        selectedSet={selectedSet}
+        setSelectedSet={setSelectedSet}
+      />
+    </Table>
+  </TableContainer>
+);

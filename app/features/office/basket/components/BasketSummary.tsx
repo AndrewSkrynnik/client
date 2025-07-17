@@ -63,7 +63,7 @@ export const BasketSummary = ({
         qty: item.qty,
         article: item.article,
         brand: item.brand,
-        description: item.description, // 👈 ОБЯЗАТЕЛЬНО
+        description: item.description,
         clientPrice: item.price,
         totalPrice: item.price * item.qty
       }));

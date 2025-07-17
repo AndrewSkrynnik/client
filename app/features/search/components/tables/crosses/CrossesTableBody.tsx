@@ -12,21 +12,29 @@ export const CrossesTableBody = ({
   onOpenImageModal,
   onOpenInfoModal,
   onAddToCart
-}: CrossesTableBodyProps) => (
-  <TableBody>
-    {crosses.map((cross, index) => (
-      <CrossesTableRow
-        key={`${cross.skuId}_${cross.supplierId}_${cross.hash}`}
-        index={index}
-        cross={cross}
-        descr={descr}
-        properties={properties}
-        images={images}
-        onUpdateCount={onUpdateCount}
-        onOpenImageModal={onOpenImageModal}
-        onOpenInfoModal={onOpenInfoModal}
-        onAddToCart={onAddToCart}
-      />
-    ))}
-  </TableBody>
-);
+}: CrossesTableBodyProps) => {
+  const sortedCrosses = [...crosses].sort((a, b) => {
+    const aKey = `${a.skuId}_${a.supplierId}`;
+    const bKey = `${b.skuId}_${b.supplierId}`;
+    return aKey.localeCompare(bKey);
+  });
+
+  return (
+    <TableBody>
+      {sortedCrosses.map((cross, index) => (
+        <CrossesTableRow
+          key={`${cross.skuId}_${cross.supplierId}`} // 👈 стабильный key
+          index={index}
+          cross={cross}
+          descr={descr}
+          properties={properties}
+          images={images}
+          onUpdateCount={onUpdateCount}
+          onOpenImageModal={onOpenImageModal}
+          onOpenInfoModal={onOpenInfoModal}
+          onAddToCart={onAddToCart}
+        />
+      ))}
+    </TableBody>
+  );
+};

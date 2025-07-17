@@ -43,7 +43,7 @@ export const BasketTableRow: FC<BasketTableRowProps> = ({
   );
 
   if (!item) return null;
-  const { hash } = item; // ❗️добавь обязательно
+  const { hash } = item;
 
   return (
     <StyledTableRowBody>
@@ -78,7 +78,6 @@ export const BasketTableRow: FC<BasketTableRowProps> = ({
       <StyledTableCellBody>
         <CloseIcon
           onClick={() => {
-            console.log("🗑 Удаление товара:", { skuId, supplierId, hash });
             deleteItem({ skuId, supplierId, hash });
           }}
           fontSize="small"
