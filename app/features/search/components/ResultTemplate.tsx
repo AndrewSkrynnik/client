@@ -23,7 +23,7 @@ export const ResultTemplate = () => {
 
   const number = useMemo(() => {
     const raw = (params?.number as string) || searchParams.get("number");
-    // ✅ защита от некорректных данных (функции, объектов и пр.)
+
     return typeof raw === "string" && !raw.includes("function") ? raw : null;
   }, [params, searchParams]);
 

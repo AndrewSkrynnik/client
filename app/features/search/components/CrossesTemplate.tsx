@@ -38,7 +38,7 @@ export const CrossesTemplate = () => {
           return;
         }
 
-        const response = await fetchCrossesData(number, brand, userId); // 🔹 передаём userId
+        const response = await fetchCrossesData(number, brand, userId);
 
         if (!response) throw new Error("Ничего не найдено");
 

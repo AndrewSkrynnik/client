@@ -33,7 +33,6 @@ export const SearchCounter = ({
     const clamped = Math.min(parsed, stock);
 
     if (clamped === 0) {
-      // 👇 ручной ввод 0 — сигнал на удаление
       onInputChange?.(0);
       return;
     }
