@@ -1,6 +1,6 @@
 import { TableBody } from "@mui/material";
 
-import { CrossesTableRow } from "@/features/search/components/tables/crosses/CrossesTableBodyRow";
+import { CrossesTableRow } from "@/features/search/components/tables/crosses/CrossesTableRow";
 import { CrossesTableBodyProps } from "@/features/search/types/crosses.types";
 
 export const CrossesTableBody = ({
@@ -23,7 +23,7 @@ export const CrossesTableBody = ({
     <TableBody>
       {sortedCrosses.map((cross, index) => (
         <CrossesTableRow
-          key={`${cross.skuId}_${cross.supplierId}`} // 👈 стабильный key
+          key={`${cross.skuId}_${cross.supplierId}`}
           index={index}
           cross={cross}
           descr={descr}

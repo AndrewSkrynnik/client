@@ -14,7 +14,7 @@ import { useBasket } from "@/hooks/useBasket";
 
 import { formatNumber } from "@/utils/format-number";
 
-// 🔐 Генерация fallback-хэша
+//  Генерация fallback-хэша
 const generateHash = (skuId: number, supplierId: number, price: number) =>
   `${skuId}-${supplierId}-${price}`;
 
