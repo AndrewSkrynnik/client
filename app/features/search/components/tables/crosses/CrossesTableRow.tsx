@@ -2,6 +2,7 @@ import { memo } from "react";
 
 import { SearchCounter } from "@/features/search/components/SearchCounter";
 import { CrossesTableRowProps } from "@/features/search/types/crosses.types";
+import { generateHash } from "@/features/search/utils/generate-hash";
 
 import { CameraAltIcon, InfoIcon } from "@/components/icons";
 import {
@@ -13,10 +14,6 @@ import { TooltipComponent } from "@/components/ui/tooltip/TooltipComponent";
 import { useBasket } from "@/hooks/useBasket";
 
 import { formatNumber } from "@/utils/format-number";
-
-//  Генерация fallback-хэша
-const generateHash = (skuId: number, supplierId: number, price: number) =>
-  `${skuId}-${supplierId}-${price}`;
 
 const CrossesTableRowComponent = ({
   cross,
@@ -40,28 +37,25 @@ const CrossesTableRowComponent = ({
 
   const count = item?.qty ?? 0;
 
+  const baseItemData = {
+    skuId: cross.skuId,
+    supplierId: cross.supplierId,
+    hash,
+    brand: cross.brand,
+    article: cross.numberFix,
+    description: descr || "Описание отсутствует",
+    price: cross.price,
+    selected: true
+  };
+
   const handleInputChange = (newQty: number) => {
     if (newQty === 0) {
-      deleteItem({
-        skuId: cross.skuId,
-        supplierId: cross.supplierId,
-        hash
-      });
+      deleteItem({ skuId: cross.skuId, supplierId: cross.supplierId, hash });
       return;
     }
 
     if (count === 0) {
-      addItem({
-        skuId: cross.skuId,
-        supplierId: cross.supplierId,
-        hash,
-        brand: cross.brand,
-        article: cross.numberFix,
-        description: descr || "Описание отсутствует",
-        price: cross.price,
-        qty: newQty,
-        selected: true
-      });
+      addItem({ ...baseItemData, qty: newQty });
       return;
     }
 
@@ -108,19 +102,7 @@ const CrossesTableRowComponent = ({
           count={count}
           stock={cross.stock}
           price={cross.price}
-          onIncrement={() =>
-            addItem({
-              skuId: cross.skuId,
-              supplierId: cross.supplierId,
-              hash,
-              brand: cross.brand,
-              article: cross.numberFix,
-              description: descr || "Описание отсутствует",
-              price: cross.price,
-              qty: 1,
-              selected: true
-            })
-          }
+          onIncrement={() => addItem({ ...baseItemData, qty: 1 })}
           onDecrement={() =>
             removeItem({
               skuId: cross.skuId,

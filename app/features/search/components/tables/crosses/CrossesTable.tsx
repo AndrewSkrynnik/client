@@ -2,7 +2,7 @@
 
 import { Paper, Table, TableContainer } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { ModalImage } from "@/features/search/components/modals/ModalImage";
 import { ModalInfo } from "@/features/search/components/modals/ModalInfo";
@@ -26,59 +26,55 @@ export const CrossesTable = ({
 }: CrossesTableProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { addItem } = useBasket();
 
+  const [currentPage, setCurrentPage] = useState(1);
   const [modalState, setModalState] = useState<{
     image?: string;
     info?: Record<string, string>;
   }>({
-    image: searchParams.get("image") || undefined,
-    info: undefined
+    image: searchParams.get("image") || undefined
   });
 
-  const [crossesWithData, setCrossesWithData] = useState<
-    {
-      skuId: number;
-      supplierId: number;
-      brand: string;
-      numberFix: string;
-      price: number;
-      stock: number;
-      count: number;
-      hash: string;
-    }[]
-  >([]);
-
-  useEffect(() => {
-    setCrossesWithData(
-      crosses.flatMap(offerGroup =>
-        offerGroup.offers.map(offer => ({
+  const crossesWithData = useMemo(
+    () =>
+      crosses.flatMap(group =>
+        group.offers.map(offer => ({
           skuId: offer.skuId,
           supplierId: offer.supplierId,
-          brand: offerGroup.brand,
-          numberFix: offerGroup.number,
+          brand: group.brand,
+          numberFix: group.number,
           price: offer.price,
           stock: offer.qty,
           count: 0,
-          hash: `${offer.price}-${offer.qty}` // ✅ стабильный hash
+          hash: `${offer.price}-${offer.qty}`
         }))
-      )
-    );
-  }, [crosses]);
+      ),
+    [crosses]
+  );
 
-  const updateCrossCount = (index: number, value: number) => {
-    setCrossesWithData(prev =>
+  const [rows, setRows] = useState(crossesWithData);
+
+  const paginatedRows = useMemo(
+    () => paginate(rows, currentPage, SEARCH_PAGINATION),
+    [rows, currentPage]
+  );
+
+  const updateCrossCount = useCallback((index: number, value: number) => {
+    setRows(prev =>
       prev.map((item, i) =>
         i === index
           ? { ...item, count: Math.max(0, Math.min(item.stock, value)) }
           : item
       )
     );
-  };
+  }, []);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const paginatedCrosses = useMemo(
-    () => paginate(crossesWithData, currentPage, SEARCH_PAGINATION),
-    [crossesWithData, currentPage]
+  const openModal = useCallback(
+    (type: "image" | "info", value: string | Record<string, string>) => {
+      setModalState(prev => ({ ...prev, [type]: value }));
+    },
+    []
   );
 
   const closeModal = useCallback(() => {
@@ -86,33 +82,25 @@ export const CrossesTable = ({
     router.replace("?", { scroll: false });
   }, [router]);
 
-  const openImageModal = (type: "image", value: string) => {
-    setModalState(prev => ({ ...prev, [type]: value }));
-  };
-
-  const openInfoModal = (value: Record<string, string>) => {
-    setModalState(prev => ({ ...prev, info: value }));
-  };
-
-  const { addItem } = useBasket();
-
-  const addToCart = (cross: (typeof crossesWithData)[number]) => {
-    if (cross.count === 0) return;
-
-    for (let i = 0; i < cross.count; i++) {
-      addItem({
-        skuId: cross.skuId,
-        supplierId: cross.supplierId,
-        hash: cross.hash,
-        brand: cross.brand,
-        article: cross.numberFix,
-        description: descr || "Описание отсутствует",
-        price: cross.price,
-        qty: 1,
-        selected: true
-      });
-    }
-  };
+  const addToCart = useCallback(
+    (cross: (typeof crossesWithData)[number]) => {
+      if (!cross.count) return;
+      for (let i = 0; i < cross.count; i++) {
+        addItem({
+          skuId: cross.skuId,
+          supplierId: cross.supplierId,
+          hash: cross.hash,
+          brand: cross.brand,
+          article: cross.numberFix,
+          description: descr || "Описание отсутствует",
+          price: cross.price,
+          qty: 1,
+          selected: true
+        });
+      }
+    },
+    [addItem, descr]
+  );
 
   return (
     <>
@@ -120,23 +108,25 @@ export const CrossesTable = ({
         <Table>
           <CrossesTableHead />
           <CrossesTableBody
-            crosses={paginatedCrosses}
+            crosses={paginatedRows}
             descr={descr}
             properties={properties}
             images={images}
             onUpdateCount={updateCrossCount}
-            onOpenImageModal={url => openImageModal("image", url)}
-            onOpenInfoModal={openInfoModal}
-            onAddToCart={index => addToCart(paginatedCrosses[index])}
+            onOpenImageModal={url => openModal("image", url)}
+            onOpenInfoModal={props => openModal("info", props)}
+            onAddToCart={index => addToCart(paginatedRows[index])}
           />
         </Table>
       </TableContainer>
+
       <PaginationComponent
-        totalItems={crossesWithData.length}
+        totalItems={rows.length}
         rowsPerPage={SEARCH_PAGINATION}
         currentPage={currentPage}
         onChange={setCurrentPage}
       />
+
       <ModalImage
         open={Boolean(modalState.image)}
         imageUrl={modalState.image ?? ""}
