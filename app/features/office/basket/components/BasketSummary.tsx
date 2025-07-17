@@ -1,8 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
+
+import {
+  BasketDiffItem,
+  BasketDiffModal
+} from "@/features/office/basket/components/BasketDiffModal";
 
 import { Button } from "@/components/ui/buttons/Button";
 
@@ -23,12 +28,19 @@ export const BasketSummary = ({
   setSelectedSet
 }: BasketSummaryProps) => {
   const router = useRouter();
+  const {
+    items,
+    deleteSelectedAsync,
+    updateItemAsync,
+    deleteItemAsync,
+    checkForDiff // 👈 добавлено из useBasket
+  } = useBasket({ selectedSet, setSelectedSet });
 
-  const { items, deleteSelectedAsync } = useBasket({
-    selectedSet,
-    setSelectedSet
-  });
   const { createOrderAsync } = useOrders();
+
+  const [showDiffModal, setShowDiffModal] = useState(false);
+  const [diffs, setDiffs] = useState<BasketDiffItem[]>([]);
+  const [lockedCheckout, setLockedCheckout] = useState(false);
 
   const selectedItems = useMemo(
     () => items.filter(item => item.selected),
@@ -56,64 +68,120 @@ export const BasketSummary = ({
   );
 
   const handleCheckout = async () => {
+    if (lockedCheckout) {
+      setShowDiffModal(true);
+      return;
+    }
+
     try {
+      const diffs = await checkForDiff();
+
+      if (diffs.length > 0) {
+        setDiffs(diffs);
+        setShowDiffModal(true);
+        setLockedCheckout(true);
+        toast.warn("Цены или остатки некоторых товаров изменились");
+        return;
+      }
+
       const payload = selectedItems.map(item => ({
         skuId: item.skuId,
         supplierId: item.supplierId,
         qty: item.qty,
-        article: item.article,
-        brand: item.brand,
-        description: item.description,
-        clientPrice: item.price,
-        totalPrice: item.price * item.qty
+        basePrice: item.price,
+        description: item.description
       }));
-      console.log("🛒 Отправляем заказ:", payload);
 
       await createOrderAsync(payload);
       toast.success("Заказ успешно оформлен!");
       await deleteSelectedAsync();
       router.push("/office/orders");
     } catch (error: any) {
-      toast.error(error?.message || "Ошибка при оформлении заказа");
-      console.error("[checkout error]", error);
+      toast.error(
+        error?.response?.data?.message || "Ошибка при оформлении заказа"
+      );
     }
   };
 
+  const handleApplyChanges = async () => {
+    const updates = diffs.map(async diff => {
+      if (diff.newQty === 0) {
+        return deleteItemAsync({
+          skuId: diff.skuId,
+          supplierId: diff.supplierId,
+          hash:
+            items.find(
+              i => i.skuId === diff.skuId && i.supplierId === diff.supplierId
+            )?.hash ?? ""
+        });
+      }
+
+      return updateItemAsync({
+        skuId: diff.skuId,
+        supplierId: diff.supplierId,
+        hash:
+          items.find(
+            i => i.skuId === diff.skuId && i.supplierId === diff.supplierId
+          )?.hash ?? "",
+        qty: diff.newQty ?? undefined,
+        price: diff.newPrice ?? undefined
+      });
+    });
+
+    await Promise.all(updates);
+
+    setShowDiffModal(false);
+    setLockedCheckout(false);
+    toast.info("Корзина обновлена. Повторите оформление заказа.");
+  };
+
   return (
-    <div className={styles.summaryContainer}>
-      <div className={styles.summaryWrapper}>
-        <div className={styles.summaryInfo}>
-          <div className={styles.summaryTitle}>Итого в корзине:</div>
-          <div className={styles.summaryInfoItem}>
-            <p>Количество товаров:</p> <span>{totalCount} шт.</span>
+    <>
+      <div className={styles.summaryContainer}>
+        <div className={styles.summaryWrapper}>
+          <div className={styles.summaryInfo}>
+            <div className={styles.summaryTitle}>Итого в корзине:</div>
+            <div className={styles.summaryInfoItem}>
+              <p>Количество товаров:</p> <span>{totalCount} шт.</span>
+            </div>
+            <div className={styles.summaryInfoItem}>
+              <p>Общая стоимость:</p>
+              <span>{formatNumber(totalPrice)} ₽</span>
+            </div>
           </div>
-          <div className={styles.summaryInfoItem}>
-            <p>Общая стоимость:</p>
-            <span>{formatNumber(totalPrice)} ₽</span>
+
+          <div className={`${styles.summaryInfo} ${styles.summaryInfoOrder}`}>
+            <div
+              className={`${styles.summaryTitle} ${styles.summaryTitleOrder}`}
+            >
+              Итого в заказе:
+            </div>
+            <div className={styles.summaryInfoItem}>
+              <p>Количество товаров:</p> <span>{selectedCount} шт.</span>
+            </div>
+            <div className={styles.summaryInfoItem}>
+              <p>Общая стоимость:</p>
+              <span>{formatNumber(selectedPrice)} ₽</span>
+            </div>
           </div>
         </div>
 
-        <div className={`${styles.summaryInfo} ${styles.summaryInfoOrder}`}>
-          <div className={`${styles.summaryTitle} ${styles.summaryTitleOrder}`}>
-            Итого в заказе:
-          </div>
-          <div className={styles.summaryInfoItem}>
-            <p>Количество товаров:</p> <span>{selectedCount} шт.</span>
-          </div>
-          <div className={styles.summaryInfoItem}>
-            <p>Общая стоимость:</p>
-            <span>{formatNumber(selectedPrice)} ₽</span>
-          </div>
+        <div className={styles.summaryButtonWrapper}>
+          <Button
+            isDisabled={selectedItems.length === 0}
+            onClick={handleCheckout}
+          >
+            Оформить заказ
+          </Button>
         </div>
       </div>
-      <div className={styles.summaryButtonWrapper}>
-        <Button
-          isDisabled={selectedItems.length === 0}
-          onClick={handleCheckout}
-        >
-          Оформить заказ
-        </Button>
-      </div>
-    </div>
+
+      <BasketDiffModal
+        open={showDiffModal}
+        changes={diffs}
+        onApply={handleApplyChanges}
+        onClose={() => setShowDiffModal(false)}
+      />
+    </>
   );
 };

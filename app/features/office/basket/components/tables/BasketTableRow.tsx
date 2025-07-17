@@ -55,14 +55,14 @@ export const BasketTableRow: FC<BasketTableRowProps> = ({
         <BasketCounter
           skuId={skuId}
           supplierId={supplierId}
-          hash={hash} // ✅ обязательно
+          hash={hash}
           id={`${skuId}_${supplierId}_${hash}`}
           brand={item.brand}
           number={item.article}
         />
       </StyledTableCellBody>
       <StyledTableCellBody>
-        {formatNumber(item.price * item.qty)} ₽
+        {formatNumber(item.price * item.qty)}
       </StyledTableCellBody>
       <StyledTableCellBody sx={{ textAlign: "center" }}>
         <TooltipComponent title="Выбрать">

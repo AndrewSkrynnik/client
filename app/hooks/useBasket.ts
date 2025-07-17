@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 
+import { BasketDiffItem } from "@/features/office/basket/components/BasketDiffModal";
+
 import {
   BasketItem,
   addToBasket,
@@ -8,7 +10,9 @@ import {
   deleteFromBasket,
   fetchBasket,
   removeFromBasket,
-  updateBasketQty // 👈 PATCH метод
+  updateBasketQty,
+  // 👈 PATCH метод
+  validateBasket
 } from "@/libs/api/basket";
 
 type BasketActionInput = Pick<BasketItem, "skuId" | "supplierId" | "hash"> & {
@@ -154,6 +158,9 @@ export const useBasket = (params?: UseBasketParams) => {
     );
   };
 
+  const checkForDiff = async (): Promise<BasketDiffItem[]> =>
+    await validateBasket(items);
+
   return {
     items: extendedItems,
     isLoading,
@@ -178,6 +185,19 @@ export const useBasket = (params?: UseBasketParams) => {
       addMutation.mutate(basketItem);
     },
 
+    updatePrice: (skuId: number, newPrice: number) => {
+      const item = items.find(i => i.skuId === skuId);
+      if (!item) return;
+
+      updateMutation.mutate({
+        skuId: item.skuId,
+        supplierId: item.supplierId,
+        hash: item.hash,
+        qty: item.qty, // отправляем текущее количество
+        price: newPrice // передаём новую цену
+      });
+    },
+
     removeItem: (input: BasketActionInput) => removeMutation.mutate(input),
     deleteItem: (input: BasketActionInput) => deleteMutation.mutate(input),
     updateItem: (input: BasketActionInput) => updateMutation.mutate(input), // ✅
@@ -191,6 +211,7 @@ export const useBasket = (params?: UseBasketParams) => {
     deleteSelectedAsync,
 
     toggleItemSelection,
-    selectAllItems
+    selectAllItems,
+    checkForDiff
   };
 };

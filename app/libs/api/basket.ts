@@ -1,3 +1,5 @@
+import { BasketDiffItem } from "@/features/office/basket/components/BasketDiffModal";
+
 import axios from "axios";
 
 export interface BasketItem {
@@ -88,4 +90,34 @@ export const updateBasketQty = async (
     withCredentials
   );
   notifyBasketUpdate();
+};
+
+export const validateBasket = async (
+  items: BasketItem[]
+): Promise<BasketDiffItem[]> => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/basket/compare`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(
+        items.map(item => ({
+          skuId: item.skuId,
+          supplierId: item.supplierId,
+          qty: item.qty,
+          basePrice: item.price,
+          article: item.article,
+          brand: item.brand,
+          description: item.description
+        }))
+      )
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Ошибка сравнения корзины");
+  }
+
+  return await res.json();
 };

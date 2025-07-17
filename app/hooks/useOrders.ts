@@ -2,13 +2,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { OrderTableItem } from "@/features/office/orders/types";
 
-import { OrderItem, createOrder, getOrders } from "@/libs/api/orders";
+import type { CreateOrderItem, OrderItemResponse } from "@/libs/api/orders";
+import { OrderResponse, createOrder, getOrders } from "@/libs/api/orders";
 
 export const useOrders = () => {
   const queryClient = useQueryClient();
 
-  const create = useMutation({
-    mutationFn: (items: OrderItem[]) => createOrder(items),
+  const create = useMutation<OrderResponse, Error, CreateOrderItem[]>({
+    mutationFn: (items: CreateOrderItem[]) => createOrder(items),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     }
@@ -17,13 +18,13 @@ export const useOrders = () => {
   const query = useQuery<OrderTableItem[]>({
     queryKey: ["orders"],
     queryFn: async () => {
-      const rawOrders: any[] = await getOrders();
+      const rawOrders: OrderResponse[] = await getOrders();
 
       return rawOrders.map(
         (order): OrderTableItem => ({
           id: String(order.id),
           orderDate: new Date(order.createdAt),
-          details: order.items.map((item: any) => ({
+          details: order.items.map((item: OrderItemResponse) => ({
             skuId: item.skuId,
             supplierId: item.supplierId,
             qty: item.qty,
