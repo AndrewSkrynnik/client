@@ -1,5 +1,6 @@
 "use client";
 
+import { TableHead } from "@mui/material";
 import { FC } from "react";
 
 import { DeleteForeverIcon } from "@/components/icons";
@@ -34,7 +35,7 @@ export const BasketTableHead: FC<BasketTableHeadProps> = ({
   };
 
   return (
-    <thead>
+    <TableHead>
       <StyledTableRowHead>
         {BASKET_TABLE_HEAD.map(itemHead => (
           <StyledTableCellHead key={itemHead.id}>
@@ -56,6 +57,6 @@ export const BasketTableHead: FC<BasketTableHeadProps> = ({
           </StyledTableCellHead>
         ))}
       </StyledTableRowHead>
-    </thead>
+    </TableHead>
   );
 };

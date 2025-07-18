@@ -51,3 +51,13 @@ export const ORDERS_DETAILS_TABLE_HEAD: {
   { key: "qty", label: "Кол-во, шт.", width: "150px" },
   { key: "totalPrice", label: "Сумма, руб.", width: "140px" }
 ];
+
+export const BASKET_DIFF_TABLE_HEAD: TableHeader[] = [
+  { id: 0, label: "Бренд" },
+  { id: 1, label: "Артикул" },
+  { id: 2, label: "Описание" },
+  { id: 3, label: "Старая цена, руб." },
+  { id: 4, label: "Новая цена, руб." },
+  { id: 5, label: "Старое кол-во, шт." },
+  { id: 6, label: "Новое кол-во, шт." }
+];
