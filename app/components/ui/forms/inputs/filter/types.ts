@@ -8,12 +8,15 @@ export interface FilterInputProps<T extends FieldValues> {
   placeholder?: string;
   disabled?: boolean;
   size?: "small" | "medium";
+  min?: number;
+  max?: number;
+  step?: number;
+  inputMode?: "decimal" | "numeric"; //
 }
-
 export interface FilterSelectProps<T extends FieldValues> {
   control: Control<T>;
   name: Path<T>;
-  label: string;
+  label?: string;
   options: string[];
   placeholder?: string;
   disabled?: boolean;

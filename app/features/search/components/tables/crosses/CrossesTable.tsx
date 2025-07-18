@@ -2,8 +2,12 @@
 
 import { Paper, Table, TableContainer } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import {
+  Filters,
+  SearchFilterPanel
+} from "@/features/search/components/SearchFilterPanel";
 import { ModalImage } from "@/features/search/components/modals/ModalImage";
 import { ModalInfo } from "@/features/search/components/modals/ModalInfo";
 import { CrossesTableBody } from "@/features/search/components/tables/crosses/CrossesTableBody";
@@ -17,6 +21,18 @@ import { useBasket } from "@/hooks/useBasket";
 import { paginate } from "@/utils/paginate";
 
 import { SEARCH_PAGINATION } from "@/common/constants";
+
+interface CrossItem {
+  skuId: number;
+  supplierId: number;
+  brand: string;
+  article: string;
+  numberFix: string;
+  price: number;
+  stock: number;
+  count: number;
+  hash: string;
+}
 
 export const CrossesTable = ({
   descr,
@@ -36,13 +52,14 @@ export const CrossesTable = ({
     image: searchParams.get("image") || undefined
   });
 
-  const crossesWithData = useMemo(
+  const items: CrossItem[] = useMemo(
     () =>
       crosses.flatMap(group =>
         group.offers.map(offer => ({
           skuId: offer.skuId,
           supplierId: offer.supplierId,
           brand: group.brand,
+          article: group.number,
           numberFix: group.number,
           price: offer.price,
           stock: offer.qty,
@@ -53,22 +70,65 @@ export const CrossesTable = ({
     [crosses]
   );
 
-  const [rows, setRows] = useState(crossesWithData);
+  const initializedRef = useRef(false);
+  useEffect(() => {
+    if (initializedRef.current) return;
+    initializedRef.current = true;
 
-  const paginatedRows = useMemo(
-    () => paginate(rows, currentPage, SEARCH_PAGINATION),
-    [rows, currentPage]
+    const prices = items.map(i => i.price);
+    const min = Math.min(...prices);
+    const max = Math.max(...prices);
+
+    setFilters({
+      brand: "",
+      article: "",
+      minPrice: min,
+      maxPrice: max
+    });
+  }, [items]);
+
+  const [filters, setFilters] = useState<Filters>({
+    brand: "",
+    article: "",
+    minPrice: 0,
+    maxPrice: 0
+  });
+
+  const handleFilterChange = useCallback((updated: Filters) => {
+    setFilters(updated);
+    setCurrentPage(1);
+  }, []);
+
+  const filteredRows = useMemo(
+    () =>
+      items.filter(
+        i =>
+          (!filters.brand || i.brand === filters.brand) &&
+          (!filters.article || i.article === filters.article) &&
+          i.price >= filters.minPrice &&
+          i.price <= filters.maxPrice
+      ),
+    [items, filters]
   );
 
-  const updateCrossCount = useCallback((index: number, value: number) => {
-    setRows(prev =>
-      prev.map((item, i) =>
-        i === index
-          ? { ...item, count: Math.max(0, Math.min(item.stock, value)) }
-          : item
-      )
-    );
-  }, []);
+  const paginatedRows = useMemo(
+    () => paginate(filteredRows, currentPage, SEARCH_PAGINATION),
+    [filteredRows, currentPage]
+  );
+
+  const updateCrossCount = useCallback(
+    (index: number, value: number) => {
+      const itemIndex =
+        currentPage * SEARCH_PAGINATION - SEARCH_PAGINATION + index;
+      const updated = [...filteredRows];
+      updated[itemIndex] = {
+        ...updated[itemIndex],
+        count: Math.max(0, Math.min(updated[itemIndex].stock, value))
+      };
+      // можно сохранить count в отдельном состоянии, если нужно
+    },
+    [filteredRows, currentPage]
+  );
 
   const openModal = useCallback(
     (type: "image" | "info", value: string | Record<string, string>) => {
@@ -83,7 +143,7 @@ export const CrossesTable = ({
   }, [router]);
 
   const addToCart = useCallback(
-    (cross: (typeof crossesWithData)[number]) => {
+    (cross: (typeof items)[number]) => {
       if (!cross.count) return;
       for (let i = 0; i < cross.count; i++) {
         addItem({
@@ -91,7 +151,7 @@ export const CrossesTable = ({
           supplierId: cross.supplierId,
           hash: cross.hash,
           brand: cross.brand,
-          article: cross.numberFix,
+          article: cross.article,
           description: descr || "Описание отсутствует",
           price: cross.price,
           qty: 1,
@@ -104,6 +164,8 @@ export const CrossesTable = ({
 
   return (
     <>
+      <SearchFilterPanel items={items} onFilter={handleFilterChange} />
+
       <TableContainer component={Paper}>
         <Table>
           <CrossesTableHead />
@@ -121,7 +183,7 @@ export const CrossesTable = ({
       </TableContainer>
 
       <PaginationComponent
-        totalItems={rows.length}
+        totalItems={filteredRows.length}
         rowsPerPage={SEARCH_PAGINATION}
         currentPage={currentPage}
         onChange={setCurrentPage}

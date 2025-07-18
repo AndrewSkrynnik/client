@@ -9,7 +9,11 @@ export const FilterInput = <T extends FieldValues>({
   label,
   type = "text",
   placeholder = "",
-  disabled = false
+  disabled = false,
+  min,
+  max,
+  step,
+  inputMode
 }: FilterInputProps<T>) => (
   <Controller
     control={control}
@@ -23,6 +27,7 @@ export const FilterInput = <T extends FieldValues>({
         fullWidth
         placeholder={placeholder}
         InputLabelProps={{ shrink: true }}
+        inputProps={{ min, max, step, inputMode }}
       />
     )}
   />
