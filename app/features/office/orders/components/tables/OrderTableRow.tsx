@@ -15,6 +15,7 @@ interface OrderTableRowProps {
 }
 
 export const OrderTableRow = ({ order, onSelect }: OrderTableRowProps) => {
+  console.log("📦 Order row:", order); // 👈 логируем весь объект
   const totalQty = order.details.reduce((sum, item) => sum + item.qty, 0);
   const totalPrice = order.details.reduce(
     (sum, item) => sum + item.clientPrice * item.qty,
@@ -38,6 +39,8 @@ export const OrderTableRow = ({ order, onSelect }: OrderTableRowProps) => {
         } else if (key === "orderDate") {
           const date = new Date(order.orderDate);
           value = isNaN(date.getTime()) ? "-" : format(date, "dd.MM.yyyy");
+        } else if (key === "id") {
+          value = order.orderNumber ?? order.id;
         } else {
           const raw = order[key];
           value =

@@ -1,4 +1,4 @@
-import { BasketDiffItem } from "@/features/office/basket/components/BasketDiffModal";
+import { BasketDiffItem } from "@/features/office/basket/types/basket-diff.type";
 
 import axios from "axios";
 

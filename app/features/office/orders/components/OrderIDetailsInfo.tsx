@@ -25,7 +25,7 @@ export const OrderDetailsInfo = ({ order }: OrderInfoProps) => {
   return (
     <div className={styles.orderInfoContainer}>
       <div className={styles.orderInfoHeader}>
-        <h3 className={styles.orderInfoTitle}>Заказ № {order.id}</h3>
+        <h3 className={styles.orderInfoTitle}>Заказ № {order.orderNumber}</h3>
         <TooltipComponent title="Выгрузить заказ в Excel">
           <DownloadForOfflineIcon
             onClick={() =>

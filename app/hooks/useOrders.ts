@@ -23,6 +23,7 @@ export const useOrders = () => {
       return rawOrders.map(
         (order): OrderTableItem => ({
           id: String(order.id),
+          orderNumber: order.orderNumber,
           orderDate: new Date(order.createdAt),
           details: order.items.map((item: OrderItemResponse) => ({
             skuId: item.skuId,

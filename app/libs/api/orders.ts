@@ -25,6 +25,7 @@ export interface OrderResponse {
   fullName?: string;
   address?: string;
   items: OrderItemResponse[];
+  orderNumber: string; // Добавлено для соответствия интерфейсу OrderTableItem
 }
 
 export interface OrderItemResponse {

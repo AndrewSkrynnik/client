@@ -27,6 +27,7 @@ export interface OrderTableItem {
   status: string;
   fullName: string;
   address: string;
+  orderNumber: string;
 }
 
 export interface OrdersTableProps {
