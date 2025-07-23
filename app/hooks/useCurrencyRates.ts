@@ -16,7 +16,7 @@ export const useCurrencyRates = () => {
   useEffect(() => {
     const fetchRates = async () => {
       try {
-        const { data } = await axios.get("/api/rates");
+        const { data } = await axios.get("/rates");
 
         setRates(data.rates);
         setDate(data.date);
