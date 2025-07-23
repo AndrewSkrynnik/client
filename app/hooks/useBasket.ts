@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-import { BasketDiffItem } from "@/features/office/basket/components/BasketDiffModal";
+import { BasketDiffItem } from "@/features/office/basket/types/basket-diff.type";
 
 import {
   BasketItem,

@@ -4,10 +4,8 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
-import {
-  BasketDiffItem,
-  BasketDiffModal
-} from "@/features/office/basket/components/BasketDiffModal";
+import { BasketDiffModal } from "@/features/office/basket/components/BasketDiffModal";
+import { BasketDiffItem } from "@/features/office/basket/types/basket-diff.type";
 
 import { Button } from "@/components/ui/buttons/Button";
 
