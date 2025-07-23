@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import axios from "@/libs/axios";
+import axios from "axios";
 
 export type Rates = {
   USD: number;
