@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import axios from "axios";
+import { fetchCurrencyRates } from "@/libs/api/rares";
 
 export type Rates = {
   USD: number;
@@ -14,19 +14,12 @@ export const useCurrencyRates = () => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const fetchRates = async () => {
-      try {
-        const { data } = await axios.get("/rates");
-
-        setRates(data.rates);
-        setDate(data.date);
-      } catch (err) {
-        console.error("Ошибка получения курсов валют:", err);
-        setError(err as Error);
-      }
-    };
-
-    fetchRates();
+    fetchCurrencyRates()
+      .then(({ rates, date }) => {
+        setRates(rates);
+        setDate(date);
+      })
+      .catch(err => setError(err));
   }, []);
 
   return { rates, date, error };
