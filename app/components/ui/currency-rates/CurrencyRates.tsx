@@ -1,36 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { AttachMoneyIcon, CurrencyYenIcon, EuroIcon } from "@/components/icons";
+
+import { useCurrencyRates } from "@/hooks/useCurrencyRates";
 
 import styles from "@/styles/components/ui/currency-rates/CurrencyRates.module.css";
 
-import axios from "axios";
-
-type Rates = {
-  USD: number;
-  EUR: number;
-  CNY: number;
-};
-
 export const CurrencyRates = () => {
-  const [rates, setRates] = useState<Rates | null>(null);
-  const [date, setDate] = useState<string | null>(null);
+  const { rates, date, error } = useCurrencyRates();
 
-  useEffect(() => {
-    const fetchRates = async () => {
-      try {
-        const { data } = await axios.get("/api/rates");
-        setRates(data.rates);
-        setDate(data.date);
-      } catch (error) {
-        console.error("Ошибка получения курсов валют:", error);
-      }
-    };
-
-    fetchRates();
-  }, []);
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <p className={styles.title}>Ошибка загрузки курсов валют</p>
+      </div>
+    );
+  }
 
   if (!rates) {
     return (
@@ -47,27 +32,27 @@ export const CurrencyRates = () => {
   return (
     <div className={styles.container}>
       <p className={styles.title}>
-        Курс валюты ЦБ РФ<span>{formattedDate && `: ${formattedDate}`}</span>
+        Курс валюты ЦБ РФ{formattedDate && `: ${formattedDate}`}
       </p>
       <ul className={styles.listItems}>
         <li className={styles.item}>
           <AttachMoneyIcon
-            sx={{ fontSize: "18px", color: "green" }}
             className={styles.icon}
+            sx={{ fontSize: 18, color: "green" }}
           />
           <span>{rates.USD.toFixed(2)} ₽</span>
         </li>
         <li className={styles.item}>
           <EuroIcon
-            sx={{ fontSize: "18px", color: "blue" }}
             className={styles.icon}
+            sx={{ fontSize: 18, color: "blue" }}
           />
           <span>{rates.EUR.toFixed(2)} ₽</span>
         </li>
         <li className={styles.item}>
           <CurrencyYenIcon
-            sx={{ fontSize: "18px", color: "red" }}
             className={styles.icon}
+            sx={{ fontSize: 18, color: "red" }}
           />
           <span>{rates.CNY.toFixed(2)} ₽</span>
         </li>
