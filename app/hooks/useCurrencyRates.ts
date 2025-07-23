@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import axios from "axios";
+import axios from "@/libs/axios";
 
 export type Rates = {
   USD: number;
@@ -16,7 +16,8 @@ export const useCurrencyRates = () => {
   useEffect(() => {
     const fetchRates = async () => {
       try {
-        const { data } = await axios.get("/rates");
+        const { data } = await axios.get("/api/rates");
+
         setRates(data.rates);
         setDate(data.date);
       } catch (err) {
