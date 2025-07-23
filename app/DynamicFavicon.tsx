@@ -6,13 +6,14 @@ const setFavicon = (href: string) => {
   const head = document.head;
 
   // Удаляем все старые favicon
-  const existingIcons = head.querySelectorAll("link[rel='icon']");
-  existingIcons.forEach(icon => icon.remove());
+  head.querySelectorAll("link[rel='icon']").forEach(icon => icon.remove());
 
-  // Создаём новую ссылку
+  // Генерируем query-параметр (timestamp или hash)
+  const cacheBuster = `?v=${Date.now()}`;
   const newIcon = document.createElement("link");
   newIcon.rel = "icon";
-  newIcon.href = href;
+  newIcon.href = `${href}${cacheBuster}`;
+
   head.appendChild(newIcon);
 };
 
