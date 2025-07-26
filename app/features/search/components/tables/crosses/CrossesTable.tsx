@@ -13,6 +13,7 @@ import { ModalInfo } from "@/features/search/components/modals/ModalInfo";
 import { CrossesTableBody } from "@/features/search/components/tables/crosses/CrossesTableBody";
 import { CrossesTableHead } from "@/features/search/components/tables/crosses/CrossesTableHead";
 import { CrossesTableProps } from "@/features/search/types";
+import { CrossItem } from "@/features/search/types/crosses.types";
 
 import { PaginationComponent } from "@/components/ui/pagination/PaginationComponent";
 
@@ -21,18 +22,6 @@ import { useBasket } from "@/hooks/useBasket";
 import { paginate } from "@/utils/paginate";
 
 import { SEARCH_PAGINATION } from "@/common/constants";
-
-interface CrossItem {
-  skuId: number;
-  supplierId: number;
-  brand: string;
-  article: string;
-  numberFix: string;
-  price: number;
-  stock: number;
-  count: number;
-  hash: string;
-}
 
 export const CrossesTable = ({
   descr,
@@ -62,6 +51,7 @@ export const CrossesTable = ({
           article: group.number,
           numberFix: group.number,
           price: offer.price,
+          basePrice: offer.basePrice,
           stock: offer.qty,
           count: 0,
           hash: `${offer.price}-${offer.qty}`
@@ -69,6 +59,8 @@ export const CrossesTable = ({
       ),
     [crosses]
   );
+
+  console.log("items in search:", items);
 
   const initializedRef = useRef(false);
   useEffect(() => {

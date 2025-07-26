@@ -64,7 +64,7 @@ export interface LocalOfferGroup {
     skuId: number;
     supplierId: number;
     price: number;
-    isCustomPrice: boolean;
+    basePrice: number;
     qty: number;
   }[];
 }
@@ -106,10 +106,4 @@ export interface SearchCounterProps {
   onInputChange?: (value: number) => void;
   onIncrement: () => void;
   onDecrement: () => void;
-}
-
-/* BasketTotal */
-export interface BasketTotalProps {
-  count: number;
-  onAddToBasket: () => void;
 }

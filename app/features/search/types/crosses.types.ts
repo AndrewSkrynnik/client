@@ -3,13 +3,14 @@ export interface CrossItem {
   skuId: number;
   supplierId: number;
   brand: string;
+  article: string;
   numberFix: string;
   price: number;
+  basePrice: number;
   stock: number;
   count: number;
   hash: string;
 }
-
 /* Общие обработчики и дополнительные данные для таблицы и строки */
 export interface CrossCommonHandlers {
   descr?: string;
