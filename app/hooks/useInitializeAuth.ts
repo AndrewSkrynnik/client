@@ -19,7 +19,8 @@ export function useInitializeAuth() {
         setAuth(user); // Устанавливаем данные пользователя
       })
       .catch(() => {
-        logout(); // Выходим при ошибке
+        /* logout() */
+        // Выходим при ошибке
       })
       .finally(() => {
         setAuthReady(true); // Ставим флаг готовности
