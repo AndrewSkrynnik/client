@@ -24,7 +24,7 @@ export const exportOrderToExcel = (
       item.brand,
       item.article,
       item.descr,
-      item.clientPrice,
+      item.price,
       item.qty,
       item.totalPrice
     ])
