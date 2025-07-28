@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
+  generateBuildId: () => String(Date.now()),
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

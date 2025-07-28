@@ -36,7 +36,6 @@ export const CrossesTemplate = () => {
         }
 
         const response = await fetchCrossesData(number, brand, userId);
-
         if (!response) throw new Error("Ничего не найдено");
 
         console.log("📦 Fetched Crosses Data:", response);
@@ -68,15 +67,22 @@ export const CrossesTemplate = () => {
 
     console.log("🧪 localOffers:", data.localOffers);
 
-    const proposalsCount = data.localOffers.reduce(
-      (sum, group) =>
-        sum +
-        (group.items ?? []).reduce(
-          (acc, item) => acc + (item.offers?.length ?? 0),
-          0
-        ),
-      0
-    );
+    let proposalsCount = 0;
+
+    try {
+      proposalsCount = data.localOffers.reduce(
+        (sum, group) =>
+          sum +
+          (group.items ?? []).reduce(
+            (acc, item) => acc + (item.offers?.length ?? 0),
+            0
+          ),
+        0
+      );
+    } catch (err) {
+      console.error("🔥 Ошибка при подсчёте предложений:", err);
+      proposalsCount = 0;
+    }
 
     console.log("🔢 proposalsCount:", proposalsCount);
 
