@@ -1,5 +1,3 @@
-"use client";
-
 import { Metadata } from "next";
 
 import { OrdersTemplate } from "@/features/office/orders/components/OrdersTemplate";

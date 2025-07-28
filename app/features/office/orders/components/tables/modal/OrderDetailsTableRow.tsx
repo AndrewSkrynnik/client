@@ -19,10 +19,9 @@ export const OrderDetailsTableRow = ({
   highlightArticle = ""
 }: OrderDetailsTableRowProps) => {
   const extendedItem = {
-    ...item,
-    totalPrice: item.qty * (item.clientPrice ?? 0)
+    ...item
   };
-
+  console.log("🧪 typeof item.price =", typeof item.price, "|", item.price);
   return (
     <StyledTableRowBody>
       {ORDERS_DETAILS_TABLE_HEAD.map(({ key }) => {
@@ -34,9 +33,13 @@ export const OrderDetailsTableRow = ({
               ? HighlightMatch(String(value), highlightArticle)
               : key === "qty"
                 ? Math.trunc(Number(value))
-                : typeof value === "number"
-                  ? formatNumber(value)
-                  : String(value ?? "-")}
+                : key === "price"
+                  ? value != null && !isNaN(Number(value))
+                    ? formatNumber(Number(value))
+                    : "-"
+                  : typeof value === "number"
+                    ? formatNumber(value)
+                    : String(value ?? "-")}
           </TableCell>
         );
       })}

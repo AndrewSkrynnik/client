@@ -20,6 +20,8 @@ export const BasketTableBody: FC<BasketTableBodyProps> = ({
 
   if (isLoading) return null;
 
+  console.log("BasketTableBody items:", items);
+
   return (
     <TableBody>
       {[...items]

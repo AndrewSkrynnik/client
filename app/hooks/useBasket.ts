@@ -19,6 +19,7 @@ type BasketActionInput = Pick<BasketItem, "skuId" | "supplierId" | "hash"> & {
   article?: string;
   descr?: string;
   price?: number;
+  basePrice?: number; // Обязательно для корректной работы
   qty?: number;
   deliveryDays?: number;
   selected?: boolean;
@@ -107,7 +108,9 @@ export const useBasket = (params?: UseBasketParams) => {
     },
     onSuccess: (_, { skuId, supplierId, hash }) => {
       invalidate();
-      if (!setSelectedSet || !hash) return;
+
+      if (!setSelectedSet) return;
+
       const key = getKey(skuId, supplierId, hash);
       setSelectedSet(prev => {
         const copy = new Set(prev);
@@ -159,7 +162,8 @@ export const useBasket = (params?: UseBasketParams) => {
   };
 
   const checkForDiff = async (): Promise<BasketDiffItem[]> =>
-    await validateBasket(items);
+    await validateBasket(extendedItems);
+  console.log("📦 items перед отправкой на compare:", extendedItems);
 
   return {
     items: extendedItems,
@@ -177,6 +181,7 @@ export const useBasket = (params?: UseBasketParams) => {
         article: input.article ?? "",
         descr: input.descr ?? "",
         price: input.price ?? 0,
+        basePrice: input.basePrice ?? 0, // 👈 обязательно
         qty: input.qty ?? 1,
         deliveryDays: input.deliveryDays ?? 0,
         selected: input.selected ?? false,

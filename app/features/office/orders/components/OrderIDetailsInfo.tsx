@@ -61,7 +61,7 @@ export const OrderDetailsInfo = ({ order }: OrderInfoProps) => {
           {formatNumber(
             Array.isArray(order.details)
               ? order.details.reduce(
-                  (sum, item) => sum + item.clientPrice * item.qty,
+                  (sum, item) => sum + item.price * item.qty,
                   0
                 )
               : 0

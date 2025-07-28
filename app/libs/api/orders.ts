@@ -4,7 +4,8 @@ export interface CreateOrderItem {
   skuId: number;
   supplierId: number;
   qty: number;
-  basePrice: number;
+  price: number;
+  basePrice: number; // Обязательно для корректной работы
   descr: string;
 }
 
@@ -15,7 +16,7 @@ export interface OrderItem {
   article: string;
   brand: string;
   descr: string;
-  clientPrice: number;
+  price: number;
   totalPrice: number;
 }
 
@@ -35,7 +36,8 @@ export interface OrderItemResponse {
   article: string;
   brand: string;
   descr: string;
-  clientPrice: number;
+  price: number;
+  basePrice?: number;
   statuses: {
     id: number;
     status: string;
@@ -53,7 +55,7 @@ export const createOrder = async (
   const payload = {
     items: items.map(item => ({
       ...item,
-      basePrice: Number(item.basePrice), // на всякий случай приведение
+      price: Number(item.price), // на всякий случай приведение
       qty: Number(item.qty)
     }))
   };

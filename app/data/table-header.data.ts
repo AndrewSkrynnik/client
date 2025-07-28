@@ -49,7 +49,7 @@ export const ORDERS_DETAILS_TABLE_HEAD: {
   { key: "brand", label: "Бренд", width: "140px" },
   { key: "article", label: "Артикул", width: "140px" },
   { key: "descr", label: "Описание" },
-  { key: "clientPrice", label: "Цена, руб.", width: "120px" },
+  { key: "price", label: "Цена, руб.", width: "120px" },
   { key: "qty", label: "Кол-во, шт.", width: "150px" },
   { key: "totalPrice", label: "Сумма, руб.", width: "140px" }
 ];

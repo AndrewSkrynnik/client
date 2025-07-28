@@ -32,8 +32,8 @@ export const useOrders = () => {
             article: item.article,
             brand: item.brand,
             descr: item.descr,
-            clientPrice: item.clientPrice,
-            totalPrice: item.clientPrice * item.qty,
+            price: item.price,
+            totalPrice: item.price * item.qty,
             statuses: item.statuses
           })),
           status: order.items?.[0]?.statuses?.[0]?.status ?? "-",

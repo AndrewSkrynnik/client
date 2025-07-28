@@ -15,7 +15,7 @@ export interface OrderDetailsItem {
   brand: string;
   descr: string;
   article: string;
-  clientPrice: number;
+  price: number;
   qty: number;
   totalPrice: number;
 }

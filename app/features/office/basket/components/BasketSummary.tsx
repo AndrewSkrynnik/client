@@ -86,7 +86,8 @@ export const BasketSummary = ({
         skuId: item.skuId,
         supplierId: item.supplierId,
         qty: item.qty,
-        basePrice: item.price,
+        price: item.price,
+        basePrice: item.basePrice,
         descr: item.descr
       }));
 
