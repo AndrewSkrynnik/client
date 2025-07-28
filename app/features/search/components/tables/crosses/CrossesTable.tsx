@@ -51,7 +51,7 @@ export const CrossesTable = ({
       let hasOffers = false;
 
       for (const item of group.items) {
-        if (!item.offers.length) continue;
+        if (!item.offers?.length) continue;
 
         for (const offer of item.offers) {
           result.push({
