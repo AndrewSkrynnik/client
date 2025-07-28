@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
     ];
   },
   reactStrictMode: true,
+  productionBrowserSourceMaps: true,
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
