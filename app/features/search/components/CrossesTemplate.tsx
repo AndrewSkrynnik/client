@@ -36,9 +36,11 @@ export const CrossesTemplate = () => {
         }
 
         const response = await fetchCrossesData(number, brand, userId);
+
         if (!response) throw new Error("Ничего не найдено");
 
-        console.log("Fetched Crosses Data:", response); // 🔍 выводим весь ответ
+        console.log("📦 Fetched Crosses Data:", response);
+
         if (isActive) setData(response);
       } catch (err: unknown) {
         if (isActive) {
@@ -60,11 +62,13 @@ export const CrossesTemplate = () => {
       return <h2 className={styles.titleError}>Ошибка: {error}</h2>;
     }
 
-    if (!isReady) {
+    if (!isReady || !Array.isArray(data?.localOffers)) {
       return <h2 className={styles.title}>Загрузка предложений...</h2>;
     }
 
-    const proposalsCount = (data.localOffers ?? []).reduce(
+    console.log("🧪 localOffers:", data.localOffers);
+
+    const proposalsCount = data.localOffers.reduce(
       (sum, group) =>
         sum +
         (group.items ?? []).reduce(
@@ -73,6 +77,9 @@ export const CrossesTemplate = () => {
         ),
       0
     );
+
+    console.log("🔢 proposalsCount:", proposalsCount);
+
     const proposalWord = getProposalWord(proposalsCount);
 
     if (proposalsCount === 0) {
@@ -87,6 +94,7 @@ export const CrossesTemplate = () => {
             {number} ({brand})
           </span>
         </h2>
+
         <CrossesTable
           brand={brand}
           descr={data.descr || "Описание отсутствует"}
