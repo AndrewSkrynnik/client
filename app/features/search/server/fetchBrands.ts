@@ -19,7 +19,7 @@ export const fetchBrands = async (number: string): Promise<SearchBrand[]> => {
       brand: responseData[key].brand,
       number: responseData[key].number,
       numberFix: responseData[key].numberFix,
-      descr: responseData[key].descr || "Описание отсутствует",
+      description: responseData[key].description || "Описание отсутствует",
       availability: responseData[key].availability || 0
     }));
   }

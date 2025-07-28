@@ -207,6 +207,7 @@ export const CrossesTable = ({
           descr: descr || "Описание отсутствует",
           price: cross.price,
           qty: 1,
+          deliveryDays: cross.deliveryDays ?? 0,
           selected: true
         });
       }

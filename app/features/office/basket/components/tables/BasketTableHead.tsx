@@ -39,13 +39,13 @@ export const BasketTableHead: FC<BasketTableHeadProps> = ({
       <StyledTableRowHead>
         {BASKET_TABLE_HEAD.map(itemHead => (
           <StyledTableCellHead key={itemHead.id}>
-            {itemHead.id === 6 ? (
+            {itemHead.id === 7 ? (
               <CheckboxComponent
                 checked={isAllSelected}
                 onChange={handleSelectAll}
                 size="large"
               />
-            ) : itemHead.id === 7 ? (
+            ) : itemHead.id === 8 ? (
               <DeleteForeverIcon
                 className="closeButton"
                 fontSize="medium"

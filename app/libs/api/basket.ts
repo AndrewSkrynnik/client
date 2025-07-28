@@ -12,7 +12,8 @@ export interface BasketItem {
   descr: string;
   price: number;
   qty: number;
-  availableQty: number; // 👈 обязательно
+  availableQty: number;
+  deliveryDays?: number;
 }
 
 const API_URL = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -37,7 +38,8 @@ export const fetchBasket = async (): Promise<BasketItem[]> => {
     descr: item.descr,
     price: item.price,
     qty: item.qty,
-    availableQty: item.availableQty ?? 0, // 👈 безопасное добавление
+    deliveryDays: item.deliveryDays ?? 0,
+    availableQty: item.availableQty ?? 0,
     selected: item.selected ?? false
   }));
 };
@@ -109,7 +111,9 @@ export const validateBasket = async (
           basePrice: item.price,
           article: item.article,
           brand: item.brand,
-          descr: item.descr
+          descr: item.descr,
+          hash: item.hash,
+          deliveryDays: item.deliveryDays
         }))
       )
     }

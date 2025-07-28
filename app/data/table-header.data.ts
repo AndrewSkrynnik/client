@@ -12,8 +12,9 @@ export const BASKET_TABLE_HEAD: TableHeader[] = [
   { id: 3, label: "Цена, руб." },
   { id: 4, label: "Кол-во, шт." },
   { id: 5, label: "Сумма, руб." },
-  { id: 6, label: "" },
-  { id: 7, label: "" }
+  { id: 6, label: "Доставка, дней" },
+  { id: 7, label: "" },
+  { id: 8, label: "" }
 ];
 export const SEARCH_RESULT_TABLE_HEAD: TableHeader[] = [
   { id: 0, label: "Бренд" },

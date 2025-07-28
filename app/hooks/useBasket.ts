@@ -11,7 +11,6 @@ import {
   fetchBasket,
   removeFromBasket,
   updateBasketQty,
-  // 👈 PATCH метод
   validateBasket
 } from "@/libs/api/basket";
 
@@ -21,6 +20,7 @@ type BasketActionInput = Pick<BasketItem, "skuId" | "supplierId" | "hash"> & {
   descr?: string;
   price?: number;
   qty?: number;
+  deliveryDays?: number;
   selected?: boolean;
 };
 
@@ -177,7 +177,8 @@ export const useBasket = (params?: UseBasketParams) => {
         article: input.article ?? "",
         descr: input.descr ?? "",
         price: input.price ?? 0,
-        qty: input.qty ?? 1, // 👈 тут по умолчанию 1, но можем передать больше
+        qty: input.qty ?? 1,
+        deliveryDays: input.deliveryDays ?? 0,
         selected: input.selected ?? false,
         availableQty: input.qty ?? 0
       };

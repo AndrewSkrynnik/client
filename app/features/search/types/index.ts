@@ -15,7 +15,7 @@ export interface SearchInputProps {
 export interface SearchBrand {
   id: string;
   brand: string;
-  descr: string;
+  description: string;
   availability: boolean;
   number: string;
   numberFix: string;

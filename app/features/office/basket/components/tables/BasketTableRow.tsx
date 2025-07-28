@@ -64,6 +64,8 @@ export const BasketTableRow: FC<BasketTableRowProps> = ({
       <StyledTableCellBody>
         {formatNumber(item.price * item.qty)}
       </StyledTableCellBody>
+      <StyledTableCellBody>{item.deliveryDays}</StyledTableCellBody>
+
       <StyledTableCellBody sx={{ textAlign: "center" }}>
         <TooltipComponent title="Выбрать">
           <CheckboxComponent
