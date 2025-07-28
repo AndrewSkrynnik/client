@@ -64,9 +64,14 @@ export const CrossesTemplate = () => {
       return <h2 className={styles.title}>Загрузка предложений...</h2>;
     }
 
-    const proposalsCount = data.localOffers.reduce(
+    console.log(data);
+    const proposalsCount = (data?.localOffers ?? []).reduce(
       (sum, group) =>
-        sum + group.items.reduce((acc, item) => acc + item.offers.length, 0),
+        sum +
+        (group?.items ?? []).reduce(
+          (acc, item) => acc + (item?.offers?.length ?? 0),
+          0
+        ),
       0
     );
     const proposalWord = getProposalWord(proposalsCount);
