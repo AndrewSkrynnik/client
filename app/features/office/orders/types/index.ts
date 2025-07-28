@@ -13,7 +13,7 @@ export interface OrdersFilterFormProps {
 
 export interface OrderDetailsItem {
   brand: string;
-  description: string;
+  descr: string;
   article: string;
   clientPrice: number;
   qty: number;

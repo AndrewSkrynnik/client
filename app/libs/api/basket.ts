@@ -9,7 +9,7 @@ export interface BasketItem {
   hash: string;
   brand: string;
   article: string;
-  description: string;
+  descr: string;
   price: number;
   qty: number;
   availableQty: number; // 👈 обязательно
@@ -34,7 +34,7 @@ export const fetchBasket = async (): Promise<BasketItem[]> => {
     hash: item.hash,
     brand: item.brand,
     article: item.article,
-    description: item.description,
+    descr: item.descr,
     price: item.price,
     qty: item.qty,
     availableQty: item.availableQty ?? 0, // 👈 безопасное добавление
@@ -109,7 +109,7 @@ export const validateBasket = async (
           basePrice: item.price,
           article: item.article,
           brand: item.brand,
-          description: item.description
+          descr: item.descr
         }))
       )
     }

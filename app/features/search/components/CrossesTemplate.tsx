@@ -10,8 +10,6 @@ import { CrossData } from "@/features/search/types";
 
 import { useAuthStore } from "@/store/useAuthStore";
 
-// 🔹 добавлено
-
 import { getProposalWord } from "@/utils/get-proposal-word";
 
 import styles from "@/styles/pages/search/Search.module.css";
@@ -20,8 +18,7 @@ export const CrossesTemplate = () => {
   const params = useParams();
   const number = params.number as string;
   const brand = params.brand as string;
-
-  const userId = useAuthStore(state => state.user?.id); // 🔹 вытягиваем userId
+  const userId = useAuthStore(state => state.user?.id);
 
   const [data, setData] = useState<CrossData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -39,9 +36,9 @@ export const CrossesTemplate = () => {
         }
 
         const response = await fetchCrossesData(number, brand, userId);
-
         if (!response) throw new Error("Ничего не найдено");
 
+        console.log("Fetched Crosses Data:", response); // 🔍 выводим весь ответ
         if (isActive) setData(response);
       } catch (err: unknown) {
         if (isActive) {
@@ -67,9 +64,11 @@ export const CrossesTemplate = () => {
       return <h2 className={styles.title}>Загрузка предложений...</h2>;
     }
 
-    const proposalsCount =
-      data.localOffers?.reduce((sum, group) => sum + group.offers.length, 0) ??
-      0;
+    const proposalsCount = data.localOffers.reduce(
+      (sum, group) =>
+        sum + group.items.reduce((acc, item) => acc + item.offers.length, 0),
+      0
+    );
     const proposalWord = getProposalWord(proposalsCount);
 
     if (proposalsCount === 0) {

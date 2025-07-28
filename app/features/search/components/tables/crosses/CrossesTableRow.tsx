@@ -2,7 +2,6 @@ import { memo } from "react";
 
 import { SearchCounter } from "@/features/search/components/SearchCounter";
 import { CrossesTableRowProps } from "@/features/search/types/crosses.types";
-import { generateHash } from "@/features/search/utils/generate-hash";
 
 import { CameraAltIcon, InfoIcon } from "@/components/icons";
 import {
@@ -25,8 +24,7 @@ const CrossesTableRowComponent = ({
 }: CrossesTableRowProps) => {
   const { items, addItem, removeItem, updateItem, deleteItem } = useBasket();
 
-  const hash =
-    cross.hash || generateHash(cross.skuId, cross.supplierId, cross.price);
+  const hash = cross.hash;
 
   const item = items.find(
     i =>
@@ -43,7 +41,7 @@ const CrossesTableRowComponent = ({
     hash,
     brand: cross.brand,
     article: cross.numberFix,
-    description: descr || "Описание отсутствует",
+    descr: descr || "Описание отсутствует",
     price: cross.price,
     selected: true
   };
@@ -96,7 +94,9 @@ const CrossesTableRowComponent = ({
         </div>
       </StyledTableCellBody>
       <StyledTableCellBody>{formatNumber(cross.price)}</StyledTableCellBody>
+
       <StyledTableCellBody>{cross.stock}</StyledTableCellBody>
+      <StyledTableCellBody>{cross.deliveryDays || "—"}</StyledTableCellBody>
       <StyledTableCellBody>
         <SearchCounter
           count={count}

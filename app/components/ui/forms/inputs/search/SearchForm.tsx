@@ -12,7 +12,7 @@ import styles from "@/styles/components/ui/forms/SearchForm.module.css";
 interface Tip {
   brand: string;
   number: string;
-  description: string;
+  descr: string;
 }
 
 export const SearchForm = () => {

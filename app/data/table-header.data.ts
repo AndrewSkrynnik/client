@@ -22,7 +22,8 @@ export const SEARCH_RESULT_TABLE_HEAD: TableHeader[] = [
   { id: 3, label: "Инфо" },
   { id: 4, label: "Цена, руб." },
   { id: 5, label: "Наличие, шт." },
-  { id: 6, label: "В корзину" }
+  { id: 6, label: "Доставка, дней" },
+  { id: 7, label: "В корзину" }
 ];
 
 export const SEARCH_TABLE_HEAD: TableHeader[] = [
@@ -46,7 +47,7 @@ export const ORDERS_DETAILS_TABLE_HEAD: {
 }[] = [
   { key: "brand", label: "Бренд", width: "140px" },
   { key: "article", label: "Артикул", width: "140px" },
-  { key: "description", label: "Описание" },
+  { key: "descr", label: "Описание" },
   { key: "clientPrice", label: "Цена, руб.", width: "120px" },
   { key: "qty", label: "Кол-во, шт.", width: "150px" },
   { key: "totalPrice", label: "Сумма, руб.", width: "140px" }

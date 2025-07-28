@@ -15,7 +15,7 @@ export interface SearchInputProps {
 export interface SearchBrand {
   id: string;
   brand: string;
-  description: string;
+  descr: string;
   availability: boolean;
   number: string;
   numberFix: string;
@@ -33,6 +33,11 @@ export interface ResultTableBodyRowProps {
   onClick: () => void;
 }
 
+export interface LocalOfferGroupList {
+  groupName: string;
+  items: LocalOfferGroup[];
+}
+
 // Тип данных о кроссах в SearchCrossesTemplate
 export interface CrossData {
   brand: string;
@@ -40,7 +45,7 @@ export interface CrossData {
   outerNumber: string;
   descr: string;
   properties: Record<string, string>;
-  localOffers: LocalOfferGroup[];
+  localOffers: LocalOfferGroupList[];
   images: CrossImage[];
   imagesCount: number;
 }
@@ -66,6 +71,8 @@ export interface LocalOfferGroup {
     price: number;
     basePrice: number;
     qty: number;
+    deliveryDays?: number;
+    hash: string;
   }[];
 }
 
@@ -86,14 +93,15 @@ export interface AbcpResponse {
   images: CrossImage[];
   images_count: number;
   descr: string;
+  localOffers: LocalOfferGroupList[]; // ✅ ← добавить
 }
 
 export interface CrossesTableProps {
   brand: string;
-  descr: string;
   number: string;
   outerNumber: string;
-  crosses: LocalOfferGroup[];
+  descr: string;
+  crosses: LocalOfferGroupList[];
   properties: Record<string, string>;
   images: CrossImage[];
 }

@@ -18,7 +18,7 @@ import {
 type BasketActionInput = Pick<BasketItem, "skuId" | "supplierId" | "hash"> & {
   brand?: string;
   article?: string;
-  description?: string;
+  descr?: string;
   price?: number;
   qty?: number;
   selected?: boolean;
@@ -175,7 +175,7 @@ export const useBasket = (params?: UseBasketParams) => {
         hash: input.hash,
         brand: input.brand ?? "",
         article: input.article ?? "",
-        description: input.description ?? "",
+        descr: input.descr ?? "",
         price: input.price ?? 0,
         qty: input.qty ?? 1, // 👈 тут по умолчанию 1, но можем передать больше
         selected: input.selected ?? false,

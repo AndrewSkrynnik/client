@@ -5,7 +5,7 @@ export interface CreateOrderItem {
   supplierId: number;
   qty: number;
   basePrice: number;
-  description: string;
+  descr: string;
 }
 
 export interface OrderItem {
@@ -14,7 +14,7 @@ export interface OrderItem {
   qty: number;
   article: string;
   brand: string;
-  description: string;
+  descr: string;
   clientPrice: number;
   totalPrice: number;
 }
@@ -34,7 +34,7 @@ export interface OrderItemResponse {
   qty: number;
   article: string;
   brand: string;
-  description: string;
+  descr: string;
   clientPrice: number;
   statuses: {
     id: number;

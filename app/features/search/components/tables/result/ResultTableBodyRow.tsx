@@ -12,7 +12,7 @@ export const ResultTableBodyRow = ({
   onClick
 }: ResultTableBodyRowProps) => (
   <StyledTableRowBody hover onClick={onClick} sx={{ cursor: "pointer" }}>
-    {[item.brand, item.number, item.description].map((value, idx) => (
+    {[item.brand, item.number, item.descr].map((value, idx) => (
       <StyledTableCellBody key={idx}>{value}</StyledTableCellBody>
     ))}
   </StyledTableRowBody>

@@ -10,6 +10,7 @@ export interface CrossItem {
   stock: number;
   count: number;
   hash: string;
+  deliveryDays?: number;
 }
 /* Общие обработчики и дополнительные данные для таблицы и строки */
 export interface CrossCommonHandlers {
@@ -24,7 +25,7 @@ export interface CrossCommonHandlers {
 
 /* Пропсы для тела таблицы кроссов (все строки) */
 export interface CrossesTableBodyProps extends CrossCommonHandlers {
-  crosses: CrossItem[];
+  crosses: CrossRowType[];
 }
 
 /* Пропсы для одной строки таблицы */
@@ -32,3 +33,8 @@ export interface CrossesTableRowProps extends CrossCommonHandlers {
   index: number;
   cross: CrossItem;
 }
+
+export type CrossRowType =
+  | { type: "group"; label: string }
+  | (CrossItem & { type?: "item" })
+  | { type: "empty"; message: string };

@@ -22,7 +22,7 @@ interface BasketTableRowProps {
   brand: string;
   number: string;
   hash: string;
-  description: string;
+  descr: string;
   selectedSet: Set<string>;
   setSelectedSet: React.Dispatch<React.SetStateAction<Set<string>>>;
 }
@@ -49,7 +49,7 @@ export const BasketTableRow: FC<BasketTableRowProps> = ({
     <StyledTableRowBody>
       <StyledTableCellBody>{item.brand}</StyledTableCellBody>
       <StyledTableCellBody>{item.article}</StyledTableCellBody>
-      <StyledTableCellBody>{item.description}</StyledTableCellBody>
+      <StyledTableCellBody>{item.descr}</StyledTableCellBody>
       <StyledTableCellBody>{formatNumber(item.price)}</StyledTableCellBody>
       <StyledTableCellBody>
         <BasketCounter

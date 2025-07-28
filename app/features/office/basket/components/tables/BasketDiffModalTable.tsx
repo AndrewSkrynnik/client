@@ -39,7 +39,7 @@ export const BasketDiffModalTable = ({
           <StyledTableRowBody key={`${item.skuId}-${item.supplierId}`}>
             <StyledTableCellBody>{item.brand}</StyledTableCellBody>
             <StyledTableCellBody>{item.article}</StyledTableCellBody>
-            <TooltipComponent title={item.description}>
+            <TooltipComponent title={item.descr}>
               <StyledTableCellBody
                 sx={{
                   maxWidth: "180px",
@@ -49,7 +49,7 @@ export const BasketDiffModalTable = ({
                   cursor: "pointer"
                 }}
               >
-                {item.description}
+                {item.descr}
               </StyledTableCellBody>
             </TooltipComponent>
             <StyledTableCellBody

@@ -3,7 +3,7 @@ export type BasketDiffItem = {
   supplierId: number;
   article: string;
   brand: string;
-  description: string;
+  descr: string;
   oldPrice?: number;
   newPrice?: number;
   oldQty?: number;

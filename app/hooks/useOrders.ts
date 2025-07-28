@@ -31,7 +31,7 @@ export const useOrders = () => {
             qty: item.qty,
             article: item.article,
             brand: item.brand,
-            description: item.description,
+            descr: item.descr,
             clientPrice: item.clientPrice,
             totalPrice: item.clientPrice * item.qty,
             statuses: item.statuses

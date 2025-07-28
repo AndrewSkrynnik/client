@@ -13,7 +13,7 @@ import { ModalInfo } from "@/features/search/components/modals/ModalInfo";
 import { CrossesTableBody } from "@/features/search/components/tables/crosses/CrossesTableBody";
 import { CrossesTableHead } from "@/features/search/components/tables/crosses/CrossesTableHead";
 import { CrossesTableProps } from "@/features/search/types";
-import { CrossItem } from "@/features/search/types/crosses.types";
+import { CrossItem, CrossRowType } from "@/features/search/types/crosses.types";
 
 import { PaginationComponent } from "@/components/ui/pagination/PaginationComponent";
 
@@ -41,33 +41,60 @@ export const CrossesTable = ({
     image: searchParams.get("image") || undefined
   });
 
-  const items: CrossItem[] = useMemo(
-    () =>
-      crosses.flatMap(group =>
-        group.offers.map(offer => ({
-          skuId: offer.skuId,
-          supplierId: offer.supplierId,
-          brand: group.brand,
-          article: group.number,
-          numberFix: group.number,
-          price: offer.price,
-          basePrice: offer.basePrice,
-          stock: offer.qty,
-          count: 0,
-          hash: `${offer.price}-${offer.qty}`
-        }))
-      ),
-    [crosses]
-  );
+  // 🧱 Построение списка со строками и заголовками групп
+  const items: CrossRowType[] = useMemo(() => {
+    const result: CrossRowType[] = [];
 
-  console.log("items in search:", items);
+    for (const group of crosses) {
+      result.push({ type: "group", label: group.groupName });
+
+      let hasOffers = false;
+
+      for (const item of group.items) {
+        if (!item.offers.length) continue;
+
+        for (const offer of item.offers) {
+          result.push({
+            type: "item",
+            skuId: offer.skuId,
+            supplierId: offer.supplierId,
+            brand: item.brand,
+            article: item.number,
+            numberFix: item.number,
+            price: offer.price,
+            basePrice: offer.basePrice,
+            stock: offer.qty,
+            count: 0,
+            hash: offer.hash,
+            deliveryDays: offer.deliveryDays ?? 0
+          });
+
+          hasOffers = true;
+        }
+      }
+
+      if (!hasOffers) {
+        result.push({
+          type: "empty",
+          message: `${group.groupName} отсутствует`
+        });
+      }
+    }
+
+    return result;
+  }, [crosses]);
 
   const initializedRef = useRef(false);
   useEffect(() => {
     if (initializedRef.current) return;
     initializedRef.current = true;
 
-    const prices = items.map(i => i.price);
+    const prices = items
+      .filter(
+        (i): i is Extract<CrossRowType, { type: "item" }> => i.type === "item"
+      )
+      .map(i => (i as CrossItem).price);
+
     const min = Math.min(...prices);
     const max = Math.max(...prices);
 
@@ -91,17 +118,46 @@ export const CrossesTable = ({
     setCurrentPage(1);
   }, []);
 
-  const filteredRows = useMemo(
-    () =>
-      items.filter(
-        i =>
-          (!filters.brand || i.brand === filters.brand) &&
-          (!filters.article || i.article === filters.article) &&
-          i.price >= filters.minPrice &&
-          i.price <= filters.maxPrice
-      ),
-    [items, filters]
-  );
+  // 📦 Фильтрация и сохранение групп
+  const filteredRows = useMemo(() => {
+    const result: CrossRowType[] = [];
+    let lastGroupLabel: string | null = null;
+    let groupAdded = false;
+
+    for (const row of items) {
+      if (row.type === "group") {
+        lastGroupLabel = row.label;
+        groupAdded = false;
+        continue;
+      }
+
+      if (row.type === "empty") {
+        if (!groupAdded) {
+          result.push({ type: "group", label: lastGroupLabel! });
+          groupAdded = true;
+        }
+        result.push(row);
+        continue;
+      }
+
+      const match =
+        row.type === "item" &&
+        (!filters.brand || row.brand === filters.brand) &&
+        (!filters.article || row.article === filters.article) &&
+        row.price >= filters.minPrice &&
+        row.price <= filters.maxPrice;
+
+      if (match) {
+        if (!groupAdded) {
+          result.push({ type: "group", label: lastGroupLabel! });
+          groupAdded = true;
+        }
+        result.push(row);
+      }
+    }
+
+    return result;
+  }, [items, filters]);
 
   const paginatedRows = useMemo(
     () => paginate(filteredRows, currentPage, SEARCH_PAGINATION),
@@ -113,11 +169,14 @@ export const CrossesTable = ({
       const itemIndex =
         currentPage * SEARCH_PAGINATION - SEARCH_PAGINATION + index;
       const updated = [...filteredRows];
-      updated[itemIndex] = {
-        ...updated[itemIndex],
-        count: Math.max(0, Math.min(updated[itemIndex].stock, value))
-      };
-      // можно сохранить count в отдельном состоянии, если нужно
+      const item = updated[itemIndex];
+
+      if (item?.type === "item") {
+        updated[itemIndex] = {
+          ...item,
+          count: Math.max(0, Math.min(item.stock, value))
+        };
+      }
     },
     [filteredRows, currentPage]
   );
@@ -135,8 +194,9 @@ export const CrossesTable = ({
   }, [router]);
 
   const addToCart = useCallback(
-    (cross: (typeof items)[number]) => {
-      if (!cross.count) return;
+    (cross: CrossRowType) => {
+      if (cross.type !== "item" || !cross.count) return;
+
       for (let i = 0; i < cross.count; i++) {
         addItem({
           skuId: cross.skuId,
@@ -144,7 +204,7 @@ export const CrossesTable = ({
           hash: cross.hash,
           brand: cross.brand,
           article: cross.article,
-          description: descr || "Описание отсутствует",
+          descr: descr || "Описание отсутствует",
           price: cross.price,
           qty: 1,
           selected: true
@@ -156,7 +216,13 @@ export const CrossesTable = ({
 
   return (
     <>
-      <SearchFilterPanel items={items} onFilter={handleFilterChange} />
+      <SearchFilterPanel
+        items={items.filter(
+          (i): i is Extract<CrossRowType, { type: "item" }> =>
+            i.type !== "group"
+        )}
+        onFilter={handleFilterChange}
+      />
 
       <TableContainer component={Paper}>
         <Table>

@@ -2,7 +2,7 @@ import {
   AbcpResponse,
   CrossData,
   CrossImage,
-  LocalOfferGroup
+  LocalOfferGroupList
 } from "@/features/search/types";
 
 import axiosInstance from "@/libs/axios";
@@ -38,7 +38,7 @@ export const fetchCrossesData = async (
       return null;
     }
 
-    const localOffers: LocalOfferGroup[] = (data as any).localOffers || [];
+    const localOffers: LocalOfferGroupList[] = data.localOffers || [];
 
     // 💬 Отладка и фильтрация изображений
     const rawImages =

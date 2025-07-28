@@ -87,7 +87,7 @@ export const BasketSummary = ({
         supplierId: item.supplierId,
         qty: item.qty,
         basePrice: item.price,
-        description: item.description
+        descr: item.descr
       }));
 
       await createOrderAsync(payload);

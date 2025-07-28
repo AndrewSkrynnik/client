@@ -1,7 +1,7 @@
 "use client";
 
 import { TableBody } from "@mui/material";
-import { FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 
 import { BasketTableRow } from "@/features/office/basket/components/tables/BasketTableRow";
 
@@ -9,7 +9,7 @@ import { useBasket } from "@/hooks/useBasket";
 
 interface BasketTableBodyProps {
   selectedSet: Set<string>;
-  setSelectedSet: React.Dispatch<React.SetStateAction<Set<string>>>;
+  setSelectedSet: Dispatch<SetStateAction<Set<string>>>;
 }
 
 export const BasketTableBody: FC<BasketTableBodyProps> = ({
@@ -31,7 +31,7 @@ export const BasketTableBody: FC<BasketTableBodyProps> = ({
             skuId={item.skuId}
             supplierId={item.supplierId}
             brand={item.brand}
-            description={item.description}
+            descr={item.descr}
             number={item.article}
             hash={item.hash}
             selectedSet={selectedSet}
