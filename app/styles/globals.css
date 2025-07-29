@@ -247,15 +247,15 @@ section.Toastify {
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
-.css-113d811-MuiFormLabel-root-MuiInputLabel-root {
+.MuiInputLabel-root {
   top: -8px !important; /* позиция для label в StyledSelect */
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
-.css-er619e-MuiFormHelperText-root {
-  position: absolute; /* позиция helperText для StyledSelect */
-  top: -20px;
-  right: -10px;
+.MuiFormHelperText-root {
+  position: absolute !important; /* позиция helperText для StyledSelect */
+  top: -20px !important;
+  right: -10px !important;
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
