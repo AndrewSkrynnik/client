@@ -257,3 +257,8 @@ section.Toastify {
   top: -20px;
   right: -10px;
 }
+
+/* stylelint-disable-next-line selector-class-pattern */
+.css-ytlejw-MuiFormControl-root {
+  margin-top: 4px !important;
+}
