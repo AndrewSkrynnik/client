@@ -259,8 +259,8 @@ section.Toastify {
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
-.css-ytlejw-MuiFormControl-root,
+.MuiFormControl-root,
 /* stylelint-disable-next-line selector-class-pattern */
-.css-1knj60v-MuiFormControl-root-MuiTextField-root {
+.MuiFormControl-root-MuiTextField-root {
   margin-top: 4px !important;
 }
