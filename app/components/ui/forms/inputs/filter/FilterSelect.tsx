@@ -23,7 +23,18 @@ export const FilterSelect = <T extends FieldValues>({
           value={field.value ?? ""}
           displayEmpty
           fullWidth
-          inputProps={{ "aria-label": label }}
+          inputProps={{
+            "aria-label": label,
+            sx: {
+              padding: "12.5px 16px",
+              "@media (max-width:1024px)": {
+                padding: "12.5px"
+              },
+              "@media (max-width:768px)": {
+                padding: "8.5px"
+              }
+            }
+          }}
         >
           <MenuItem value="">{placeholder}</MenuItem>
           {options.map(option => (
