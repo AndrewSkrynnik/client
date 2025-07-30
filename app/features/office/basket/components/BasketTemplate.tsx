@@ -6,6 +6,8 @@ import { BasketEmpty } from "@/features/office/basket/components/BasketEmpty";
 import { BasketSummary } from "@/features/office/basket/components/BasketSummary";
 import { BasketTable } from "@/features/office/basket/components/tables/BasketTable";
 
+import { SearchForm } from "@/components/ui/forms/inputs/search/SearchForm";
+
 import { useBasket } from "@/hooks/useBasket";
 
 export const BasketTemplate = () => {
@@ -17,7 +19,12 @@ export const BasketTemplate = () => {
 
   return (
     <div className="officePage">
-      <h2 className="officePageTitle">Корзина</h2>
+      <div className="flex items-center justify-between gap-x-[160px]">
+        <h2 className="officePageTitle">Корзина</h2>
+        <div className="w-full max-w-[566px]">
+          <SearchForm />
+        </div>
+      </div>
       <div className="officePageContent">
         {items.length > 0 ? (
           <>

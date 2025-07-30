@@ -2,13 +2,19 @@ import { AccountForm } from "@/features/office/account/components/forms/AccountF
 import { ChangePasswordForm } from "@/features/office/account/components/forms/ChangePasswordForm";
 
 import { AccountCircleIcon } from "@/components/icons";
+import { SearchForm } from "@/components/ui/forms/inputs/search/SearchForm";
 import { UserInfo } from "@/components/ui/user/UserInfo";
 
 import styles from "@/styles/pages/office/account/Account.module.css";
 
 export const AccountTemplate = () => (
   <div className="officePage">
-    <h2 className="officePageTitle">Учетная запись</h2>
+    <div className="flex items-center justify-between gap-x-[160px]">
+      <h2 className="officePageTitle">Учетная запись</h2>
+      <div className="w-full max-w-[566px]">
+        <SearchForm />
+      </div>
+    </div>
     <div className="officePageContent">
       <div className={styles.avatarContainer}>
         <AccountCircleIcon

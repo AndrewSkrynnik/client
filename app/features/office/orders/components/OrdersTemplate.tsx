@@ -8,6 +8,7 @@ import { OrdersTable } from "@/features/office/orders/components/tables/OrdersTa
 import { OrdersFilters } from "@/features/office/orders/types";
 import { filterOrders } from "@/features/office/orders/utils/filter-orders";
 
+import { SearchForm } from "@/components/ui/forms/inputs/search/SearchForm";
 import { PaginationComponent } from "@/components/ui/pagination/PaginationComponent";
 
 import { useOrders } from "@/hooks/useOrders";
@@ -57,7 +58,12 @@ export const OrdersTemplate = () => {
 
   return (
     <div className="officePage">
-      <h2 className="officePageTitle">Заказы</h2>
+      <div className="flex items-center justify-between gap-x-[160px]">
+        <h2 className="officePageTitle">Заказы</h2>
+        <div className="w-full max-w-[566px]">
+          <SearchForm />
+        </div>
+      </div>
       <div className="officePageContent">
         <OrdersForm onFilter={handleFilter} onReset={handleReset} />
 
