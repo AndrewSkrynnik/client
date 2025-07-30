@@ -18,8 +18,8 @@ export interface Item {
 export interface Filters {
   brand: string;
   article: string;
-  minPrice: number;
-  maxPrice: number;
+  minPrice: string; // string для свободного ввода
+  maxPrice: string;
 }
 
 const extractUniqueValues = (items: Item[]) => {
@@ -38,7 +38,12 @@ export const SearchFilterPanel = ({
   onFilter
 }: {
   items: Item[];
-  onFilter: (filters: Filters) => void;
+  onFilter: (filters: {
+    brand: string;
+    article: string;
+    minPrice: number;
+    maxPrice: number;
+  }) => void;
 }) => {
   const { brands, articles, minPrice, maxPrice } = useMemo(
     () => extractUniqueValues(items),
@@ -49,47 +54,53 @@ export const SearchFilterPanel = ({
     defaultValues: {
       brand: "",
       article: "",
-      minPrice,
-      maxPrice
+      minPrice: String(minPrice),
+      maxPrice: String(maxPrice)
     }
   });
 
-  // при изменении фильтров из формы → обновляем onFilter
   const values = useWatch({ control });
 
   useEffect(() => {
     onFilter({
       brand: values.brand || "",
       article: values.article || "",
-      minPrice: values.minPrice || 0,
-      maxPrice: values.maxPrice || 0
+      minPrice: parseFloat(values.minPrice || "") || 0,
+      maxPrice: parseFloat(values.maxPrice || "") || 0
     });
   }, [values, onFilter]);
 
   useEffect(() => {
-    setValue("minPrice", minPrice);
-    setValue("maxPrice", maxPrice);
+    setValue("minPrice", String(minPrice));
+    setValue("maxPrice", String(maxPrice));
   }, [minPrice, maxPrice, setValue]);
 
-  useEffect(() => {
-    const newMin = Math.max(minPrice, values.minPrice || 0);
-    const newMax = Math.min(maxPrice, values.maxPrice || maxPrice);
+  const handlePriceBlur = (field: "minPrice" | "maxPrice") => {
+    const raw = values[field];
+    const val = parseFloat(raw || "");
 
-    if (values.minPrice !== newMin) {
-      setValue("minPrice", newMin);
+    if (isNaN(val)) {
+      setValue(field, String(field === "minPrice" ? minPrice : maxPrice));
+      return;
     }
 
-    if (values.maxPrice !== newMax) {
-      setValue("maxPrice", newMax);
+    if (field === "minPrice") {
+      if (val < minPrice) setValue("minPrice", String(minPrice));
+      else if (val > maxPrice) setValue("minPrice", String(maxPrice));
     }
-  }, [values.minPrice, values.maxPrice, minPrice, maxPrice, setValue]);
+
+    if (field === "maxPrice") {
+      if (val < minPrice) setValue("maxPrice", String(minPrice));
+      else if (val > maxPrice) setValue("maxPrice", String(maxPrice));
+    }
+  };
 
   const handleReset = () => {
     reset({
       brand: "",
       article: "",
-      minPrice,
-      maxPrice
+      minPrice: String(minPrice),
+      maxPrice: String(maxPrice)
     });
   };
 
@@ -113,24 +124,20 @@ export const SearchFilterPanel = ({
         label="Цена от"
         type="number"
         placeholder={String(minPrice)}
-        min={minPrice}
-        max={maxPrice}
         step={1}
         inputMode="decimal"
+        onBlur={() => handlePriceBlur("minPrice")}
       />
-
       <FilterInput
         control={control}
         name="maxPrice"
         label="Цена до"
         type="number"
         placeholder={String(maxPrice)}
-        min={minPrice}
-        max={maxPrice}
         step={1}
         inputMode="decimal"
+        onBlur={() => handlePriceBlur("maxPrice")}
       />
-
       <Button size="Small" variant="SecondaryOutline" onClick={handleReset}>
         Сброс
       </Button>
