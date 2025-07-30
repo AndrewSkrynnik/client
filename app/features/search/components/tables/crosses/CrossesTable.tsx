@@ -4,10 +4,7 @@ import { Paper, Table, TableContainer } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import {
-  Filters,
-  SearchFilterPanel
-} from "@/features/search/components/SearchFilterPanel";
+import { SearchFilterPanel } from "@/features/search/components/SearchFilterPanel";
 import { ModalImage } from "@/features/search/components/modals/ModalImage";
 import { ModalInfo } from "@/features/search/components/modals/ModalInfo";
 import { CrossesTableBody } from "@/features/search/components/tables/crosses/CrossesTableBody";
@@ -22,6 +19,13 @@ import { useBasket } from "@/hooks/useBasket";
 import { paginate } from "@/utils/paginate";
 
 import { SEARCH_PAGINATION } from "@/common/constants";
+
+export interface Filters {
+  brand: string;
+  article: string;
+  minPrice: number;
+  maxPrice: number;
+}
 
 export const CrossesTable = ({
   descr,
@@ -85,6 +89,7 @@ export const CrossesTable = ({
   }, [crosses]);
 
   const initializedRef = useRef(false);
+
   useEffect(() => {
     if (initializedRef.current) return;
     initializedRef.current = true;
@@ -219,8 +224,7 @@ export const CrossesTable = ({
     <>
       <SearchFilterPanel
         items={items.filter(
-          (i): i is Extract<CrossRowType, { type: "item" }> =>
-            i.type !== "group"
+          (i): i is Extract<CrossRowType, { type: "item" }> => i.type === "item"
         )}
         onFilter={handleFilterChange}
       />

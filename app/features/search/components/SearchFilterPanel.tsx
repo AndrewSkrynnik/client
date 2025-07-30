@@ -15,10 +15,10 @@ export interface Item {
   price: number;
 }
 
-export interface Filters {
+export interface FormFilters {
   brand: string;
   article: string;
-  minPrice: string; // string для свободного ввода
+  minPrice: string;
   maxPrice: string;
 }
 
@@ -50,7 +50,7 @@ export const SearchFilterPanel = ({
     [items]
   );
 
-  const { control, setValue, reset } = useForm<Filters>({
+  const { control, setValue, reset } = useForm<FormFilters>({
     defaultValues: {
       brand: "",
       article: "",
