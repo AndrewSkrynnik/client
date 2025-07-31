@@ -54,10 +54,8 @@ export const OrdersForm = ({ onFilter, onReset }: OrdersFilterFormProps) => {
       </div>
 
       <div style={{ display: "flex", gap: "8px" }}>
-        <Button type="submit" size="Small">
-          Применить фильтр
-        </Button>
-        <Button type="reset" size="Small" variant="SecondaryOutline">
+        <Button type="submit">Применить фильтр</Button>
+        <Button type="reset" variant="SecondaryOutline">
           Сбросить фильтр
         </Button>
       </div>

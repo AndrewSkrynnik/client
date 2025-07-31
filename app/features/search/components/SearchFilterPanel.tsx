@@ -118,29 +118,36 @@ export const SearchFilterPanel = ({
         options={brands}
         placeholder="Все бренды"
       />
-      <FilterInput
-        control={control}
-        name="minPrice"
-        label="Цена от"
-        type="number"
-        placeholder={String(minPrice)}
-        step={1}
-        inputMode="decimal"
-        onBlur={() => handlePriceBlur("minPrice")}
-      />
-      <FilterInput
-        control={control}
-        name="maxPrice"
-        label="Цена до"
-        type="number"
-        placeholder={String(maxPrice)}
-        step={1}
-        inputMode="decimal"
-        onBlur={() => handlePriceBlur("maxPrice")}
-      />
-      <Button size="Small" variant="SecondaryOutline" onClick={handleReset}>
-        Сброс
-      </Button>
+      <div className="w-full max-w-[100px]">
+        <FilterInput
+          control={control}
+          name="minPrice"
+          label="Цена от"
+          type="number"
+          placeholder={String(minPrice)}
+          step={1}
+          inputMode="decimal"
+          onBlur={() => handlePriceBlur("minPrice")}
+        />
+      </div>
+
+      <div className="w-full max-w-[100px]">
+        <FilterInput
+          control={control}
+          name="maxPrice"
+          label="Цена до"
+          type="number"
+          placeholder={String(maxPrice)}
+          step={1}
+          inputMode="decimal"
+          onBlur={() => handlePriceBlur("maxPrice")}
+        />
+      </div>
+      <div className="mt-[4px]">
+        <Button size="Medium" variant="SecondaryOutline" onClick={handleReset}>
+          Сброс
+        </Button>
+      </div>
     </div>
   );
 };
