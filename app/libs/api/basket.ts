@@ -100,22 +100,6 @@ export const clearBasket = async () => {
   notifyBasketUpdate();
 };
 
-// 🔁 Обновление количества и опционально цены
-export const updateBasketQty = async (
-  skuId: number,
-  supplierId: number,
-  hash: string,
-  qty: number,
-  price?: number
-) => {
-  await axios.patch(
-    `${API_URL}/basket/update`,
-    { skuId, supplierId, hash, qty, price },
-    withCredentials
-  );
-  notifyBasketUpdate();
-};
-
 // ✅ Сравнение корзины с сервером
 export const validateBasket = async (
   items: BasketItem[]

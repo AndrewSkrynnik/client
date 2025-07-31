@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 import { BasketDiffItem } from "@/features/office/basket/types/basket-diff.type";
+import { generateBasketHash } from "@/features/office/basket/utils/generate-basket-hash";
 
 import {
   BasketItem,
@@ -10,7 +11,6 @@ import {
   deleteFromBasket,
   fetchBasket,
   removeFromBasket,
-  updateBasketQty,
   validateBasket
 } from "@/libs/api/basket";
 
@@ -121,25 +121,51 @@ export const useBasket = (params?: UseBasketParams) => {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({
+    mutationFn: async ({
       skuId,
       supplierId,
       hash,
       qty,
-      price
+      price,
+      basePrice,
+      article,
+      brand,
+      descr,
+      deliveryDays
     }: BasketActionInput) => {
-      if (!hash || typeof qty !== "number")
-        throw new Error("Missing hash or qty for updateItem");
-      return updateBasketQty(skuId, supplierId, hash, qty, price);
-    },
-    onSuccess: invalidate
-  });
+      if (
+        !hash ||
+        typeof qty !== "number" ||
+        typeof price !== "number" ||
+        typeof basePrice !== "number"
+      ) {
+        throw new Error("Missing required fields for updateItem");
+      }
 
-  const clearMutation = useMutation({
-    mutationFn: clearBasket,
-    onSuccess: () => {
-      invalidate();
-      if (setSelectedSet) setSelectedSet(new Set());
+      // 1. Удалить старую позицию
+      await deleteFromBasket(skuId, supplierId, hash);
+
+      // 2. Сгенерировать новый hash
+      const newHash = generateBasketHash(skuId, supplierId, basePrice, qty);
+
+      // 3. Создать новую запись
+      return addToBasket({
+        skuId,
+        supplierId,
+        hash: newHash,
+        qty,
+        price,
+        basePrice,
+        article: article ?? "",
+        brand: brand ?? "",
+        descr: descr ?? "",
+        deliveryDays: deliveryDays ?? 0,
+        selected: true,
+        availableQty: qty
+      });
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["basket"] });
     }
   });
 
@@ -165,6 +191,14 @@ export const useBasket = (params?: UseBasketParams) => {
     await validateBasket(extendedItems);
   console.log("📦 items перед отправкой на compare:", extendedItems);
 
+  const clearMutation = useMutation({
+    mutationFn: clearBasket,
+    onSuccess: () => {
+      invalidate();
+      if (setSelectedSet) setSelectedSet(new Set());
+    }
+  });
+
   return {
     items: extendedItems,
     isLoading,
@@ -181,7 +215,7 @@ export const useBasket = (params?: UseBasketParams) => {
         article: input.article ?? "",
         descr: input.descr ?? "",
         price: input.price ?? 0,
-        basePrice: input.basePrice ?? 0, // 👈 обязательно
+        basePrice: input.basePrice ?? 0,
         qty: input.qty ?? 1,
         deliveryDays: input.deliveryDays ?? 0,
         selected: input.selected ?? false,
@@ -212,8 +246,8 @@ export const useBasket = (params?: UseBasketParams) => {
     addItemAsync: addMutation.mutateAsync,
     removeItemAsync: removeMutation.mutateAsync,
     deleteItemAsync: deleteMutation.mutateAsync,
-    updateItemAsync: updateMutation.mutateAsync, // ✅
     clearAsync: clearMutation.mutateAsync,
+    updateItemAsync: updateMutation.mutateAsync, // ✅
     deleteSelectedAsync,
 
     toggleItemSelection,

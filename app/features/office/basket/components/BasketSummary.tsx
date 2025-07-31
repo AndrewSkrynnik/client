@@ -104,26 +104,31 @@ export const BasketSummary = ({
 
   const handleApplyChanges = async () => {
     const updates = diffs.map(async diff => {
+      const item = items.find(
+        i => i.skuId === diff.skuId && i.supplierId === diff.supplierId
+      );
+
+      if (!item) return;
+
       if (diff.newQty === 0) {
         return deleteItemAsync({
           skuId: diff.skuId,
           supplierId: diff.supplierId,
-          hash:
-            items.find(
-              i => i.skuId === diff.skuId && i.supplierId === diff.supplierId
-            )?.hash ?? ""
+          hash: item.hash
         });
       }
 
       return updateItemAsync({
         skuId: diff.skuId,
         supplierId: diff.supplierId,
-        hash:
-          items.find(
-            i => i.skuId === diff.skuId && i.supplierId === diff.supplierId
-          )?.hash ?? "",
-        qty: diff.newQty ?? undefined,
-        price: diff.newPrice ?? undefined
+        hash: item.hash,
+        qty: diff.newQty,
+        price: diff.newPrice,
+        basePrice: item.basePrice,
+        article: item.article,
+        brand: item.brand,
+        descr: item.descr,
+        deliveryDays: item.deliveryDays
       });
     });
 
