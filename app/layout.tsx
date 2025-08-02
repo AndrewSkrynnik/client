@@ -25,9 +25,6 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "rotazap.ru", url: "https://rotazap.ru" }],
   metadataBase: new URL("https://rotazap.ru"),
-  verification: {
-    google: "tfpPQmMVyjKmQCpESNPXZRgwEzkrY72uxilLWbPSC_M"
-  },
   icons: [
     {
       rel: "icon",
