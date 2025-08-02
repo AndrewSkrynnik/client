@@ -65,10 +65,10 @@ export const userMenuItems: MenuItemConfig[] = [
   },
   {
     id: 6,
-    href: "/office/statutory-documents",
+    href: "/office/documents",
     title: "Уставные документы",
     disabled: false,
-    render: false,
+    render: true,
     icon: ContactPageIcon
   },
   {

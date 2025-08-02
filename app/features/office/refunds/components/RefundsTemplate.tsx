@@ -16,9 +16,11 @@ export const RefundsTemplate = () => (
     <div className="officePageContent">
       <div className={styles.linksWrapper}>
         <div className="w-[200px]">
-          <Button variant="PrimaryOutline" size="Small">
-            <Link href="/office/refunds/create">Оформить заявку</Link>
-          </Button>
+          <Link href="/office/refunds/create">
+            <Button variant="PrimaryOutline" size="Small">
+              Оформить заявку
+            </Button>
+          </Link>
         </div>
         <Link className="link" href="/info/warranty-refund">
           Условия возврата
