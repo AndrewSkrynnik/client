@@ -7,6 +7,8 @@ import "@/styles/globals.css";
 import ClientLayout from "./ClientLayout";
 import { DynamicFavicon } from "@/DynamicFavicon";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "rotazap.ru",
   description:
