@@ -64,6 +64,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)"
+    // все пути, кроме API, _next, статики, favicon, sitemap, robots и проверочных HTML
+    "/((?!api|_next/static|_next/image|favicon\\.ico|sitemap\\.xml|robots\\.txt|google273306f69acdefef\\.html|yandex_76be64e45a69686b\\.html).*)"
   ]
 };
