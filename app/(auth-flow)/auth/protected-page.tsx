@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 import { AuthTemplate } from "@/features/auth/components/AuthTemplate";
 
-export default function ProtectedAuthPage() {
+export function ProtectedAuthPage() {
   const router = useRouter();
 
   useEffect(() => {

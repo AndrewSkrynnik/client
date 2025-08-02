@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 import { HomeTemplate } from "@/features/home/components/HomeTemplate";
 
-export default function ProtectedMainPage() {
+export function ProtectedMainPage() {
   const router = useRouter();
 
   useEffect(() => {
