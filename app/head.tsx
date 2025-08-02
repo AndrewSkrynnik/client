@@ -1,30 +1,11 @@
 // app/head.tsx
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  // fallback — обязательно
-  icons: {
-    icon: "/favicon.ico",
-    other: [
-      {
-        rel: "icon",
-        url: "/favicon-light.ico",
-        media: "(prefers-color-scheme: light)"
-      },
-      {
-        rel: "icon",
-        url: "/favicon-dark.ico",
-        media: "(prefers-color-scheme: dark)"
-      }
-    ]
-  }
-};
-
 export default function Head() {
   return (
     <>
-      {/* на всякий случай продублируем */}
-      <link rel="icon" href="/favicon.ico" />
+      <meta charSet="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      {/* Иконки для светлой и тёмной темы */}
       <link
         rel="icon"
         href="/favicon-light.ico"
@@ -35,6 +16,9 @@ export default function Head() {
         href="/favicon-dark.ico"
         media="(prefers-color-scheme: dark)"
       />
+
+      {/* Обязательный общий fallback */}
+      <link rel="icon" href="/favicon.ico" />
     </>
   );
 }
