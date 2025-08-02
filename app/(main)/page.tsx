@@ -1,4 +1,9 @@
+"use client";
+
+import { getCookie } from "cookies-next";
 import { Metadata } from "next";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import { HomeTemplate } from "@/features/home/components/HomeTemplate";
 
@@ -9,5 +14,14 @@ export const metadata: Metadata = {
 };
 
 export default function MainPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = getCookie("accessToken");
+    if (!token) {
+      router.replace("/auth");
+    }
+  }, []);
+
   return <HomeTemplate />;
 }
