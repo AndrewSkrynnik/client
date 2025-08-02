@@ -25,12 +25,27 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "rotazap.ru", url: "https://rotazap.ru" }],
   metadataBase: new URL("https://rotazap.ru"),
-  icons: [
-    {
-      rel: "icon",
-      url: "/favicon.ico" // fallback
+  verification: {
+    google: "tfpPQmMVyjKmQCpESNPXZRgwEzkrY72uxilLWbPSC_M",
+    other: {
+      "yandex-verification": "76be64e45a69686b"
     }
-  ]
+  },
+  icons: {
+    icon: "/favicon.ico",
+    other: [
+      {
+        rel: "icon",
+        url: "/favicon-light.ico",
+        media: "(prefers-color-scheme: light)"
+      },
+      {
+        rel: "icon",
+        url: "/favicon-dark.ico",
+        media: "(prefers-color-scheme: dark)"
+      }
+    ]
+  }
 };
 
 export default function RootLayout({
