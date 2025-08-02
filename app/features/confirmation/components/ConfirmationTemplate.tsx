@@ -59,7 +59,7 @@ export const ConfirmationTemplate = () => {
             <p>
               Ознакомиться с условиями Вы можете{" "}
               <a
-                href="https://rotazap.ru/info/wholesale"
+                href="info/wholesale"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="link"

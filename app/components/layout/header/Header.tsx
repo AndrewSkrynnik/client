@@ -10,7 +10,9 @@ import { useAuthStore } from "@/store/useAuthStore";
 import styles from "@/styles/components/layout/header/Header.module.css";
 
 export const Header = () => {
-  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+  const isAuthenticated = useAuthStore(
+    state => !!state.user && state.user.role === "user"
+  );
   const isAuthReady = useAuthStore(state => state.isAuthReady);
 
   return (

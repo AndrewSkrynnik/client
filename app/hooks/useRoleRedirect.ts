@@ -9,24 +9,23 @@ export function useRoleRedirect() {
   const currentPath = usePathname();
 
   useEffect(() => {
-    // Ждём, пока данные авторизации будут готовы
-    if (!isAuthReady) return;
+    if (!isAuthReady || !user) return;
 
-    // Если пользователь отсутствует, пропускаем логику
-    if (!user) return;
+    const normalizedPath = currentPath?.replace(/\/$/, "") || "";
 
-    const redirect = () => {
-      // Если роль "pending", перенаправляем на /confirmation
-      if (user.role === "pending" && currentPath !== "/confirmation") {
-        router.push("/confirmation");
-      }
+    const isInfo =
+      normalizedPath === "/info" || normalizedPath.startsWith("/info/");
 
-      // Если роль "user", не даём оставаться на /confirmation
-      if (user.role === "user" && currentPath === "/confirmation") {
-        router.push("/");
-      }
-    };
+    if (
+      user.role === "pending" &&
+      normalizedPath !== "/confirmation" &&
+      !isInfo
+    ) {
+      router.replace("/confirmation");
+    }
 
-    redirect();
+    if (user.role === "user" && normalizedPath === "/confirmation") {
+      router.replace("/");
+    }
   }, [user, isAuthReady, router, currentPath]);
 }

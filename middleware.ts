@@ -43,14 +43,10 @@ export function middleware(request: NextRequest) {
 
   // --- Если роль "pending", разрешаем только /confirmation и /info/* ---
   if (userRole === "pending") {
-    const isInfo = pathname === "/info" || pathname.startsWith("/info/");
-    const isConfirmation = pathname === "/confirmation";
-
-    if (!isConfirmation && !isInfo) {
-      console.log("Redirecting pending user to /confirmation");
+    if (pathname !== "/confirmation" && !pathname.startsWith("/info")) {
+      console.log("Redirecting to /confirmation due to pending role");
       return NextResponse.redirect(new URL("/confirmation", request.url));
     }
-
     return NextResponse.next();
   }
 
@@ -67,5 +63,7 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|favicon.ico|sitemap.xml|robots.txt).*)"]
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)"
+  ]
 };
