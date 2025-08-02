@@ -14,6 +14,7 @@ export function ProtectedAuthPage() {
     if (token) {
       router.replace("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <AuthTemplate />;

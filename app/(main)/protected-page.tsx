@@ -14,6 +14,7 @@ export function ProtectedMainPage() {
     if (!token) {
       router.replace("/auth");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <HomeTemplate />;

@@ -42,7 +42,9 @@ export const AuthSignInForm = () => {
 
       setAuth(user);
       toast.success("Вход выполнен!");
-      router.push("/confirmation");
+      setTimeout(() => {
+        router.push("/");
+      }, 300);
     } catch (error: any) {
       if (error.response?.data?.message) {
         toast.error(error.response.data.message);
