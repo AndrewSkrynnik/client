@@ -1,11 +1,6 @@
-"use client";
-
-import { getCookie } from "cookies-next";
 import { Metadata } from "next";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-import { AuthTemplate } from "@/features/auth/components/AuthTemplate";
+import dynamic from "next/dynamic";
 
 export const metadata: Metadata = {
   title: "Вход и регистрация | rotazap.ru",
@@ -13,16 +8,10 @@ export const metadata: Metadata = {
     "Вход и регистрация в интернет-магазин автозапчастей rotazap.ru. Получите доступ к истории заказов, избранному и персональным предложениям."
 };
 
+const ProtectedAuthPage = dynamic(() => import("./protected-page"), {
+  ssr: false
+});
+
 export default function AuthPage() {
-  const router = useRouter();
-
-  useEffect(() => {
-    const token = getCookie("accessToken");
-
-    if (token) {
-      router.replace("/");
-    }
-  }, []);
-
-  return <AuthTemplate />;
+  return <ProtectedAuthPage />;
 }
