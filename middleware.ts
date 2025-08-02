@@ -43,10 +43,14 @@ export function middleware(request: NextRequest) {
 
   // --- Если роль "pending", разрешаем только /confirmation и /info/* ---
   if (userRole === "pending") {
-    if (pathname !== "/confirmation" && !pathname.startsWith("/info")) {
-      console.log("Redirecting to /confirmation due to pending role");
+    const isInfo = pathname === "/info" || pathname.startsWith("/info/");
+    const isConfirmation = pathname === "/confirmation";
+
+    if (!isConfirmation && !isInfo) {
+      console.log("Redirecting pending user to /confirmation");
       return NextResponse.redirect(new URL("/confirmation", request.url));
     }
+
     return NextResponse.next();
   }
 
