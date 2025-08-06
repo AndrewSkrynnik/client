@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/buttons/Button";
 
@@ -10,21 +9,6 @@ import styles from "@/styles/pages/not-found/NotFound.module.css";
 
 export const NotFoundTemplate = () => {
   const pathname = usePathname();
-  const [countdown, setCountdown] = useState(3);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown(prevCountdown => {
-        if (prevCountdown <= 1) {
-          clearInterval(timer);
-          window.location.href = "/";
-        }
-        return prevCountdown - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [pathname]);
 
   return (
     <div className={styles.container}>
@@ -35,8 +19,7 @@ export const NotFoundTemplate = () => {
             Страница <span className="text-accent">{pathname}</span> не найдена
           </p>
           <p className={styles.description}>
-            Вы будете перенаправлены на главную страницу через
-            <strong className="text-accent"> {countdown} сек.</strong>
+            Возможно, она была удалена или перемещена.
           </p>
         </div>
       </div>
