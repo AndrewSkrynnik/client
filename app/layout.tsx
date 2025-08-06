@@ -5,7 +5,6 @@ import { ibm, roboto } from "@/styles/fonts/fonts";
 import "@/styles/globals.css";
 
 import ClientLayout from "./ClientLayout";
-import { DynamicFavicon } from "@/DynamicFavicon";
 
 export const metadata: Metadata = {
   title: "rotazap.ru",
@@ -32,19 +31,25 @@ export const metadata: Metadata = {
     }
   },
   icons: {
-    icon: "/favicon.ico",
-    other: [
+    icon: [
       {
-        rel: "icon",
-        url: "/favicon-light.ico",
-        media: "(prefers-color-scheme: light)"
+        url: "/icons/icon-512.png",
+        type: "image/png",
+        sizes: "512x512"
       },
       {
-        rel: "icon",
-        url: "/favicon-dark.ico",
-        media: "(prefers-color-scheme: dark)"
+        url: "/icons/icon-192.png",
+        type: "image/png",
+        sizes: "192x192"
       }
-    ]
+    ],
+    apple: [
+      {
+        url: "/icons/icon-192.png",
+        sizes: "192x192"
+      }
+    ],
+    shortcut: "/icons/favicon.ico"
   }
 };
 
@@ -59,7 +64,6 @@ export default function RootLayout({
       className={`${roboto.variable} ${ibm.variable} antialiased`}
     >
       <body className="app">
-        <DynamicFavicon />
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

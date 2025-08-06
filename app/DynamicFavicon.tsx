@@ -5,7 +5,6 @@ import { useEffect } from "react";
 const setFavicon = (href: string) => {
   const head = document.head;
 
-  // Удаляем все старые favicon
   head.querySelectorAll("link[rel='icon']").forEach(icon => icon.remove());
 
   // Генерируем query-параметр (timestamp или hash)
@@ -20,7 +19,9 @@ const setFavicon = (href: string) => {
 export const DynamicFavicon = () => {
   useEffect(() => {
     const applyFavicon = (isDark: boolean) => {
-      const href = isDark ? "/favicon-dark.ico" : "/favicon-light.ico";
+      const href = isDark
+        ? "/icons/favicon-dark.ico"
+        : "/icons/favicon-light.ico";
       setFavicon(href);
     };
 

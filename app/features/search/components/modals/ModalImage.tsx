@@ -19,7 +19,7 @@ export const ModalImage = ({ imageUrl, open, onClose }: ModalImageProps) => (
       height={400}
       className="rounded border object-contain"
       placeholder="blur"
-      blurDataURL="/no-image.png"
+      blurDataURL="/img/no-image.png"
     />
   </ModalComponent>
 );

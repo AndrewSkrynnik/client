@@ -14,8 +14,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/favicon.ico",
-        destination: "/favicon-light.ico",
+        source: "/icons/favicon-dark.ico",
+        destination: "/icons/favicon-light.ico",
         permanent: false
       }
     ];
