@@ -10,18 +10,22 @@ interface OrdersTableBodyProps {
   onSelect: (order: OrderTableItem) => void;
 }
 
-export const OrdersTableBody = ({ orders, onSelect }: OrdersTableBodyProps) => (
-  <TableBody>
-    {orders.length === 0 ? (
-      <TableRow>
-        <TableCell colSpan={ORDERS_TABLE_HEAD.length} align="center">
-          У Вас пока нет заказов
-        </TableCell>
-      </TableRow>
-    ) : (
-      orders.map(order => (
-        <OrderTableRow key={order.id} order={order} onSelect={onSelect} />
-      ))
-    )}
-  </TableBody>
-);
+export const OrdersTableBody = ({ orders, onSelect }: OrdersTableBodyProps) => {
+  console.log("📦 all orders:", orders);
+
+  return (
+    <TableBody>
+      {orders.length === 0 ? (
+        <TableRow>
+          <TableCell colSpan={ORDERS_TABLE_HEAD.length} align="center">
+            У Вас пока нет заказов
+          </TableCell>
+        </TableRow>
+      ) : (
+        orders.map(order => (
+          <OrderTableRow key={order.id} order={order} onSelect={onSelect} />
+        ))
+      )}
+    </TableBody>
+  );
+};

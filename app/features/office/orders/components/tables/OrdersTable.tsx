@@ -23,7 +23,6 @@ export const OrdersTable = ({
   );
 
   const handleClose = () => setSelectedOrder(null);
-
   return (
     <>
       <TableContainer

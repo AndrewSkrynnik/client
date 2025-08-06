@@ -15,7 +15,6 @@ interface OrderTableRowProps {
 }
 
 export const OrderTableRow = ({ order, onSelect }: OrderTableRowProps) => {
-  console.log("📦 Order row:", order); // 👈 логируем весь объект
   const totalQty = order.details.reduce((sum, item) => sum + item.qty, 0);
   const totalPrice = order.details.reduce(
     (sum, item) => sum + item.price * item.qty,

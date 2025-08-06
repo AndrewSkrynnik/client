@@ -187,9 +187,10 @@ export const useBasket = (params?: UseBasketParams) => {
     );
   };
 
-  const checkForDiff = async (): Promise<BasketDiffItem[]> =>
-    await validateBasket(extendedItems);
-  console.log("📦 items перед отправкой на compare:", extendedItems);
+  const checkForDiff = async (): Promise<BasketDiffItem[]> => {
+    console.log("📦 items перед отправкой на compare:", extendedItems);
+    return await validateBasket(extendedItems);
+  };
 
   const clearMutation = useMutation({
     mutationFn: clearBasket,

@@ -21,7 +21,6 @@ export const OrderDetailsTableRow = ({
   const extendedItem = {
     ...item
   };
-  console.log("🧪 typeof item.price =", typeof item.price, "|", item.price);
   return (
     <StyledTableRowBody>
       {ORDERS_DETAILS_TABLE_HEAD.map(({ key }) => {
