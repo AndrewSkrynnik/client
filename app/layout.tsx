@@ -5,6 +5,7 @@ import { ibm, roboto } from "@/styles/fonts/fonts";
 import "@/styles/globals.css";
 
 import ClientLayout from "./ClientLayout";
+import { sharedIcons } from "@/metadata-icons";
 
 export const metadata: Metadata = {
   title: "rotazap.ru",
@@ -30,27 +31,7 @@ export const metadata: Metadata = {
       "yandex-verification": "76be64e45a69686b"
     }
   },
-  icons: {
-    icon: [
-      {
-        url: "/icons/icon-512.png",
-        type: "image/png",
-        sizes: "512x512"
-      },
-      {
-        url: "/icons/icon-192.png",
-        type: "image/png",
-        sizes: "192x192"
-      }
-    ],
-    apple: [
-      {
-        url: "/icons/icon-192.png",
-        sizes: "192x192"
-      }
-    ],
-    shortcut: "/icons/favicon.ico"
-  },
+  icons: sharedIcons,
   openGraph: {
     title: "rotazap.ru – интернет-магазин автозапчастей",
     description:
@@ -59,7 +40,7 @@ export const metadata: Metadata = {
     siteName: "rotazap.ru",
     images: [
       {
-        url: "https://rotazap.ruhttps://rotazap.ru/opengraph-image", // ← путь к картинке, которую ты генерируешь
+        url: "https://rotazap.ru/opengraph-image", // ← путь к картинке, которую ты генерируешь
         width: 1200,
         height: 630,
         alt: "rotazap.ru – интернет-магазин автозапчастей",
@@ -74,7 +55,7 @@ export const metadata: Metadata = {
     title: "rotazap.ru – интернет-магазин автозапчастей",
     description:
       "Поиск деталей по артикулу, бренду и кроссам. Поддержка ABCP API. Онлайн-наличие.",
-    images: ["https://rotazap.ruhttps://rotazap.ru/opengraph-image"]
+    images: ["https://rotazap.ru/opengraph-image"]
   }
 };
 

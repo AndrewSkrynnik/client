@@ -1,41 +1,52 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const setFavicon = (href: string) => {
   const head = document.head;
 
-  head.querySelectorAll("link[rel='icon']").forEach(icon => icon.remove());
+  head.querySelectorAll("link[rel*='icon']").forEach(link => link.remove());
 
-  // Генерируем query-параметр (timestamp или hash)
-  const cacheBuster = `?v=${Date.now()}`;
-  const newIcon = document.createElement("link");
-  newIcon.rel = "icon";
-  newIcon.href = `${href}${cacheBuster}`;
+  const versioned = `${href}?v=${Date.now()}`;
 
-  head.appendChild(newIcon);
+  const icon = document.createElement("link");
+  icon.rel = "icon";
+  icon.href = versioned;
+
+  const shortcut = document.createElement("link");
+  shortcut.rel = "shortcut icon";
+  shortcut.href = versioned;
+
+  head.appendChild(icon);
+  head.appendChild(shortcut);
 };
 
 export const DynamicFavicon = () => {
+  const lastIsDark = useRef<boolean | null>(null);
+
   useEffect(() => {
-    const applyFavicon = (isDark: boolean) => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const apply = (isDark: boolean) => {
+      if (lastIsDark.current === isDark) return; // не менять, если тема не изменилась
+      lastIsDark.current = isDark;
+
       const href = isDark
         ? "/icons/favicon-dark.ico"
         : "/icons/favicon-light.ico";
+
+      console.log("💡 Theme changed! Dark mode:", isDark);
       setFavicon(href);
     };
 
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    apply(mediaQuery.matches); // первая установка
 
-    // начальная установка
-    applyFavicon(mediaQuery.matches);
-
-    // обработчик изменений темы
-    const handleChange = (e: MediaQueryListEvent) => applyFavicon(e.matches);
-    mediaQuery.addEventListener("change", handleChange);
+    // Слушаем изменения системной темы
+    const handler = (e: MediaQueryListEvent) => apply(e.matches);
+    mediaQuery.addEventListener("change", handler);
 
     return () => {
-      mediaQuery.removeEventListener("change", handleChange);
+      mediaQuery.removeEventListener("change", handler);
     };
   }, []);
 

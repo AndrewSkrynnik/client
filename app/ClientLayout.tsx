@@ -13,7 +13,6 @@ import { setupAxiosInterceptors } from "@/libs/axios-interceptors";
 import { useAuthStore } from "@/store/useAuthStore";
 
 import { BasketSyncInitializer } from "@/BasketSyncInitializer";
-import { DynamicFavicon } from "@/DynamicFavicon";
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
@@ -33,7 +32,6 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <DynamicFavicon />
       <BasketSyncInitializer />
       {children}
       <ToastComponent />
