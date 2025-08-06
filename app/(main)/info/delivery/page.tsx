@@ -10,14 +10,14 @@ export const metadata: Metadata = {
     title: "Доставка | rotazap.ru",
     description:
       "Информация о способах и условиях доставки в интернет-магазине автозапчастей rotazap.ru: регионы, сроки, стоимость и службы доставки",
-    images: ["/opengraph-image"]
+    images: ["https://rotazap.ru/opengraph-image"]
   },
   twitter: {
     card: "summary_large_image",
     title: "Доставка | rotazap.ru",
     description:
       "Информация о способах и условиях доставки в интернет-магазине автозапчастей rotazap.ru: регионы, сроки, стоимость и службы доставки",
-    images: ["/opengraph-image"]
+    images: ["https://rotazap.ru/opengraph-image"]
   }
 };
 

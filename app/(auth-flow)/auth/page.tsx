@@ -10,14 +10,14 @@ export const metadata: Metadata = {
     title: "Вход и регистрация | rotazap.ru",
     description:
       "Вход и регистрация в интернет-магазин автозапчастей rotazap.ru. Получите доступ к истории заказов, избранному и персональным предложениям",
-    images: ["/opengraph-image"]
+    images: ["https://rotazap.ru/opengraph-image"]
   },
   twitter: {
     card: "summary_large_image",
     title: "Вход и регистрация | rotazap.ru",
     description:
       "Вход и регистрация в интернет-магазин автозапчастей rotazap.ru. Получите доступ к истории заказов, избранному и персональным предложениям",
-    images: ["/opengraph-image"]
+    images: ["https://rotazap.ru/opengraph-image"]
   }
 };
 

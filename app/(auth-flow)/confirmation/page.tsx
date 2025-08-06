@@ -10,14 +10,14 @@ export const metadata: Metadata = {
     title: "Подтверждение аккаунта | rotazap.ru",
     description:
       "Страница подтверждения аккаунта на rotazap.ru. Доступ к личному кабинету предоставляется после заключения договора и активации учетной записи",
-    images: ["/opengraph-image"]
+    images: ["https://rotazap.ru/opengraph-image"]
   },
   twitter: {
     card: "summary_large_image",
     title: "Подтверждение аккаунта | rotazap.ru",
     description:
       "Страница подтверждения аккаунта на rotazap.ru. Доступ к личному кабинету предоставляется после заключения договора и активации учетной записи",
-    images: ["/opengraph-image"]
+    images: ["https://rotazap.ru/opengraph-image"]
   }
 };
 

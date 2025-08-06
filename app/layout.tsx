@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     siteName: "rotazap.ru",
     images: [
       {
-        url: "/opengraph-image", // ← путь к картинке, которую ты генерируешь
+        url: "https://rotazap.ruhttps://rotazap.ru/opengraph-image", // ← путь к картинке, которую ты генерируешь
         width: 1200,
         height: 630,
         alt: "rotazap.ru – интернет-магазин автозапчастей",
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     title: "rotazap.ru – интернет-магазин автозапчастей",
     description:
       "Поиск деталей по артикулу, бренду и кроссам. Поддержка ABCP API. Онлайн-наличие.",
-    images: ["/opengraph-image"]
+    images: ["https://rotazap.ruhttps://rotazap.ru/opengraph-image"]
   }
 };
 

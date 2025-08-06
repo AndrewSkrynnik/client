@@ -10,14 +10,14 @@ export const metadata: Metadata = {
     title: "Сброс пароля | rotazap.ru",
     description:
       "Страница сброса пароля на rotazap.ru. Предназначена для установки нового пароля пользователями, запросившими восстановление доступа",
-    images: ["/opengraph-image"]
+    images: ["https://rotazap.ru/opengraph-image"]
   },
   twitter: {
     card: "summary_large_image",
     title: "Сброс пароля | rotazap.ru",
     description:
       "Страница сброса пароля на rotazap.ru. Предназначена для установки нового пароля пользователями, запросившими восстановление доступа",
-    images: ["/opengraph-image"]
+    images: ["https://rotazap.ru/opengraph-image"]
   }
 };
 
