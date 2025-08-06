@@ -1,28 +1,51 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://rotazap.ru", // 🔁 Замени на свой основной домен без слэша
-  generateRobotsTxt: true, // Автоматически создаёт robots.txt
-  exclude: ["/admin", "/office"], // Страницы, исключаемые из sitemap.xml
-
+  siteUrl: "https://rotazap.ru",
+  generateRobotsTxt: true,
+  changefreq: "weekly",
+  priority: 0.7,
   sitemapSize: 5000,
-  changefreq: "weekly", // Рекомендация поисковикам: обновляется еженедельно
-  priority: 0.7, // Приоритет страниц
+  noindex: false,
+
+  // Полный контроль над URL
+  transform: async (config, path) => {
+    const disallowed = [
+      "/admin",
+      "/office",
+      "/forgot-password",
+      "/reset-password",
+      "/confirmation"
+    ];
+
+    // Игнорируем все маршруты, начинающиеся с запрещённых префиксов
+    if (disallowed.some(dis => path.startsWith(dis))) {
+      return null;
+    }
+
+    return {
+      loc: path,
+      changefreq: config.changefreq,
+      priority: config.priority,
+      lastmod: new Date().toISOString()
+    };
+  },
 
   robotsTxtOptions: {
-    policies: [
-      {
-        userAgent: "*",
-        allow: "/",
-        disallow: ["/admin", "/office"] // Исключить эти страницы из индексации
-      }
-    ],
-    additionalSitemaps: [
-      "https://rotazap.ru/sitemap-0.xml" // Подключение дополнительных sitemap
-    ],
+    policies: [],
     additionalRobotsTxt: `
-# Дополнительные указания для поисковых систем
+User-agent: *
+
+Allow: /auth
+Allow: /info/
+
+Disallow: /admin
+Disallow: /office
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /confirmation
+
 Host: https://rotazap.ru
-Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content&ref /
+Sitemap: https://rotazap.ru/sitemap.xml
     `.trim()
   }
 };

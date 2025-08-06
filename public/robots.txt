@@ -1,12 +1,13 @@
-# *
 User-agent: *
-Allow: /
+
+Allow: /auth
+Allow: /info/
+
 Disallow: /admin
 Disallow: /office
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /confirmation
 
-# Host
 Host: https://rotazap.ru
-
-# Sitemaps
 Sitemap: https://rotazap.ru/sitemap.xml
-Sitemap: https://rotazap.ru/sitemap-0.xml

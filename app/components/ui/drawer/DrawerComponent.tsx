@@ -41,11 +41,13 @@ export const DrawerComponent = () => {
           className={`${styles.drawerLinkBase} ${isInfoSection ? styles.drawerLinkInfo : styles.drawerLink} ${
             pathname === item.path ? styles.activeLink : ""
           } ${additionalClasses}`}
+          itemProp="url"
           href={item.path}
           target={item.target || "_self"}
         >
           <item.icon fontSize="medium" />
           <p
+            itemProp="name"
             className={
               isInfoSection
                 ? styles.drawerListItemTextInfo
@@ -62,6 +64,8 @@ export const DrawerComponent = () => {
     <nav
       className={styles.navigation}
       role="presentation"
+      itemScope
+      itemType="https://schema.org/SiteNavigationElement"
       onClick={toggleDrawer(anchor)}
       onKeyDown={toggleDrawer(anchor)}
     >
