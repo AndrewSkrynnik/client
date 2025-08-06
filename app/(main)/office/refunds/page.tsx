@@ -5,7 +5,7 @@ import { RefundsTemplate } from "@/features/office/refunds/components/RefundsTem
 export const metadata: Metadata = {
   title: "Возвраты | rotazap.ru",
   description:
-    "Страница возвратов в личном кабинете rotazap.ru: информация о возвращённых товарах, причинах возврата, статусах обработки и суммах компенсаций."
+    "Страница возвратов в личном кабинете rotazap.ru: информация о возвращённых товарах, причинах возврата, статусах обработки и суммах компенсаций"
 };
 
 export default function RefundsPage() {

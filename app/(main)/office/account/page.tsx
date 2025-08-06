@@ -5,7 +5,7 @@ import { AccountTemplate } from "@/features/office/account/components/AccountTem
 export const metadata: Metadata = {
   title: "Учетная запись | rotazap.ru",
   description:
-    "Страница учетной записи в личном кабинете rotazap.ru: просмотр и изменение личной информации, пароля и настроек профиля."
+    "Страница учетной записи в личном кабинете rotazap.ru: просмотр и изменение личной информации, пароля и настроек профиля"
 };
 
 export default function AccountPage() {

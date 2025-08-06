@@ -5,7 +5,20 @@ import { ForgotPasswordTemplate } from "@/features/password/components/ForgotPas
 export const metadata: Metadata = {
   title: "Восстановление пароля | rotazap.ru",
   description:
-    "Страница восстановления пароля на rotazap.ru. Предназначена для запроса ссылки на сброс пароля через адрес электронной почты."
+    "Страница восстановления пароля на rotazap.ru. Предназначена для запроса ссылки на сброс пароля через адрес электронной почты",
+  openGraph: {
+    title: "Восстановление пароля | rotazap.ru",
+    description:
+      "Страница восстановления пароля на rotazap.ru. Предназначена для запроса ссылки на сброс пароля через адрес электронной почты",
+    images: ["/opengraph-image"]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Восстановление пароля | rotazap.ru",
+    description:
+      "Страница восстановления пароля на rotazap.ru. Предназначена для запроса ссылки на сброс пароля через адрес электронной почты",
+    images: ["/opengraph-image"]
+  }
 };
 
 export default function ForgotPasswordPage() {
