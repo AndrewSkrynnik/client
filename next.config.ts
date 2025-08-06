@@ -20,6 +20,14 @@ const nextConfig: NextConfig = {
       }
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/opengraph-image.png",
+        destination: "/opengraph-image"
+      }
+    ];
+  },
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
   generateBuildId: () => String(Date.now()),

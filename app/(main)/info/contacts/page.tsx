@@ -10,14 +10,14 @@ export const metadata: Metadata = {
     title: "Контакты | rotazap.ru",
     description:
       "Контактная информация интернет-магазина rotazap.ru: адрес, телефон, электронная почта и форма обратной связи",
-    images: ["https://rotazap.ru/opengraph-image"]
+    images: ["https://rotazap.ru/opengraph-image.png"]
   },
   twitter: {
     card: "summary_large_image",
     title: "Контакты | rotazap.ru",
     description:
       "Контактная информация интернет-магазина rotazap.ru: адрес, телефон, электронная почта и форма обратной связи",
-    images: ["https://rotazap.ru/opengraph-image"]
+    images: ["https://rotazap.ru/opengraph-image.png"]
   }
 };
 
