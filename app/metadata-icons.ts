@@ -21,6 +21,10 @@ export const sharedIcons: Metadata["icons"] = {
       url: "/icons/icon-192.png",
       type: "image/png",
       sizes: "192x192"
+    },
+    {
+      url: "/icons/logo-120.svg",
+      type: "image/svg+xml"
     }
   ],
   apple: [
