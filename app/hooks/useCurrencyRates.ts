@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { fetchCurrencyRates } from "@/libs/api/rares";
+import { fetchCurrencyRates } from "@/libs/api/rates";
 
 export type Rates = {
   USD: number;

@@ -41,7 +41,7 @@ export const AuthSignInForm = () => {
       toast.success("Вход выполнен!");
       setTimeout(() => {
         window.location.href = "/";
-      }, 3000);
+      }, 1500);
     } catch (error: any) {
       if (error.response?.data?.message) {
         toast.error(error.response.data.message);
