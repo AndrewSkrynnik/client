@@ -71,7 +71,7 @@ const CrossesTableRowComponent = ({
   };
 
   return (
-    <StyledTableRowBody className={isWarehouse ? "bg-green-100" : ""}>
+    <StyledTableRowBody className={isWarehouse ? "bg-blue-100" : ""}>
       <StyledTableCellBody>{cross.brand}</StyledTableCellBody>
       <StyledTableCellBody>{cross.numberFix}</StyledTableCellBody>
       <StyledTableCellBody>

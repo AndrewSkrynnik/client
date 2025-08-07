@@ -43,7 +43,7 @@ export const contactsDetails = [
   },
   {
     title: "№ тел.",
-    text: "+7-916-393-43-69"
+    text: "+7-000-000-00-00"
   },
   {
     divider: true
