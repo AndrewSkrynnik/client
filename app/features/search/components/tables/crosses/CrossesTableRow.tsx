@@ -3,7 +3,7 @@ import { memo } from "react";
 import { SearchCounter } from "@/features/search/components/SearchCounter";
 import { CrossesTableRowProps } from "@/features/search/types/crosses.types";
 
-import { CameraAltIcon, InfoIcon } from "@/components/icons";
+import { CameraAltIcon, InfoIcon, WarehouseIcon } from "@/components/icons";
 import {
   StyledTableCellBody,
   StyledTableRowBody
@@ -25,6 +25,8 @@ const CrossesTableRowComponent = ({
   const { items, addItem, removeItem, updateItem, deleteItem } = useBasket();
 
   const hash = cross.hash;
+
+  const isWarehouse = cross.supplierId === 0;
 
   const item = items.find(
     i =>
@@ -69,7 +71,7 @@ const CrossesTableRowComponent = ({
   };
 
   return (
-    <StyledTableRowBody>
+    <StyledTableRowBody className={isWarehouse ? "bg-green-100" : ""}>
       <StyledTableCellBody>{cross.brand}</StyledTableCellBody>
       <StyledTableCellBody>{cross.numberFix}</StyledTableCellBody>
       <StyledTableCellBody>
@@ -83,12 +85,19 @@ const CrossesTableRowComponent = ({
               className="closeButton"
             />
           </TooltipComponent>
+
           {images?.[0]?.url && (
             <TooltipComponent title="Просмотр изображения">
               <CameraAltIcon
                 onClick={() => onOpenImageModal(images[0].url)}
                 className="closeButton"
               />
+            </TooltipComponent>
+          )}
+
+          {isWarehouse && (
+            <TooltipComponent title="В наличии на нашем складе">
+              <WarehouseIcon className="closeButton" />
             </TooltipComponent>
           )}
         </div>

@@ -59,8 +59,8 @@ export const navLinks: MenuItem[] = [
   },
   {
     id: 8,
-    title: "+7(916)393-43-69",
-    path: "tel:79163935369",
+    title: "+7(000)000-00-00",
+    path: "tel:70000000000",
     icon: PhoneIcon
   },
   {

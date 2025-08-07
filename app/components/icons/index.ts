@@ -45,3 +45,5 @@ export { default as VisibilityOffIcon } from "@mui/icons-material/VisibilityOff"
 export { default as AttachMoneyIcon } from "@mui/icons-material/AttachMoney";
 export { default as CurrencyYenIcon } from "@mui/icons-material/CurrencyYen";
 export { default as EuroIcon } from "@mui/icons-material/Euro";
+
+export { default as WarehouseIcon } from "@mui/icons-material/Warehouse";
