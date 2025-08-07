@@ -72,8 +72,8 @@ export const ConfirmationTemplate = () => {
           <Button onClick={handleLogout}>На страницу авторизации</Button>
           <p className="mt-[30px] text-center text-sm">
             Дополнительную информацию вы можете получить у нашего менеджера:{" "}
-            <a href="tel:+79163934369" className="link">
-              +7 (916) 393-43-69
+            <a href="tel:+74997689933" className="link">
+              +7(499)678-99-33
             </a>{" "}
             /{" "}
             <a href="mailto:info@rotazap.ru" className="link">
