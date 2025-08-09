@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     locale: "ru_RU",
     images: [
       {
-        url: "https://rotazap.ru/opengraph-image.png",
+        url: "/opengraph-image?v=2",
         width: 1200,
         height: 630,
         alt: "rotazap.ru – интернет-магазин автозапчастей",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     title: "Вход и регистрация | rotazap.ru",
     description:
       "Вход и регистрация в интернет-магазин автозапчастей rotazap.ru. Получите доступ к истории заказов, избранному и персональным предложениям",
-    images: ["https://rotazap.ru/opengraph-image.png"]
+    images: ["/opengraph-image?v=2"]
   }
 };
 

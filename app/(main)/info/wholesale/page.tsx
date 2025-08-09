@@ -10,14 +10,14 @@ export const metadata: Metadata = {
     title: "Оптовым покупателям | rotazap.ru",
     description:
       "Информация для оптовых покупателей интернет-магазина rotazap.ru: условия сотрудничества, объёмы заказов, скидки и преимущества для бизнеса",
-    images: ["https://rotazap.ru/opengraph-image.png"]
+    images: ["/opengraph-image?v=2"]
   },
   twitter: {
     card: "summary_large_image",
     title: "Оптовым покупателям | rotazap.ru",
     description:
       "Информация для оптовых покупателей интернет-магазина rotazap.ru: условия сотрудничества, объёмы заказов, скидки и преимущества для бизнеса",
-    images: ["https://rotazap.ru/opengraph-image.png"]
+    images: ["/opengraph-image?v=2"]
   }
 };
 

@@ -10,14 +10,14 @@ export const metadata: Metadata = {
     title: "Гарантия и возвраты | rotazap.ru",
     description:
       "Правила гарантии и возврата товаров в интернет-магазине rotazap.ru: сроки, порядок оформления, условия обмена и возврата автозапчастей",
-    images: ["https://rotazap.ru/opengraph-image.png"]
+    images: ["/opengraph-image?v=2"]
   },
   twitter: {
     card: "summary_large_image",
     title: "Гарантия и возвраты | rotazap.ru",
     description:
       "Правила гарантии и возврата товаров в интернет-магазине rotazap.ru: сроки, порядок оформления, условия обмена и возврата автозапчастей",
-    images: ["https://rotazap.ru/opengraph-image.png"]
+    images: ["/opengraph-image?v=2"]
   }
 };
 
