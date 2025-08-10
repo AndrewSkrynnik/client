@@ -33,29 +33,18 @@ export const metadata: Metadata = {
   },
   icons: sharedIcons,
   openGraph: {
-    title: "rotazap.ru – интернет-магазин автозапчастей",
-    description:
-      "Быстрый поиск автозапчастей по артикулу, бренду, OEM и кросс-номерам. Поддержка ABCP API. Онлайн-наличие. Оформление заказов напрямую.",
+    type: "website",
     url: "https://rotazap.ru",
+    title: "rotazap.ru — автозапчасти",
+    description: "Быстрый поиск по артикулу и бренду, актуальные цены и сроки.",
     siteName: "rotazap.ru",
-    images: [
-      {
-        url: "/opengraph-image?v=2",
-        width: 1200,
-        height: 630,
-        alt: "rotazap.ru – интернет-магазин автозапчастей",
-        type: "image/png"
-      }
-    ],
-    locale: "ru_RU",
-    type: "website"
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }]
   },
   twitter: {
     card: "summary_large_image",
-    title: "rotazap.ru – интернет-магазин автозапчастей",
-    description:
-      "Поиск деталей по артикулу, бренду и кроссам. Поддержка ABCP API. Онлайн-наличие.",
-    images: ["/opengraph-image?v=2"]
+    title: "rotazap.ru — автозапчасти",
+    description: "Поиск по артикулу и бренду, актуальные цены и сроки.",
+    images: ["/opengraph-image"]
   }
 };
 
