@@ -106,7 +106,7 @@ export default async function OpengraphImage() {
           <div
             style={{
               marginTop: 16,
-              display: "inline-flex",
+              display: "flex",
               alignItems: "center",
               gap: 12,
               color: "#93c5fd",
